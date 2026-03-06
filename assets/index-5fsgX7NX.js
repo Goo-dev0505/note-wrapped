@@ -129,7 +129,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   .growth-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; }
   .worst-grid  { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
   .trend-grid  { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-  .stat-row    { display:flex; gap:32px; margin-top:48px; flex-wrap:wrap; }
+  .stat-row    { display:flex; flex-direction:column; gap:20px; margin-top:40px; }
   .top5-rank   { font-size:clamp(32px,5vw,56px); min-width:60px; }
   .top5-pv     { font-size:28px; }
   .top5-bar    { display:block; }
@@ -151,7 +151,6 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     .growth-grid  { grid-template-columns:1fr; gap:24px; }
     .worst-grid   { grid-template-columns:1fr; gap:12px; }
     .trend-grid   { grid-template-columns:1fr; gap:12px; }
-    .stat-row     { gap:18px; margin-top:28px; }
     .top5-rank    { font-size:32px; min-width:40px; }
     .top5-pv      { font-size:20px; }
     .top5-bar     { display:none; }
