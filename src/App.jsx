@@ -66,12 +66,14 @@ function useNoteData() {
       fetch(DATA_BASE + "period_ranking.csv").then(r => { if (!r.ok) throw new Error("period_ranking.csv not found"); return r.text(); }),
       fetch(DATA_BASE + "trend_analysis.csv").then(r => { if (!r.ok) throw new Error("trend_analysis.csv not found"); return r.text(); }),
       fetch(DATA_BASE + "followers.csv").then(r => { if (!r.ok) throw new Error("followers.csv not found"); return r.text(); }),
+      fetch(DATA_BASE + "articles.csv").then(r => { if (!r.ok) throw new Error("articles.csv not found"); return r.text(); }),
     ])
-      .then(([dailyRaw, rankRaw, trendRaw, follRaw]) => {
+      .then(([dailyRaw, rankRaw, trendRaw, follRaw, articlesRaw]) => {
         const daily = parseCSV(dailyRaw);
         const ranking = parseCSV(rankRaw);
         const trend = parseCSV(trendRaw);
         const followers = parseCSV(follRaw);
+        const articles = parseCSV(articlesRaw);
 
         // ── Latest snapshot ──
         const latest = daily[daily.length - 1];
@@ -119,7 +121,7 @@ function useNoteData() {
           trendCounts[s] = (trendCounts[s] || 0) + 1;
         });
 
-        // ── Worst 3 articles (EXCLUDED_TITLES で除外) ──
+        // ── Worst 3 articles (articles.csvの最新日付データから累計PVで選択) ──
         const ROASTS = [
           "タイトルだけで完結してた。",
           "投稿した本人が一番驚いている。",
@@ -127,16 +129,18 @@ function useNoteData() {
           "短すぎたのか、長すぎたのか。謎は深まるばかり。",
           "存在は確認されている。",
         ];
-        const worst3 = ranking
+        const latestArticleDate = articles.reduce((a, b) => (a.date || "") > (b.date || "") ? a : b).date;
+        const worst3 = articles
           .filter(r =>
-            parseInt(r["期間増加PV"] || 0) > 0 &&
+            r.date === latestArticleDate &&
+            parseInt(r["read_count"] || 0) > 0 &&
             !EXCLUDED_TITLES.includes((r["title"] || "").trim())
           )
-          .sort((a, b) => parseInt(a["期間増加PV"] || 0) - parseInt(b["期間増加PV"] || 0))
+          .sort((a, b) => parseInt(a["read_count"] || 0) - parseInt(b["read_count"] || 0))
           .slice(0, 3)
           .map((r, i) => ({
             title: (r["title"] || "").replace(/ #\d+$/, "").slice(0, 28),
-            pv: parseInt(r["期間増加PV"] || 0),
+            pv: parseInt(r["read_count"] || 0),
             roast: ROASTS[i % ROASTS.length],
           }));
 
