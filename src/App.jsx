@@ -129,6 +129,24 @@ function useNoteData() {
       const EMOJIS = ["💀","🔧","🔬","🎨","⚗️"];
       const top5 = ranking.sort((a,b)=>parseInt(b["期間増加PV"]||0)-parseInt(a["期間増加PV"]||0)).slice(0,5)
         .map((r,i)=>({ rank:String(i+1).padStart(2,"0"), title:(r["title"]||"").replace(/ #\d+$/,"").slice(0,32), pv:parseInt(r["期間増加PV"]||0), avg:parseFloat(r["1日平均PV"]||0).toFixed(1), emoji:EMOJIS[i] }));
+
+      // 累計PV Top5（articles.csv の read_count）
+      const PV_EMOJIS = ["👑","🥈","🥉","🎖️","🏅"];
+      const top5PV = articles
+        .filter(r => r.date === latestArticleDate && parseInt(r["read_count"]||0) > 0)
+        .sort((a,b) => parseInt(b["read_count"]||0) - parseInt(a["read_count"]||0))
+        .slice(0, 5)
+        .map((r,i) => ({ rank:String(i+1).padStart(2,"0"), title:(r["title"]||"").replace(/ #\d+$/,"").slice(0,32), val:parseInt(r["read_count"]||0), emoji:PV_EMOJIS[i] }));
+
+      // スキ Top5（like_count / スキ数 など）
+      const SK_EMOJIS = ["💖","💗","💓","💞","💝"];
+      const skKey = articles[0] && (articles[0]["like_count"]!==undefined ? "like_count" : articles[0]["スキ数"]!==undefined ? "スキ数" : null);
+      const top5SK = skKey ? articles
+        .filter(r => r.date === latestArticleDate && parseInt(r[skKey]||0) > 0)
+        .sort((a,b) => parseInt(b[skKey]||0) - parseInt(a[skKey]||0))
+        .slice(0, 5)
+        .map((r,i) => ({ rank:String(i+1).padStart(2,"0"), title:(r["title"]||"").replace(/ #\d+$/,"").slice(0,32), val:parseInt(r[skKey]||0), emoji:SK_EMOJIS[i] }))
+        : [];
       const trendCounts = {};
       trend.forEach(r=>{ const s=r["状態"]||r["state"]||""; trendCounts[s]=(trendCounts[s]||0)+1; });
       const ROASTS = ["タイトルだけで完結してた。","投稿した本人が一番驚いている。","来ると思ってた。来なかった。","短すぎたのか、長すぎたのか。謎は深まるばかり。","存在は確認されている。"];
@@ -142,7 +160,7 @@ function useNoteData() {
       const follData = followers.filter(r=>r["フォロワー数"]);
       setData({
         totalPV,totalSK,totalArt,pvGrowth,skGrowth,lastFollower,followerDiff,followerMsg,
-        growthChart,top5,trendCounts,worst3,skiRate,
+        growthChart,top5,top5PV,top5SK,trendCounts,worst3,skiRate,
         tickerText:`🔥 急上昇 ${rising}記事 · 🟢 継続 ${cont}記事 · ⚠️ 減速 ${slow}記事 · 💤 停止 ${stop}記事 · スキ率 ${parseFloat(skiRate).toFixed(1)}% · `,
         stopPct:totalArt>0?Math.round(stop/(rising+cont+slow+stop)*100):51,
         rising,cont,slow,stop,updatedAt:latest["日付"]||"",
@@ -306,6 +324,70 @@ export default function KitaWrapped() {
                 </div>
               </div>
             ))
+          }
+        </div>
+      </section>
+
+      {/* ── 累計PV TOP5 ── */}
+      <section className="sec" style={{background:"#120800",color:CREAM,borderTop:"1px solid #ffffff0a"}}>
+        <div style={{maxWidth:900,margin:"0 auto"}}>
+          <div style={{display:"flex",alignItems:"baseline",gap:12,marginBottom:36,flexWrap:"wrap"}}>
+            <span className="badge" style={{background:"#ffffff22",color:CREAM}}>ALL TIME</span>
+            <h2 style={{fontFamily:"'Bebas Neue'",fontSize:"clamp(28px,7vw,64px)",lineHeight:1}}>累計PV ランキング</h2>
+          </div>
+          {loading
+            ? [1,2,3,4,5].map(i=><Skeleton key={i} w="100%" h={56} style={{marginBottom:12}} />)
+            : data.top5PV.map((a,i)=>(
+              <div key={i} style={{display:"flex",alignItems:"center",gap:isMobile?10:20,padding:isMobile?"12px 0":"20px 0",borderBottom:"1px solid #ffffff18"}}>
+                <div className="top5-rank" style={{fontFamily:"'Bebas Neue'",color:i===0?C:"#ffffff22",lineHeight:1}}>{a.rank}</div>
+                <div style={{fontSize:isMobile?14:18,flexShrink:0}}>{a.emoji}</div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontSize:isMobile?12:14,fontWeight:700,color:i===0?C:CREAM,lineHeight:1.3,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{a.title}</div>
+                </div>
+                <div style={{textAlign:"right",flexShrink:0}}>
+                  <div className="top5-pv" style={{fontFamily:"'Bebas Neue'",color:i===0?C:CREAM}}>{a.val.toLocaleString()}</div>
+                  <div style={{fontSize:10,color:"#ffffff33",letterSpacing:1}}>累計PV</div>
+                </div>
+                <div className="top5-bar" style={{width:60,flexShrink:0}}>
+                  <div style={{height:4,background:"#ffffff18",borderRadius:2,overflow:"hidden"}}>
+                    <div style={{height:"100%",background:i===0?C:"#ffffff44",width:`${a.val/data.top5PV[0].val*100}%`,borderRadius:2}} />
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      {/* ── スキ TOP5 ── */}
+      <section className="sec" style={{background:"#0e0a14",color:CREAM,borderTop:"1px solid #ffffff0a"}}>
+        <div style={{maxWidth:900,margin:"0 auto"}}>
+          <div style={{display:"flex",alignItems:"baseline",gap:12,marginBottom:36,flexWrap:"wrap"}}>
+            <span className="badge" style={{background:"#ff6b9d44",color:"#ff9ec4"}}>LOVE</span>
+            <h2 style={{fontFamily:"'Bebas Neue'",fontSize:"clamp(28px,7vw,64px)",lineHeight:1}}>スキ ランキング</h2>
+          </div>
+          {loading
+            ? [1,2,3,4,5].map(i=><Skeleton key={i} w="100%" h={56} style={{marginBottom:12}} />)
+            : data.top5SK.length === 0
+              ? <div style={{fontSize:13,color:"#ffffff44",padding:"24px 0"}}>スキデータが見つかりませんでした（like_count / スキ数 列を確認してください）</div>
+              : data.top5SK.map((a,i)=>(
+                <div key={i} style={{display:"flex",alignItems:"center",gap:isMobile?10:20,padding:isMobile?"12px 0":"20px 0",borderBottom:"1px solid #ffffff18"}}>
+                  <div className="top5-rank" style={{fontFamily:"'Bebas Neue'",color:i===0?"#ff6b9d":"#ffffff22",lineHeight:1}}>{a.rank}</div>
+                  <div style={{fontSize:isMobile?14:18,flexShrink:0}}>{a.emoji}</div>
+                  <div style={{flex:1,minWidth:0}}>
+                    <div style={{fontSize:isMobile?12:14,fontWeight:700,color:i===0?"#ff9ec4":CREAM,lineHeight:1.3,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{a.title}</div>
+                  </div>
+                  <div style={{textAlign:"right",flexShrink:0}}>
+                    <div className="top5-pv" style={{fontFamily:"'Bebas Neue'",color:i===0?"#ff6b9d":CREAM}}>{a.val.toLocaleString()}</div>
+                    <div style={{fontSize:10,color:"#ffffff33",letterSpacing:1}}>スキ数</div>
+                  </div>
+                  <div className="top5-bar" style={{width:60,flexShrink:0}}>
+                    <div style={{height:4,background:"#ffffff18",borderRadius:2,overflow:"hidden"}}>
+                      <div style={{height:"100%",background:i===0?"#ff6b9d":"#ffffff44",width:`${a.val/data.top5SK[0].val*100}%`,borderRadius:2}} />
+                    </div>
+                  </div>
+                </div>
+              ))
           }
         </div>
       </section>
