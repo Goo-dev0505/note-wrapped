@@ -21,12 +21,19 @@ styleEl.textContent = `
 `;
 document.head.appendChild(styleEl);
 
+/* ── 除外記事リスト ────────────────────────────────
+   ワースト表示から除外したいタイトルをここに追加
+──────────────────────────────────────────────────── */
+const EXCLUDED_TITLES = [
+  // 例: 'テスト投稿',
+  // 例: 'メモ',
+];
+
 /* ── CSV Parser ───────────────────────────────────── */
 function parseCSV(text) {
   const lines = text.trim().split("\n");
   const headers = lines[0].split(",").map(h => h.trim().replace(/^"|"$/g, ""));
   return lines.slice(1).map(line => {
-    // handle quoted commas
     const vals = [];
     let cur = "", inQ = false;
     for (const ch of line) {
@@ -75,7 +82,7 @@ function useNoteData() {
           ? parseInt(followers[followers.length - 1]["フォロワー数"] || 0)
           : 0;
 
-        // ── Growth chart (sample every ~7 rows for readability) ──
+        // ── Growth chart ──
         const step = Math.max(1, Math.floor(daily.length / 16));
         const growthChart = daily
           .filter((_, i) => i % step === 0 || i === daily.length - 1)
@@ -105,7 +112,7 @@ function useNoteData() {
           trendCounts[s] = (trendCounts[s] || 0) + 1;
         });
 
-        // ── Worst 3 articles (lowest PV, with title) ──
+        // ── Worst 3 articles (EXCLUDED_TITLES で除外) ──
         const ROASTS = [
           "タイトルだけで完結してた。",
           "投稿した本人が一番驚いている。",
@@ -114,7 +121,10 @@ function useNoteData() {
           "存在は確認されている。",
         ];
         const worst3 = ranking
-          .filter(r => parseInt(r["期間増加PV"] || 0) > 0)
+          .filter(r =>
+            parseInt(r["期間増加PV"] || 0) > 0 &&
+            !EXCLUDED_TITLES.includes((r["title"] || "").trim())
+          )
           .sort((a, b) => parseInt(a["期間増加PV"] || 0) - parseInt(b["期間増加PV"] || 0))
           .slice(0, 3)
           .map((r, i) => ({
@@ -130,7 +140,7 @@ function useNoteData() {
         const stop = trendCounts["💤 停止"] || 0;
         const skiRate = latest["スキ率(%)"] || latest["スキ率"] || "—";
 
-        // ── Follower milestones from followers.csv ──
+        // ── Follower milestones ──
         const follData = followers.filter(r => r["フォロワー数"]);
         const follFirst = follData[0];
         const follLast = follData[follData.length - 1];
@@ -187,7 +197,6 @@ export default function KitaWrapped() {
       <section style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: INK, color: CREAM, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 20% 50%,#2a1500,transparent 60%),radial-gradient(circle at 80% 20%,#300a00,transparent 50%)", pointerEvents: "none" }} />
 
-        {/* top bar */}
         <div style={{ padding: "24px 32px", display: "flex", justifyContent: "space-between", alignItems: "center", position: "relative", zIndex: 1, borderBottom: "1px solid #ffffff18" }}>
           <span style={{ fontFamily: "'Bebas Neue'", fontSize: 18, letterSpacing: 3, color: C }}>KITACORE</span>
           <span style={{ fontFamily: "'Syne',sans-serif", fontSize: 11, letterSpacing: 2, color: "#ffffff44" }}>
@@ -195,7 +204,6 @@ export default function KitaWrapped() {
           </span>
         </div>
 
-        {/* main title */}
         <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 32px 48px", position: "relative", zIndex: 1 }}>
           <div className="fu d1" style={{ fontFamily: "'Bebas Neue'", fontSize: "clamp(72px,13vw,160px)", lineHeight: .88, letterSpacing: "-2px", color: CREAM }}>
             DATA<br /><span style={{ color: C }}>×</span><br />NOTE
@@ -204,7 +212,6 @@ export default function KitaWrapped() {
             {loading ? "データ読み込み中…" : `${data.totalArt}本の記事・${data.updatedAt}集計。ログは続く。`}
           </div>
 
-          {/* KPIs */}
           <div className="fu d3" style={{ display: "flex", gap: 32, marginTop: 48, flexWrap: "wrap" }}>
             {loading
               ? [1, 2, 3, 4].map(i => <Skeleton key={i} w={80} h={64} />)
@@ -358,7 +365,6 @@ export default function KitaWrapped() {
             }
           </div>
 
-          {/* shame footer stat */}
           <div style={{ marginTop: 32, padding: "24px 28px", background: "#ffffff08", borderRadius: 14, border: "1px dashed #ffffff22", display: "flex", alignItems: "center", gap: 24, flexWrap: "wrap" }}>
             <div style={{ fontSize: 28 }}>🏆</div>
             <div style={{ flex: 1 }}>
