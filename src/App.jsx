@@ -106,9 +106,15 @@ function useNoteData() {
       const daily = parseCSV(dailyRaw), ranking = parseCSV(rankRaw),
             trend = parseCSV(trendRaw), followers = parseCSV(follRaw), articles = parseCSV(articlesRaw);
       const latest = daily[daily.length - 1], prev = daily[daily.length - 2] || {}, first = daily[0];
+
+      // ── ★ latestArticleDate を先に定義 ──
+      const latestArticleDate = articles.reduce((a,b)=>(a.date||"")>(b.date||"")?a:b).date;
+      const latestArticles = articles.filter(r => r.date === latestArticleDate);
+
       const totalPV = parseInt(latest["ビュー合計"] || latest["pv"] || 0);
       const totalSK = parseInt(latest["スキ合計"] || latest["sk"] || 0);
-      const totalArt = parseInt(latest["記事数"] || 0);
+      // ── ★ articles.csv の実際の件数をカウント ──
+      const totalArt = latestArticles.length;
       const prevPV = parseInt(prev["ビュー合計"] || prev["pv"] || 0);
       const prevSK = parseInt(prev["スキ合計"] || prev["sk"] || 0);
       const prevArt = parseInt(prev["記事数"] || 0);
@@ -132,15 +138,14 @@ function useNoteData() {
       const step = Math.max(1, Math.floor(daily.length/16));
       const growthChart = daily.filter((_,i)=>i%step===0||i===daily.length-1)
         .map(r=>({ d:(r["日付"]||"").replace("2025/","").replace("2026/","").replace(/^0/,""), v:parseInt(r["ビュー合計"]||0), s:parseInt(r["スキ合計"]||0) }));
-      const latestArticleDate = articles.reduce((a,b)=>(a.date||"")>(b.date||"")?a:b).date;
       const EMOJIS = ["💀","🔧","🔬","🎨","⚗️"];
       const top5 = ranking.sort((a,b)=>parseInt(b["期間増加PV"]||0)-parseInt(a["期間増加PV"]||0)).slice(0,5)
         .map((r,i)=>({ rank:String(i+1).padStart(2,"0"), title:(r["title"]||"").replace(/ #\d+$/,"").slice(0,32), pv:parseInt(r["期間増加PV"]||0), avg:parseFloat(r["1日平均PV"]||0).toFixed(1), emoji:EMOJIS[i] }));
 
       // 累計PV Top5（articles.csv の read_count）
       const PV_EMOJIS = ["👑","🥈","🥉","🎖️","🏅"];
-      const top5PV = articles
-        .filter(r => r.date === latestArticleDate && parseInt(r["read_count"]||0) > 0)
+      const top5PV = latestArticles
+        .filter(r => parseInt(r["read_count"]||0) > 0)
         .sort((a,b) => parseInt(b["read_count"]||0) - parseInt(a["read_count"]||0))
         .slice(0, 5)
         .map((r,i) => ({ rank:String(i+1).padStart(2,"0"), title:(r["title"]||"").replace(/ #\d+$/,"").slice(0,32), val:parseInt(r["read_count"]||0), emoji:PV_EMOJIS[i] }));
@@ -148,8 +153,8 @@ function useNoteData() {
       // スキ Top5（like_count / スキ数 など）
       const SK_EMOJIS = ["💖","💗","💓","💞","💝"];
       const skKey = articles[0] && (articles[0]["like_count"]!==undefined ? "like_count" : articles[0]["スキ数"]!==undefined ? "スキ数" : null);
-      const top5SK = skKey ? articles
-        .filter(r => r.date === latestArticleDate && parseInt(r[skKey]||0) > 0)
+      const top5SK = skKey ? latestArticles
+        .filter(r => parseInt(r[skKey]||0) > 0)
         .sort((a,b) => parseInt(b[skKey]||0) - parseInt(a[skKey]||0))
         .slice(0, 5)
         .map((r,i) => ({ rank:String(i+1).padStart(2,"0"), title:(r["title"]||"").replace(/ #\d+$/,"").slice(0,32), val:parseInt(r[skKey]||0), emoji:SK_EMOJIS[i] }))
@@ -157,7 +162,8 @@ function useNoteData() {
       const trendCounts = {};
       trend.forEach(r=>{ const s=r["状態"]||r["state"]||""; trendCounts[s]=(trendCounts[s]||0)+1; });
       const ROASTS = ["タイトルだけで完結してた。","投稿した本人が一番驚いている。","来ると思ってた。来なかった。","短すぎたのか、長すぎたのか。謎は深まるばかり。","存在は確認されている。"];
-      const worst3 = articles.filter(r=>r.date===latestArticleDate&&parseInt(r["read_count"]||0)>0&&!EXCLUDED_TITLES.includes((r["title"]||"").trim()))
+      const worst3 = latestArticles
+        .filter(r=>parseInt(r["read_count"]||0)>0&&!EXCLUDED_TITLES.includes((r["title"]||"").trim()))
         .sort((a,b)=>parseInt(a["read_count"]||0)-parseInt(b["read_count"]||0)).slice(0,3)
         .map((r,i)=>({ title:(r["title"]||"").replace(/ #\d+$/,"").slice(0,28), pv:parseInt(r["read_count"]||0), roast:ROASTS[i%ROASTS.length] }));
       const rising=trendCounts["🔥 急上昇"]||0, cont=trendCounts["🟢 継続"]||0,
