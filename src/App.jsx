@@ -181,7 +181,7 @@ export default function KitaWrapped() {
         <div style={{position:"absolute",inset:0,backgroundImage:"radial-gradient(circle at 20% 50%,#2a1500,transparent 60%),radial-gradient(circle at 80% 20%,#300a00,transparent 50%)",pointerEvents:"none"}} />
 
         <div className="hero-hd" style={{display:"flex",justifyContent:"space-between",alignItems:"center",position:"relative",zIndex:1,borderBottom:"1px solid #ffffff18"}}>
-          <span style={{fontFamily:"'Bebas Neue'",fontSize:18,letterSpacing:3,color:C}}>KITACORE</span>
+          <span style={{fontFamily:"'Bebas Neue'",fontSize:18,letterSpacing:3,color:C}}>KITAcore</span>
           <span style={{fontFamily:"'Syne',sans-serif",fontSize:11,letterSpacing:2,color:"#ffffff44"}}>
             NOTE REPORT {loading?"—":data.updatedAt.slice(0,7).replace("/",".")}
           </span>
