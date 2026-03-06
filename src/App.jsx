@@ -189,7 +189,7 @@ export default function KitaWrapped() {
 
         <div className="hero-bd fu d1" style={{flex:1,display:"flex",flexDirection:"column",justifyContent:"center",position:"relative",zIndex:1}}>
           <div style={{fontFamily:"'Bebas Neue'",fontSize:"clamp(60px,15vw,160px)",lineHeight:.88,letterSpacing:"-2px",color:CREAM}}>
-            DATA<br /><span style={{color:C}}>×</span><br />NOTE
+            DATA <span style={{color:C}}>×</span> NOTE
           </div>
           <div className="fu d2" style={{fontFamily:"'Syne',sans-serif",fontSize:"clamp(12px,3vw,17px)",color:"#ffffff88",marginTop:20,maxWidth:480,lineHeight:1.7}}>
             {loading?"データ読み込み中…":`${data.totalArt}本の記事・${data.updatedAt}集計。ログは続く。`}
