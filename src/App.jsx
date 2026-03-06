@@ -105,10 +105,14 @@ function useNoteData() {
     ]).then(([dailyRaw, rankRaw, trendRaw, follRaw, articlesRaw]) => {
       const daily = parseCSV(dailyRaw), ranking = parseCSV(rankRaw),
             trend = parseCSV(trendRaw), followers = parseCSV(follRaw), articles = parseCSV(articlesRaw);
-      const latest = daily[daily.length - 1], first = daily[0];
+      const latest = daily[daily.length - 1], prev = daily[daily.length - 2] || {}, first = daily[0];
       const totalPV = parseInt(latest["ビュー合計"] || latest["pv"] || 0);
       const totalSK = parseInt(latest["スキ合計"] || latest["sk"] || 0);
       const totalArt = parseInt(latest["記事数"] || 0);
+      const prevPV = parseInt(prev["ビュー合計"] || prev["pv"] || 0);
+      const prevArt = parseInt(prev["記事数"] || 0);
+      const pvDiff = prevPV > 0 ? totalPV - prevPV : 0;
+      const artDiff = prevArt > 0 ? totalArt - prevArt : 0;
       const firstPV = parseInt(first["ビュー合計"] || first["pv"] || 0);
       const firstSK = parseInt(first["スキ合計"] || first["sk"] || 0);
       const pvGrowth = firstPV > 0 ? Math.round((totalPV - firstPV) / firstPV * 100) : 0;
@@ -159,7 +163,7 @@ function useNoteData() {
       const skiRate = latest["スキ率(%)"]||latest["スキ率"]||"—";
       const follData = followers.filter(r=>r["フォロワー数"]);
       setData({
-        totalPV,totalSK,totalArt,pvGrowth,skGrowth,lastFollower,followerDiff,followerMsg,
+        totalPV,totalSK,totalArt,pvGrowth,skGrowth,pvDiff,artDiff,lastFollower,followerDiff,followerMsg,
         growthChart,top5,top5PV,top5SK,trendCounts,worst3,skiRate,
         tickerText:`🔥 急上昇 ${rising}記事 · 🟢 継続 ${cont}記事 · ⚠️ 減速 ${slow}記事 · 💤 停止 ${stop}記事 · スキ率 ${parseFloat(skiRate).toFixed(1)}% · `,
         stopPct:totalArt>0?Math.round(stop/(rising+cont+slow+stop)*100):51,
@@ -217,17 +221,24 @@ export default function KitaWrapped() {
             {loading
               ? [1,2,3,4].map(i=><Skeleton key={i} w={80} h={64} />)
               : [
-                  {n:data.totalPV.toLocaleString(),u:"累計PV"},
+                  {n:data.totalPV.toLocaleString(),u:"累計PV",diff:data.pvDiff},
                   {n:data.totalSK.toLocaleString(),u:"累計スキ"},
-                  {n:data.lastFollower.toLocaleString(),u:"フォロワー",msg:data.followerMsg,diff:data.followerDiff},
-                  {n:data.totalArt.toLocaleString(),u:"総記事数"},
+                  {n:data.lastFollower.toLocaleString(),u:"フォロワー",diff:data.followerDiff,msg:data.followerMsg},
+                  {n:data.totalArt.toLocaleString(),u:"総記事数",diff:data.artDiff},
                 ].map(k=>(
                   <div key={k.u}>
-                    <div style={{fontFamily:"'Bebas Neue'",fontSize:"clamp(30px,7vw,60px)",color:C,lineHeight:1}}>{k.n}</div>
+                    <div style={{display:"flex",alignItems:"baseline",gap:8,flexWrap:"wrap"}}>
+                      <div style={{fontFamily:"'Bebas Neue'",fontSize:"clamp(30px,7vw,60px)",color:C,lineHeight:1}}>{k.n}</div>
+                      {k.diff!==undefined&&k.diff!==0&&(
+                        <div style={{fontSize:12,fontWeight:700,color:k.diff>0?"#86efac":"#fca5a5",lineHeight:1}}>
+                          {k.diff>0?`▲${k.diff}`:`▼${Math.abs(k.diff)}`}
+                        </div>
+                      )}
+                    </div>
                     <div style={{fontFamily:"'Syne',sans-serif",fontSize:10,color:"#ffffff55",letterSpacing:2,marginTop:4}}>{k.u}</div>
                     {k.msg&&(
                       <div style={{marginTop:6,fontSize:11,color:k.diff>0?"#86efac":k.diff<0?"#fca5a5":"#ffffff66",fontStyle:"italic",}}>
-                        {k.diff>0?`▲${k.diff} `:k.diff<0?`▼${Math.abs(k.diff)} `:""}{k.msg}
+                        {k.msg}
                       </div>
                     )}
                   </div>
