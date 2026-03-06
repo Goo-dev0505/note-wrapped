@@ -481,7 +481,7 @@ export default function KitaWrapped() {
       {/* ── FOOTER ── */}
       <section className="sec" style={{background:INK,color:CREAM,paddingBottom:60,textAlign:"center"}}>
         <div style={{fontFamily:"'Bebas Neue'",fontSize:"clamp(44px,13vw,110px)",lineHeight:.85,marginBottom:20}}>
-          ログは<br /><span style={{color:C}}>続く。</span>
+          ログは<span style={{color:C}}>続く。</span>
         </div>
         <p style={{fontSize:14,color:"#ffffff55",maxWidth:460,margin:"0 auto",lineHeight:1.8}}>
           データで遊び、失敗をネタにし、また書く。<br />
