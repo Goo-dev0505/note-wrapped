@@ -1,0 +1,14 @@
+- name: Push to wrapped repo
+        env:
+          PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
+        run: |
+          git clone https://x-access-token:${PUBLIC_REPO_TOKEN}@github.com/Goo-dev0505/note-wrapped.git wrapped-repo
+          cp data/*.csv wrapped-repo/public/data/
+          cd wrapped-repo
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add public/data/*.csv
+          if ! git diff --staged --quiet; then
+            git commit -m "Update data: $(date +'%Y-%m-%d %H:%M')"
+            git push
+          fi
