@@ -40,7 +40,7 @@ function parseCSV(text) {
 }
 
 /* ── Data hook ────────────────────────────────────── */
-const DATA_BASE = "./data/";
+const DATA_BASE = "/note-wrapped/data/";
 
 function useNoteData() {
   const [data, setData] = useState(null);
