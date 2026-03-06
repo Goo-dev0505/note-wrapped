@@ -182,8 +182,8 @@ export default function KitaWrapped() {
 
         <div className="hero-hd" style={{display:"flex",justifyContent:"space-between",alignItems:"center",position:"relative",zIndex:1,borderBottom:"1px solid #ffffff18"}}>
           <span style={{fontFamily:"'Bebas Neue'",fontSize:18,letterSpacing:3,color:C}}>KITA<span style={{fontFamily:"'Noto Sans JP',sans-serif",fontWeight:700,fontSize:14,letterSpacing:1}}>core</span></span>
-          <span style={{fontFamily:"'Syne',sans-serif",fontSize:11,letterSpacing:2,color:"#ffffff44"}}>
-            NOTE REPORT {loading?"—":data.updatedAt.slice(0,7).replace("/",".")}
+          <span style={{fontFamily:"'Syne',sans-serif",fontSize:10,letterSpacing:1,color:"#ffffff44"}}>
+            {loading?"—":`更新 ${data.updatedAt}`}
           </span>
         </div>
 
