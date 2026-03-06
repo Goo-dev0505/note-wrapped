@@ -208,7 +208,7 @@ export default function KitaWrapped() {
                     <div style={{fontFamily:"'Bebas Neue'",fontSize:"clamp(30px,7vw,60px)",color:C,lineHeight:1}}>{k.n}</div>
                     <div style={{fontFamily:"'Syne',sans-serif",fontSize:10,color:"#ffffff55",letterSpacing:2,marginTop:4}}>{k.u}</div>
                     {k.msg&&(
-                      <div style={{marginTop:6,fontSize:11,color:k.diff>0?"#86efac":k.diff<0?"#fca5a5":"#ffffff66",fontStyle:"italic",maxWidth:180,lineHeight:1.5}}>
+                      <div style={{marginTop:6,fontSize:11,color:k.diff>0?"#86efac":k.diff<0?"#fca5a5":"#ffffff66",fontStyle:"italic",}}>
                         {k.diff>0?`▲${k.diff} `:k.diff<0?`▼${Math.abs(k.diff)} `:""}{k.msg}
                       </div>
                     )}
