@@ -86,10 +86,39 @@ function useNoteData() {
         const pvGrowth = firstPV > 0 ? Math.round((totalPV - firstPV) / firstPV * 100) : 0;
         const skGrowth = firstSK > 0 ? Math.round((totalSK - firstSK) / firstSK * 100) : 0;
 
-        // ── Latest follower count ──
+        // ── Latest follower count + 増減メッセージ ──
         const lastFollower = followers.length > 0
           ? parseInt(followers[followers.length - 1]["フォロワー数"] || 0)
           : 0;
+        const prevFollower = followers.length > 1
+          ? parseInt(followers[followers.length - 2]["フォロワー数"] || 0)
+          : lastFollower;
+        const followerDiff = lastFollower - prevFollower;
+
+        const followerUpMsgs = [
+          "ぇ？今日のワイの記事がいけてるん！？",
+          "フォロワー増えとる…なんか怖いんやけど笑",
+          "誰かワイのこと好きになってくれたん？ありがとな。",
+          "これ、バレたらどうしよ（何が）",
+          "ちょっと待って、今日なんかいい記事書いたっけ？",
+        ];
+        const followerDownMsgs = [
+          "いや～、フォロワーが減ってもうた！",
+          "去った人よ、元気でな。",
+          "フォロワー減ったけど、ワイは元気です。",
+          "これがnoteの現実やな…（メモしとく）",
+          "減った分だけ、残った人が濃いってことにしとく。",
+        ];
+        const followerFlatMsgs = [
+          "今日はフォロワー動かず。嵐の前の静けさ？",
+          "現状維持。悪くない、悪くない。",
+          "誰も来ず、誰も去らず。平和な一日。",
+        ];
+        const followerMsg = followerDiff > 0
+          ? followerUpMsgs[Math.abs(followerDiff + new Date().getDate()) % followerUpMsgs.length]
+          : followerDiff < 0
+          ? followerDownMsgs[Math.abs(Math.abs(followerDiff) + new Date().getDate()) % followerDownMsgs.length]
+          : followerFlatMsgs[new Date().getDate() % followerFlatMsgs.length];
 
         // ── Growth chart ──
         const step = Math.max(1, Math.floor(daily.length / 16));
@@ -159,7 +188,7 @@ function useNoteData() {
 
         setData({
           totalPV, totalSK, totalArt, pvGrowth, skGrowth,
-          lastFollower, growthChart, top5, trendCounts,
+          lastFollower, followerDiff, followerMsg, growthChart, top5, trendCounts,
           worst3, skiRate,
           tickerText: `🔥 急上昇 ${rising}記事 · 🟢 継続 ${cont}記事 · ⚠️ 減速 ${slow}記事 · 💤 停止 ${stop}記事 · スキ率 ${parseFloat(skiRate).toFixed(1)}% · `,
           stopPct: totalArt > 0 ? Math.round(stop / (rising + cont + slow + stop) * 100) : 51,
@@ -229,12 +258,17 @@ export default function KitaWrapped() {
               : [
                 { n: data.totalPV.toLocaleString(), u: "累計PV" },
                 { n: data.totalSK.toLocaleString(), u: "累計スキ" },
-                { n: data.lastFollower.toLocaleString(), u: "フォロワー" },
+                { n: data.lastFollower.toLocaleString(), u: "フォロワー", msg: data.followerMsg, diff: data.followerDiff },
                 { n: data.totalArt.toLocaleString(), u: "総記事数" },
               ].map(k => (
                 <div key={k.u}>
                   <div style={{ fontFamily: "'Bebas Neue'", fontSize: "clamp(36px,6vw,60px)", color: C, lineHeight: 1 }}>{k.n}</div>
                   <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 11, color: "#ffffff55", letterSpacing: 2, marginTop: 4 }}>{k.u}</div>
+                  {k.msg && (
+                    <div style={{ marginTop: 8, fontSize: 12, color: k.diff > 0 ? "#86efac" : k.diff < 0 ? "#fca5a5" : "#ffffff66", fontStyle: "italic", maxWidth: 200, lineHeight: 1.5 }}>
+                      {k.diff > 0 ? `▲${k.diff} ` : k.diff < 0 ? `▼${Math.abs(k.diff)} ` : ""}{k.msg}
+                    </div>
+                  )}
                 </div>
               ))
             }
@@ -262,8 +296,13 @@ export default function KitaWrapped() {
                   集計開始→今<br /><span style={{ color: C }}>+{data.pvGrowth}%</span>
                 </h2>
                 <p style={{ marginTop: 24, lineHeight: 1.8, color: "#5a3a1a", fontSize: 14 }}>
-                  スキの伸びは <strong>+{data.skGrowth}%</strong> とPVを上回る。<br />
-                  「数字より質」が育ってる証拠。
+                  スキの伸びは <strong>+{data.skGrowth}%</strong>
+                  {data.skGrowth > data.pvGrowth
+                    ? <> とPVを上回る。<br />「数字より質」が育ってる証拠。</>
+                    : data.skGrowth > 0
+                    ? <> で成長中。<br />PVと一緒にファンも増やしていこ。</>
+                    : <> は伸び途中。<br />スキされる記事、研究する価値あり。</>
+                  }
                 </p>
                 <div style={{ marginTop: 28, display: "flex", gap: 20 }}>
                   <div style={{ borderLeft: `3px solid ${C}`, paddingLeft: 12 }}>
