@@ -1,14 +1,21 @@
-- name: Push to wrapped repo
-        env:
-          PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
-        run: |
-          git clone https://x-access-token:${PUBLIC_REPO_TOKEN}@github.com/Goo-dev0505/note-wrapped.git wrapped-repo
-          cp data/*.csv wrapped-repo/public/data/
-          cd wrapped-repo
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add public/data/*.csv
-          if ! git diff --staged --quiet; then
-            git commit -m "Update data: $(date +'%Y-%m-%d %H:%M')"
-            git push
-          fi
+name: Deploy Wrapped Page
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm run build
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
