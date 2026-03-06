@@ -110,8 +110,10 @@ function useNoteData() {
       const totalSK = parseInt(latest["スキ合計"] || latest["sk"] || 0);
       const totalArt = parseInt(latest["記事数"] || 0);
       const prevPV = parseInt(prev["ビュー合計"] || prev["pv"] || 0);
+      const prevSK = parseInt(prev["スキ合計"] || prev["sk"] || 0);
       const prevArt = parseInt(prev["記事数"] || 0);
       const pvDiff = prevPV > 0 ? totalPV - prevPV : 0;
+      const skDiff = prevSK > 0 ? totalSK - prevSK : 0;
       const artDiff = prevArt > 0 ? totalArt - prevArt : 0;
       const firstPV = parseInt(first["ビュー合計"] || first["pv"] || 0);
       const firstSK = parseInt(first["スキ合計"] || first["sk"] || 0);
@@ -163,7 +165,7 @@ function useNoteData() {
       const skiRate = latest["スキ率(%)"]||latest["スキ率"]||"—";
       const follData = followers.filter(r=>r["フォロワー数"]);
       setData({
-        totalPV,totalSK,totalArt,pvGrowth,skGrowth,pvDiff,artDiff,lastFollower,followerDiff,followerMsg,
+        totalPV,totalSK,totalArt,pvGrowth,skGrowth,pvDiff,skDiff,artDiff,lastFollower,followerDiff,followerMsg,
         growthChart,top5,top5PV,top5SK,trendCounts,worst3,skiRate,
         tickerText:`🔥 急上昇 ${rising}記事 · 🟢 継続 ${cont}記事 · ⚠️ 減速 ${slow}記事 · 💤 停止 ${stop}記事 · スキ率 ${parseFloat(skiRate).toFixed(1)}% · `,
         stopPct:totalArt>0?Math.round(stop/(rising+cont+slow+stop)*100):51,
@@ -222,7 +224,7 @@ export default function KitaWrapped() {
               ? [1,2,3,4].map(i=><Skeleton key={i} w={80} h={64} />)
               : [
                   {n:data.totalPV.toLocaleString(),u:"累計PV",diff:data.pvDiff},
-                  {n:data.totalSK.toLocaleString(),u:"累計スキ"},
+                  {n:data.totalSK.toLocaleString(),u:"累計スキ",diff:data.skDiff},
                   {n:data.lastFollower.toLocaleString(),u:"フォロワー",diff:data.followerDiff,msg:data.followerMsg},
                   {n:data.totalArt.toLocaleString(),u:"総記事数",diff:data.artDiff},
                 ].map(k=>(
@@ -230,8 +232,8 @@ export default function KitaWrapped() {
                     <div style={{display:"flex",alignItems:"baseline",gap:8,flexWrap:"wrap"}}>
                       <div style={{fontFamily:"'Bebas Neue'",fontSize:"clamp(30px,7vw,60px)",color:C,lineHeight:1}}>{k.n}</div>
                       {k.diff!==undefined&&k.diff!==0&&(
-                        <div style={{fontSize:12,fontWeight:700,color:k.diff>0?"#86efac":"#fca5a5",lineHeight:1}}>
-                          {k.diff>0?`▲${k.diff}`:`▼${Math.abs(k.diff)}`}
+                        <div style={{fontSize:11,color:k.diff>0?"#86efac":"#fca5a5",lineHeight:1}}>
+                          <span style={{fontSize:9,opacity:.7,marginRight:3}}>前日比</span>{k.diff>0?`▲${k.diff}`:`▼${Math.abs(k.diff)}`}
                         </div>
                       )}
                     </div>
