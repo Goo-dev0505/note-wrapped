@@ -376,6 +376,221 @@ function ArticleListPage({ data, isMobile }) {
 }
 
 /* ══════════════════════════════════════════════
+   ランキングページ
+   - 各期間JSONをタブ切替時に遅延fetch（初回のみ）
+   - JSON構造: { ranking_type, generated_at, items: [...] }
+   - items フィールド: rank / creator_name / creator_url /
+     has_profile_url / likes_count / last_like_at / like_user_id
+══════════════════════════════════════════════ */
+const RANK_PERIODS = [
+  { id: "total",     file: "ranking_total.json",     label: "総合"  },
+  { id: "monthly",   file: "ranking_monthly.json",   label: "今月"  },
+  { id: "this_week", file: "ranking_this_week.json",  label: "今週"  },
+  { id: "last_week", file: "ranking_last_week.json",  label: "先週"  },
+];
+
+function useRankingData(file) {
+  const [state, setState] = useState({ data: null, error: null, loaded: false });
+  useEffect(() => {
+    if (state.loaded) return;
+    fetch(DATA_BASE + file)
+      .then(r => { if (!r.ok) throw new Error(`${file} が見つかりません`); return r.json(); })
+      .then(d  => setState({ data: d, error: null,    loaded: true }))
+      .catch(e => setState({ data: null, error: e.message, loaded: true }));
+  }, [file, state.loaded]);
+  return state;
+}
+
+function RankingTable({ items, error, loaded, isMobile }) {
+  function formatDate(iso) {
+    if (!iso) return "—";
+    const d = new Date(iso);
+    return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,"0")}/${String(d.getDate()).padStart(2,"0")}`;
+  }
+
+  if (!loaded) return (
+    <>
+      {[1,2,3,4,5,6,7].map(i => (
+        <div key={i} style={{ padding: isMobile ? "14px 16px" : "16px 20px", borderBottom: "1px solid #ffffff08", display:"flex", gap:16, alignItems:"center" }}>
+          <Skeleton w={36} h={36} />
+          <Skeleton w={`${40+i*8}%`} h={16} />
+        </div>
+      ))}
+    </>
+  );
+
+  if (error) return (
+    <div style={{ textAlign:"center", padding:"60px 20px", color:"#ffffff22", fontSize:14 }}>⚠️ {error}</div>
+  );
+
+  if (!items?.length) return (
+    <div style={{ textAlign:"center", padding:"60px 20px", color:"#ffffff22", fontSize:14 }}>この期間のデータがありません</div>
+  );
+
+  return items.map((row) => {
+    const isTop = row.rank === 1;
+    const url   = row.has_profile_url ? row.creator_url : null;
+    return (
+      <div
+        key={row.like_user_id}
+        className="article-row"
+        style={{
+          display: "grid",
+          gridTemplateColumns: isMobile ? "44px 1fr 64px" : "56px 1fr 80px 120px 110px",
+          gap: isMobile ? 8 : 16,
+          padding: isMobile ? "14px 16px" : "16px 20px",
+          borderBottom: "1px solid #ffffff08",
+          alignItems: "center",
+          background: isTop ? "#d44a0010" : "transparent",
+        }}
+      >
+        {/* 順位 */}
+        <div style={{
+          fontFamily: "'Bebas Neue'",
+          fontSize: isTop ? (isMobile?32:40) : (isMobile?22:28),
+          color: isTop ? C : "#ffffff22",
+          lineHeight: 1, textAlign: "center",
+        }}>
+          {row.rank}
+        </div>
+
+        {/* クリエイター名 */}
+        <div style={{ minWidth:0 }}>
+          {isTop && (
+            <span className="badge" style={{ background:C, color:"#fff", fontSize:9, marginBottom:4, display:"inline-block" }}>👑 TOP</span>
+          )}
+          <div style={{
+            fontSize: isMobile?12:14, fontWeight:700,
+            color: isTop ? CREAM : "#ffffffcc",
+            overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", lineHeight:1.4,
+          }}>
+            {url
+              ? <a href={url} target="_blank" rel="noopener noreferrer"
+                   style={{ color:"inherit", textDecoration:"none", borderBottom:`1px solid ${C}44` }}
+                   onMouseEnter={e=>e.target.style.borderBottomColor=C}
+                   onMouseLeave={e=>e.target.style.borderBottomColor=`${C}44`}>
+                   {row.creator_name}
+                </a>
+              : <span style={{ color:"#ffffff44" }}>{row.creator_name}</span>
+            }
+          </div>
+        </div>
+
+        {/* スキ数 */}
+        <div style={{ textAlign:"right", fontFamily:"'Bebas Neue'", fontSize:isMobile?22:26, color:isTop?C:CREAM, lineHeight:1 }}>
+          {Number(row.likes_count).toLocaleString()}
+          <div style={{ fontSize:10, color:"#ffffff33", fontFamily:"'Syne',sans-serif", letterSpacing:1 }}>スキ</div>
+        </div>
+
+        {/* 最終スキ日（PCのみ） */}
+        {!isMobile && (
+          <div style={{ textAlign:"right", fontSize:11, color:"#ffffff44", lineHeight:1.6 }}>
+            <div>{formatDate(row.last_like_at)}</div>
+            <div style={{ fontSize:9, color:"#ffffff22", letterSpacing:.5 }}>最終スキ</div>
+          </div>
+        )}
+
+        {/* 見に行くボタン（PCのみ） */}
+        {!isMobile && (
+          <div style={{ textAlign:"right" }}>
+            {url
+              ? <a href={url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
+                  <span style={{
+                    display:"inline-block", padding:"5px 14px", borderRadius:20,
+                    fontSize:10, fontFamily:"'Syne',sans-serif", letterSpacing:1,
+                    color:CREAM, border:`1px solid ${C}66`, cursor:"pointer", transition:"all .18s",
+                  }}
+                  onMouseEnter={e=>{ e.currentTarget.style.background=C; e.currentTarget.style.borderColor=C; }}
+                  onMouseLeave={e=>{ e.currentTarget.style.background="transparent"; e.currentTarget.style.borderColor=`${C}66`; }}
+                  >見に行く →</span>
+                </a>
+              : <span style={{ fontSize:10, color:"#ffffff22", fontFamily:"'Syne',sans-serif" }}>URLなし</span>
+            }
+          </div>
+        )}
+      </div>
+    );
+  });
+}
+
+function LikesRankingPage({ isMobile }) {
+  const [period, setPeriod] = useState("total");
+  const current = RANK_PERIODS.find(p => p.id === period);
+
+  // タブごとに独立したfetch状態を持つ（切替時のみ初回fetch）
+  const total     = useRankingData("ranking_total.json");
+  const monthly   = useRankingData("ranking_monthly.json");
+  const thisWeek  = useRankingData("ranking_this_week.json");
+  const lastWeek  = useRankingData("ranking_last_week.json");
+
+  const stateMap  = { total, monthly, this_week: thisWeek, last_week: lastWeek };
+  const active    = stateMap[period];
+  const items     = active.data?.items ?? null;
+  const genAt     = active.data?.generated_at?.slice(0,10).replace(/-/g,"/") ?? null;
+
+  return (
+    <div className="page-fade" style={{ minHeight:"100vh", background:INK, color:CREAM }}>
+
+      {/* ヘッダー */}
+      <div style={{ padding: isMobile?"28px 16px 0":"48px 40px 0", maxWidth:960, margin:"0 auto" }}>
+        <span className="badge" style={{ background:C, color:"#fff", marginBottom:12, display:"inline-block" }}>RANKING</span>
+        <h1 style={{ fontFamily:"'Bebas Neue'", fontSize:"clamp(40px,9vw,80px)", lineHeight:.88, marginBottom:8 }}>
+          スキした人たち
+        </h1>
+        <p style={{ fontSize:12, color:"#ffffff44", marginBottom:28 }}>
+          {active.error
+            ? active.error
+            : genAt
+              ? `集計日 ${genAt} — 反応してくれたクリエイターから、新しい出会いへ`
+              : "読み込み中…"}
+        </p>
+
+        {/* 期間タブ */}
+        <div style={{ display:"flex", gap:4, marginBottom:32 }}>
+          {RANK_PERIODS.map(p => (
+            <button key={p.id} className="tab-btn" onClick={() => setPeriod(p.id)}
+              style={{
+                padding: isMobile?"8px 16px":"9px 24px",
+                borderRadius:24, fontSize:12, letterSpacing:1,
+                color: period===p.id?"#fff":"#ffffff44",
+                background: period===p.id?C:"#ffffff0a",
+                border: `1px solid ${period===p.id?C:"#ffffff18"}`,
+                transition:"all .18s",
+              }}
+            >{p.label}</button>
+          ))}
+        </div>
+      </div>
+
+      {/* テーブル */}
+      <div style={{ maxWidth:960, margin:"0 auto", padding: isMobile?"0 0 80px":"0 40px 80px" }}>
+        <div style={{
+          display:"grid",
+          gridTemplateColumns: isMobile?"44px 1fr 64px":"56px 1fr 80px 120px 110px",
+          gap: isMobile?8:16,
+          padding: isMobile?"8px 16px":"10px 20px",
+          borderBottom:"1px solid #ffffff14",
+          fontSize:10, color:"#ffffff33",
+          fontFamily:"'Syne',sans-serif", letterSpacing:1,
+        }}>
+          <div>RANK</div><div>CREATOR</div>
+          <div style={{ textAlign:"right" }}>スキ数</div>
+          {!isMobile && <><div style={{ textAlign:"right" }}>最終スキ日</div><div /></>}
+        </div>
+
+        <RankingTable items={items} error={active.error} loaded={active.loaded} isMobile={isMobile} />
+      </div>
+
+      {items?.length > 0 && (
+        <div style={{ textAlign:"center", padding:"0 24px 60px", color:"#ffffff33", fontSize:11, fontFamily:"'Syne',sans-serif", letterSpacing:1 }}>
+          反応している人から、新しい出会いが見つかる
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════
    メインコンポーネント
 ══════════════════════════════════════════════ */
 export default function KitaWrapped() {
@@ -411,6 +626,7 @@ export default function KitaWrapped() {
         {[
           {id:"dashboard",label:"DASHBOARD"},
           {id:"articles", label:"記事一覧"},
+          {id:"ranking",  label:"ランキング"},
         ].map(t=>(
           <button
             key={t.id}
@@ -728,6 +944,9 @@ export default function KitaWrapped() {
 
       {/* ══ 記事一覧 ══ */}
       {tab === "articles" && <ArticleListPage data={data} isMobile={isMobile} />}
+
+      {/* ══ ランキング ══ */}
+      {tab === "ranking" && <LikesRankingPage isMobile={isMobile} />}
 
     </div>
   );
