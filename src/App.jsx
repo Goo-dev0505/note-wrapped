@@ -1020,7 +1020,9 @@ function LikesRankingPage({ isMobile }) {
   const stateMap   = { total, monthly, last_week: lastWeek };
   const active     = stateMap[period];
   const periodCfg  = RANK_PERIODS.find(p => p.id === period);
-  const items      = (active.data?.items ?? []).slice(0, periodCfg.top);
+  const items = (active.data?.items ?? [])
+  .filter(r => ![...EXCLUDED_URLNAMES].some(u => (r.creator_url || "").includes(u)))
+  .slice(0, periodCfg.top);
   const top3       = items.slice(0, 3);
   const rest       = items.slice(3);
   const genAt      = active.data?.generated_at?.slice(0, 10).replace(/-/g, "/") ?? null;
