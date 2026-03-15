@@ -129,10 +129,22 @@ function useNoteData() {
       fetch(DATA_BASE + "trend_analysis.csv").then(r => { if (!r.ok) throw new Error("trend_analysis.csv not found"); return r.text(); }),
       fetch(DATA_BASE + "followers.csv").then(r => { if (!r.ok) throw new Error("followers.csv not found"); return r.text(); }),
       fetch(DATA_BASE + "articles.csv").then(r => { if (!r.ok) throw new Error("articles.csv not found"); return r.text(); }),
-    ]).then(([dailyRaw, rankRaw, trendRaw, follRaw, articlesRaw]) => {
+      // ▼ 変更①: article_quality.csv を追加（失敗しても落ちないよう空文字フォールバック）
+      fetch(DATA_BASE + "article_quality.csv").then(r => r.ok ? r.text() : ""),
+    ]).then(([dailyRaw, rankRaw, trendRaw, follRaw, articlesRaw, qualityRaw]) => {
       const daily = parseCSV(dailyRaw), ranking = parseCSV(rankRaw),
             trend = parseCSV(trendRaw), followers = parseCSV(follRaw), articles = parseCSV(articlesRaw);
       const latest = daily[daily.length - 1], prev = daily[daily.length - 2] || {}, first = daily[0];
+
+      // ▼ 変更②: key列からURLマップを生成（タイトル → noteURL）
+      const qualityUrlMap = {};
+      if (qualityRaw) {
+        parseCSV(qualityRaw).forEach(r => {
+          const title = (r["タイトル"] || "").trim();
+          const key   = (r["key"]      || "").trim();
+          if (title && key) qualityUrlMap[title] = `https://note.com/ktcrs1107/n/${key}`;
+        });
+      }
 
       const latestArticleDate = articles.reduce((a,b)=>(a.date||"")>(b.date||"")?a:b).date;
       const latestArticles = articles.filter(r => r.date === latestArticleDate);
@@ -175,7 +187,7 @@ function useNoteData() {
       const EMOJIS = ["💀","🔧","🔬","🎨","⚗️"];
       const top5 = ranking.sort((a,b) => parseInt(b["期間増加PV"]||0) - parseInt(a["期間増加PV"]||0)).slice(0,5)
         .map((r,i) => ({
-          rank:  String(i+1).padStart(2,"0"),
+          rank:  String(i+1).padStart(2,"00"),
           title: (r["title"]||"").replace(/ #\d+$/,"").slice(0,32),
           pv:    parseInt(r["期間増加PV"]||0),
           avg:   parseFloat(r["1日平均PV"]||0).toFixed(1),
@@ -188,7 +200,7 @@ function useNoteData() {
         .sort((a,b) => parseInt(b["read_count"]||0) - parseInt(a["read_count"]||0))
         .slice(0,5)
         .map((r,i) => ({
-          rank:  String(i+1).padStart(2,"0"),
+          rank:  String(i+1).padStart(2,"00"),
           title: (r["title"]||"").replace(/ #\d+$/,"").slice(0,32),
           val:   parseInt(r["read_count"]||0),
           emoji: PV_EMOJIS[i],
@@ -202,7 +214,7 @@ function useNoteData() {
             .sort((a,b) => parseInt(b[skKey]||0) - parseInt(a[skKey]||0))
             .slice(0,5)
             .map((r,i) => ({
-              rank:  String(i+1).padStart(2,"0"),
+              rank:  String(i+1).padStart(2,"00"),
               title: (r["title"]||"").replace(/ #\d+$/,"").slice(0,32),
               val:   parseInt(r[skKey]||0),
               emoji: SK_EMOJIS[i],
@@ -217,6 +229,7 @@ function useNoteData() {
         const key = (r["title"]||r["記事タイトル"]||"").trim();
         trendMap[key] = r["状態"]||r["state"]||"";
       });
+
       const articleList = latestArticles
         .filter(r => (r["title"]||"").trim() !== "")
         .map(r => {
@@ -225,7 +238,9 @@ function useNoteData() {
           const sk     = skKey ? parseInt(r[skKey]||0) : 0;
           const skRate = pv > 0 ? parseFloat((sk / pv * 100).toFixed(1)) : 0;
           const status = trendMap[title] || trendMap[title.replace(/ #\d+$/,"")] || "—";
-          return { title, pv, sk, skRate, status };
+          // ▼ 変更③: qualityUrlMap からURLを付与（一致しない記事はnull）
+          const url    = qualityUrlMap[title] || null;
+          return { title, pv, sk, skRate, status, url };
         });
 
       const ROASTS = ["タイトルだけで完結してた。","投稿した本人が一番驚いている。","来ると思ってた。来なかった。","短すぎたのか、長すぎたのか。謎は深まるばかり。","存在は確認されている。"];
@@ -262,8 +277,8 @@ function Skeleton({ w = "100%", h = 32, style: s = {} }) {
 }
 
 /* ── 定数 ─────────────────────────────────────────── */
-const C    = "#d44a00";
-const INK  = "#1a0f00";
+const C     = "#d44a00";
+const INK   = "#1a0f00";
 const CREAM = "#fffbf2";
 
 const EXCLUDED_URLNAMES = new Set(["ktcrs1107"]);
@@ -387,14 +402,26 @@ function ArticleListPage({ data, isMobile }) {
                       alignItems: "center",
                     }}
                   >
+                    {/* ▼ 変更④: タイトルをリンク化（URLあり→<a>、なし→<span>） */}
                     <div style={{ minWidth: 0 }}>
-                      <div style={{ fontSize: isMobile ? 12 : 13, fontWeight: 700, color: CREAM, lineHeight: 1.4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", marginBottom: 5 }}>
-                        {a.title}
+                      <div style={{ fontSize: isMobile ? 12 : 13, fontWeight: 700, lineHeight: 1.4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", marginBottom: 5 }}>
+                        {a.url
+                          ? <a
+                              href={a.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ color: CREAM, textDecoration: "none", borderBottom: `1px solid ${C}55`, transition: "border-color .15s" }}
+                              onMouseEnter={e => e.currentTarget.style.borderBottomColor = C}
+                              onMouseLeave={e => e.currentTarget.style.borderBottomColor = `${C}55`}
+                            >{a.title}</a>
+                          : <span style={{ color: CREAM }}>{a.title}</span>
+                        }
                       </div>
                       <div style={{ height: 2, background: "#ffffff0a", borderRadius: 1, overflow: "hidden" }}>
                         <div style={{ height: "100%", background: C, width: `${(a.pv / maxPV) * 100}%`, borderRadius: 1, opacity: .5 }} />
                       </div>
                     </div>
+
                     <div style={{ textAlign: "right", fontFamily: "'Bebas Neue'", fontSize: isMobile ? 18 : 20, color: C, lineHeight: 1 }}>
                       {a.pv.toLocaleString()}
                     </div>
@@ -555,17 +582,15 @@ function MonthlyChart({ items, isMobile }) {
 }
 
 /* ── 成長レース：定数 ─────────────────────────────── */
-// 判別しやすい10色（同系色を避けたパレット）
 const BUMP_COLORS = [
   "#d44a00","#60a5fa","#f5b942","#7dd3a8","#f472b6",
   "#a78bfa","#e8855a","#34d399","#fbbf24","#94a3b8",
   "#38bdf8","#fb923c","#c084fc","#4ade80","#e879f9",
   "#facc15","#f87171","#2dd4bf","#818cf8","#a3e635",
 ];
-// fetch する最大人数（表示人数の上限）
 const BUMP_FETCH_N = 20;
 
-/* ── useBumpData: ranking_monthly_trace.csv を読み込む ── */
+/* ── useBumpData ──────────────────────────────────── */
 function useBumpData() {
   const [state, setState] = useState({ data: null, error: null, loaded: false });
 
@@ -578,25 +603,19 @@ function useBumpData() {
       })
       .then(text => {
         const rows = parseCSV(text);
-
-        // 除外ユーザーを除いた行
         const filtered = rows.filter(r => !EXCLUDED_URLNAMES.has(r.creator_urlname));
-
-        // 日付リスト（昇順）
         const dates = [...new Set(filtered.map(r => r.date))].sort();
         if (dates.length === 0) {
           setState({ data: { dates: [], creators: [] }, error: null, loaded: true });
           return;
         }
 
-        // ── O(1) lookup map: { userId: { date: row } } ──
         const rowLookup = {};
         filtered.forEach(r => {
           if (!rowLookup[r.like_user_id]) rowLookup[r.like_user_id] = {};
           rowLookup[r.like_user_id][r.date] = r;
         });
 
-        // 最終日の上位 BUMP_FETCH_N（累計降順 → 同点はrank昇順）
         const lastDate = dates[dates.length - 1];
         const topRows = filtered
           .filter(r => r.date === lastDate)
@@ -606,7 +625,6 @@ function useBumpData() {
           })
           .slice(0, BUMP_FETCH_N);
 
-        // クリエイターごとの系列データを構築
         const creators = topRows.map((lastRow, i) => {
           const uid = lastRow.like_user_id;
           return {
@@ -615,7 +633,6 @@ function useBumpData() {
             creator_url:     lastRow.creator_url    || "",
             has_profile_url: lastRow.has_profile_url === "True",
             color:           BUMP_COLORS[i % BUMP_COLORS.length],
-            // 日付順の配列（データ欠損はnull）
             counts:      dates.map(d => rowLookup[uid]?.[d] ? parseInt(rowLookup[uid][d].likes_count_cumulative) : null),
             dailyCounts: dates.map(d => rowLookup[uid]?.[d] ? parseInt(rowLookup[uid][d].likes_count_daily)      : null),
             ranks:       dates.map(d => rowLookup[uid]?.[d] ? parseInt(rowLookup[uid][d].rank)                   : null),
@@ -623,7 +640,6 @@ function useBumpData() {
           };
         });
 
-        // X軸ラベル（"3/1" 形式）
         const labelDates = dates.map(d => {
           const [, m, day] = d.split("-");
           return `${parseInt(m)}/${parseInt(day)}`;
@@ -637,13 +653,12 @@ function useBumpData() {
   return state;
 }
 
-/* ── GrowthRaceChart: 折れ線チャート本体 ─────────── */
+/* ── GrowthRaceChart ──────────────────────────────── */
 function GrowthRaceChart({ bumpState, isMobile }) {
   const [hovered, setHovered] = useState(null);
-  const [hidden,  setHidden]  = useState(new Set()); // 非表示クリエイターのID集合
-  const [topN,    setTopN]    = useState(10);        // 表示人数（10 or 20）
+  const [hidden,  setHidden]  = useState(new Set());
+  const [topN,    setTopN]    = useState(10);
 
-  // ── 状態表示 ──
   if (!bumpState.loaded) return <RankSkeleton isMobile={isMobile} />;
   if (bumpState.error) return (
     <div style={{ textAlign: "center", padding: "60px 20px", color: "#ffffff22", fontSize: 14 }}>
@@ -657,10 +672,8 @@ function GrowthRaceChart({ bumpState, isMobile }) {
   );
 
   const { dates, creators: allCreators } = bumpState.data;
-  // topN で絞り込んだクリエイター
   const creators = allCreators.slice(0, topN);
 
-  // 凡例クリック：表示/非表示トグル
   const toggleHidden = uid => {
     setHidden(prev => {
       const next = new Set(prev);
@@ -669,7 +682,6 @@ function GrowthRaceChart({ bumpState, isMobile }) {
     });
   };
 
-  // recharts 用データ: [{ date:"3/1", uid1:累計, uid2:累計, ... }, ...]
   const chartData = dates.map((label, di) => {
     const row = { date: label };
     creators.forEach(c => {
@@ -678,14 +690,10 @@ function GrowthRaceChart({ bumpState, isMobile }) {
     return row;
   });
 
-  // ── カスタムツールチップ ──
   const CustomTooltip = ({ active, payload, label }) => {
     if (!active || !payload?.length) return null;
     const di = dates.findIndex(d => d === label);
-    const sorted = [...payload]
-      .filter(p => p.value != null)
-      .sort((a, b) => b.value - a.value);
-
+    const sorted = [...payload].filter(p => p.value != null).sort((a, b) => b.value - a.value);
     return (
       <div style={{
         background: "#1a0f00", border: "1px solid #ffffff22",
@@ -694,47 +702,26 @@ function GrowthRaceChart({ bumpState, isMobile }) {
         maxHeight: 360, overflowY: "auto",
         fontFamily: "'Noto Sans JP',sans-serif",
       }}>
-        {/* 日付ヘッダー */}
-        <div style={{ fontSize: 11, color: "#ffffff55", fontFamily: "'Syne',sans-serif", letterSpacing: 1, marginBottom: 8 }}>
-          {label}
-        </div>
-
+        <div style={{ fontSize: 11, color: "#ffffff55", fontFamily: "'Syne',sans-serif", letterSpacing: 1, marginBottom: 8 }}>{label}</div>
         {sorted.map(p => {
           const c = creators.find(cr => cr.like_user_id === p.dataKey);
           if (!c) return null;
-          const rank     = di >= 0 ? c.ranks[di]       : null;
-          const daily    = di >= 0 ? c.dailyCounts[di]  : null;
-          const follower = di >= 0 ? c.followers[di]    : null;
+          const rank     = di >= 0 ? c.ranks[di]      : null;
+          const daily    = di >= 0 ? c.dailyCounts[di] : null;
+          const follower = di >= 0 ? c.followers[di]   : null;
           return (
             <div key={p.dataKey} style={{ marginBottom: 8, paddingBottom: 8, borderBottom: "1px solid #ffffff08" }}>
-              {/* 名前 + 順位 */}
               <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
                 <span style={{ width: 8, height: 8, borderRadius: "50%", background: p.stroke, display: "inline-block", flexShrink: 0 }} />
                 <span style={{ fontSize: 11, color: "#fff", fontWeight: 700, flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: 150 }}>
                   {c.creator_name}
                 </span>
-                {rank != null && (
-                  <span style={{ fontSize: 9, color: "#ffffff44", fontFamily: "'Syne',sans-serif", flexShrink: 0 }}>#{rank}位</span>
-                )}
+                {rank != null && <span style={{ fontSize: 9, color: "#ffffff44", fontFamily: "'Syne',sans-serif", flexShrink: 0 }}>#{rank}位</span>}
               </div>
-              {/* 数値グリッド */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2px 12px", paddingLeft: 14, fontSize: 10, color: "#ffffff66" }}>
-                <div>
-                  累計&nbsp;
-                  <span style={{ fontFamily: "'Bebas Neue'", fontSize: 15, color: p.stroke }}>{p.value}</span>
-                </div>
-                {daily != null && (
-                  <div>
-                    本日&nbsp;
-                    <span style={{ fontFamily: "'Bebas Neue'", fontSize: 15, color: "#ffffffaa" }}>+{daily}</span>
-                  </div>
-                )}
-                {follower != null && (
-                  <div style={{ gridColumn: "1/-1" }}>
-                    フォロワー&nbsp;
-                    <span style={{ fontFamily: "'Bebas Neue'", fontSize: 15, color: "#ffffffaa" }}>{follower.toLocaleString()}</span>
-                  </div>
-                )}
+                <div>累計&nbsp;<span style={{ fontFamily: "'Bebas Neue'", fontSize: 15, color: p.stroke }}>{p.value}</span></div>
+                {daily != null && <div>本日&nbsp;<span style={{ fontFamily: "'Bebas Neue'", fontSize: 15, color: "#ffffffaa" }}>+{daily}</span></div>}
+                {follower != null && <div style={{ gridColumn: "1/-1" }}>フォロワー&nbsp;<span style={{ fontFamily: "'Bebas Neue'", fontSize: 15, color: "#ffffffaa" }}>{follower.toLocaleString()}</span></div>}
               </div>
             </div>
           );
@@ -743,7 +730,6 @@ function GrowthRaceChart({ bumpState, isMobile }) {
     );
   };
 
-  // ホバー中の線のみドット表示
   const CustomDot = props => {
     const { cx, cy, dataKey, value } = props;
     if (value == null || hovered !== dataKey) return null;
@@ -755,79 +741,42 @@ function GrowthRaceChart({ bumpState, isMobile }) {
 
   return (
     <div style={{ marginTop: 16 }}>
-
-      {/* ── 上段コントロール ── */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
-        {/* 表示人数切替（データが10人超のときだけ表示） */}
         {allCreators.length > 10 && (
           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
             <span style={{ fontSize: 10, color: "#ffffff33", fontFamily: "'Syne',sans-serif", letterSpacing: 1 }}>表示人数</span>
             {[10, 20].filter(n => n <= allCreators.length).map(n => (
-              <button
-                key={n}
-                className={`sort-btn${topN === n ? " active" : ""}`}
-                style={{ padding: "4px 12px" }}
-                onClick={() => { setTopN(n); setHidden(new Set()); }}
-              >
+              <button key={n} className={`sort-btn${topN === n ? " active" : ""}`} style={{ padding: "4px 12px" }}
+                onClick={() => { setTopN(n); setHidden(new Set()); }}>
                 TOP {n}
               </button>
             ))}
           </div>
         )}
-
-        {/* 非表示リセット */}
         {hidden.size > 0 && (
-          <button
-            className="sort-btn"
-            style={{ padding: "4px 12px", color: C, borderColor: `${C}55` }}
-            onClick={() => setHidden(new Set())}
-          >
+          <button className="sort-btn" style={{ padding: "4px 12px", color: C, borderColor: `${C}55` }}
+            onClick={() => setHidden(new Set())}>
             全員表示
           </button>
         )}
       </div>
 
-      {/* ── 凡例（クリックで表示切替 / ホバーでハイライト） ── */}
       <div style={{ display: "flex", flexWrap: "wrap", gap: isMobile ? 6 : 8, marginBottom: 16 }}>
         {creators.map(c => {
           const isHid  = hidden.has(c.like_user_id);
           const dimmed = !isHid && hovered && hovered !== c.like_user_id;
           return (
-            <div
-              key={c.like_user_id}
+            <div key={c.like_user_id}
               title={isHid ? "クリックで表示" : "クリックで非表示"}
-              style={{
-                display: "flex", alignItems: "center", gap: 5,
-                cursor: "pointer", userSelect: "none",
-                opacity: isHid || dimmed ? 0.25 : 1,
-                transition: "opacity .18s",
-              }}
+              style={{ display: "flex", alignItems: "center", gap: 5, cursor: "pointer", userSelect: "none", opacity: isHid || dimmed ? 0.25 : 1, transition: "opacity .18s" }}
               onClick={() => toggleHidden(c.like_user_id)}
               onMouseEnter={() => { if (!isHid) setHovered(c.like_user_id); }}
               onMouseLeave={() => setHovered(null)}
             >
-              {/* 非表示時は縁取りのみ */}
-              <span style={{
-                width: 10, height: 10, borderRadius: "50%", display: "inline-block", flexShrink: 0,
-                background:  isHid ? "transparent" : c.color,
-                border:      isHid ? `2px solid ${c.color}` : "none",
-                boxSizing:   "border-box",
-              }} />
-              <span style={{
-                fontSize: isMobile ? 9 : 10, color: "#ffffffaa",
-                fontFamily: "'Noto Sans JP',sans-serif",
-                maxWidth: isMobile ? 72 : 120,
-                overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-                textDecoration: isHid ? "line-through" : "none",
-              }}>
+              <span style={{ width: 10, height: 10, borderRadius: "50%", display: "inline-block", flexShrink: 0, background: isHid ? "transparent" : c.color, border: isHid ? `2px solid ${c.color}` : "none", boxSizing: "border-box" }} />
+              <span style={{ fontSize: isMobile ? 9 : 10, color: "#ffffffaa", fontFamily: "'Noto Sans JP',sans-serif", maxWidth: isMobile ? 72 : 120, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", textDecoration: isHid ? "line-through" : "none" }}>
                 {c.has_profile_url
-                  ? <a
-                      href={c.creator_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={e => e.stopPropagation()}
-                      style={{ color: "inherit", textDecoration: "none", pointerEvents: isHid ? "none" : "auto" }}
-                    >{c.creator_name}</a>
+                  ? <a href={c.creator_url} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} style={{ color: "inherit", textDecoration: "none", pointerEvents: isHid ? "none" : "auto" }}>{c.creator_name}</a>
                   : c.creator_name
                 }
               </span>
@@ -836,49 +785,28 @@ function GrowthRaceChart({ bumpState, isMobile }) {
         })}
       </div>
 
-      {/* ── 折れ線チャート ── */}
       {visibleCount === 0
-        ? (
-          <div style={{ textAlign: "center", padding: "40px 20px", color: "#ffffff22", fontSize: 13 }}>
-            凡例から表示したいクリエイターを選んでください
-          </div>
-        )
+        ? <div style={{ textAlign: "center", padding: "40px 20px", color: "#ffffff22", fontSize: 13 }}>凡例から表示したいクリエイターを選んでください</div>
         : (
           <ResponsiveContainer width="100%" height={isMobile ? 260 : 340}>
             <LineChart data={chartData} margin={{ top: 8, right: isMobile ? 8 : 16, left: isMobile ? -16 : 0, bottom: 4 }}>
               <CartesianGrid stroke="#ffffff0a" vertical={false} />
-              <XAxis
-                dataKey="date"
-                tick={{ fill: "#ffffff44", fontSize: isMobile ? 9 : 11, fontFamily: "'Syne',sans-serif" }}
-                axisLine={false} tickLine={false}
-              />
-              <YAxis
-                tick={{ fill: "#ffffff33", fontSize: isMobile ? 9 : 10, fontFamily: "'Bebas Neue',sans-serif" }}
-                axisLine={false} tickLine={false}
-                width={isMobile ? 28 : 32}
-                label={!isMobile ? {
-                  value: "累計スキ数", angle: -90, position: "insideLeft",
-                  fill: "#ffffff22", fontSize: 10,
-                  fontFamily: "'Noto Sans JP',sans-serif", dx: -4,
-                } : undefined}
+              <XAxis dataKey="date" tick={{ fill: "#ffffff44", fontSize: isMobile ? 9 : 11, fontFamily: "'Syne',sans-serif" }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fill: "#ffffff33", fontSize: isMobile ? 9 : 10, fontFamily: "'Bebas Neue',sans-serif" }} axisLine={false} tickLine={false} width={isMobile ? 28 : 32}
+                label={!isMobile ? { value: "累計スキ数", angle: -90, position: "insideLeft", fill: "#ffffff22", fontSize: 10, fontFamily: "'Noto Sans JP',sans-serif", dx: -4 } : undefined}
               />
               <Tooltip content={<CustomTooltip />} />
               {creators.map(c => {
                 if (hidden.has(c.like_user_id)) return null;
                 const isHov = hovered === c.like_user_id;
                 return (
-                  <Line
-                    key={c.like_user_id}
-                    type="monotone"
-                    dataKey={c.like_user_id}
+                  <Line key={c.like_user_id} type="monotone" dataKey={c.like_user_id}
                     stroke={c.color}
                     strokeWidth={isHov ? 3 : hovered ? 1 : 1.8}
                     strokeOpacity={hovered && !isHov ? 0.15 : 1}
                     dot={<CustomDot />}
                     activeDot={isHov ? { r: 6, fill: c.color, stroke: INK, strokeWidth: 2 } : false}
-                    connectNulls={false}
-                    isAnimationActive={true}
-                    animationDuration={700}
+                    connectNulls={false} isAnimationActive={true} animationDuration={700}
                     onMouseEnter={() => setHovered(c.like_user_id)}
                     onMouseLeave={() => setHovered(null)}
                     style={{ cursor: c.has_profile_url ? "pointer" : "default" }}
@@ -890,7 +818,6 @@ function GrowthRaceChart({ bumpState, isMobile }) {
           </ResponsiveContainer>
         )
       }
-
       <p style={{ fontSize: 10, color: "#ffffff28", textAlign: "right", marginTop: 6, fontFamily: "'Syne',sans-serif", letterSpacing: 1 }}>
         凡例クリックで表示/非表示 · 名前または線クリックでプロフィールへ
       </p>
@@ -913,11 +840,7 @@ function HeroCard({ row, isMobile }) {
       height: "100%",
       animation: `rankIn .5s cubic-bezier(.22,1,.36,1) ${idx * .08}s both`,
     }}>
-      {url && (
-        <div className="cta-layer">
-          <span className="cta-text">プロフィールへ →</span>
-        </div>
-      )}
+      {url && <div className="cta-layer"><span className="cta-text">プロフィールへ →</span></div>}
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
         <span style={{ fontSize: isFirst ? 28 : 22 }}>{MEDAL[idx]}</span>
         <span style={{ fontFamily: "'Bebas Neue'", fontSize: isFirst ? (isMobile ? 52 : 72) : (isMobile ? 40 : 56), color: mc, lineHeight: 1, letterSpacing: -1 }}>
@@ -960,23 +883,15 @@ function RankRow({ row, isMobile }) {
       animation: `rankIn .4s cubic-bezier(.22,1,.36,1) ${(row.rank - 4) * .04}s both`,
     }}>
       <div style={{ fontFamily: "'Bebas Neue'", fontSize: isMobile ? 24 : 28, color: "#ffffff28", lineHeight: 1, textAlign: "center" }}>{row.rank}</div>
-      <div style={{ fontSize: isMobile ? 12 : 13, fontWeight: 700, color: "#ffffffbb", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-        {row.creator_name}
-      </div>
+      <div style={{ fontSize: isMobile ? 12 : 13, fontWeight: 700, color: "#ffffffbb", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{row.creator_name}</div>
       <div style={{ textAlign: "right", fontFamily: "'Bebas Neue'", fontSize: isMobile ? 20 : 22, color: CREAM, lineHeight: 1 }}>
         {Number(row.likes_count).toLocaleString()}
         <div style={{ fontSize: 9, color: "#ffffff28", fontFamily: "'Syne',sans-serif", letterSpacing: .5 }}>スキ</div>
       </div>
-      {!isMobile && (
-        <div style={{ textAlign: "right", fontSize: 10, color: "#ffffff33" }}>{fmtDate(row.last_like_at)}</div>
-      )}
+      {!isMobile && <div style={{ textAlign: "right", fontSize: 10, color: "#ffffff33" }}>{fmtDate(row.last_like_at)}</div>}
       {!isMobile && (
         <div className="row-cta" style={{ textAlign: "right" }}>
-          {url && (
-            <span style={{ display: "inline-block", padding: "4px 12px", borderRadius: 16, fontSize: 10, fontFamily: "'Syne',sans-serif", letterSpacing: 1, color: "#fff", background: C, whiteSpace: "nowrap" }}>
-              見に行く →
-            </span>
-          )}
+          {url && <span style={{ display: "inline-block", padding: "4px 12px", borderRadius: 16, fontSize: 10, fontFamily: "'Syne',sans-serif", letterSpacing: 1, color: "#fff", background: C, whiteSpace: "nowrap" }}>見に行く →</span>}
         </div>
       )}
     </div>
@@ -1010,25 +925,24 @@ function RankSkeleton({ isMobile }) {
 ══════════════════════════════════════════════ */
 function LikesRankingPage({ isMobile }) {
   const [period,   setPeriod]   = useState("total");
-  const [viewMode, setViewMode] = useState("rank"); // "rank" | "chart" | "race"
+  const [viewMode, setViewMode] = useState("rank");
 
   const total    = useRankingData("ranking_total.json");
   const monthly  = useRankingData("ranking_monthly.json");
   const lastWeek = useRankingData("ranking_last_week.json");
   const bump     = useBumpData();
 
-  const stateMap   = { total, monthly, last_week: lastWeek };
-  const active     = stateMap[period];
-  const periodCfg  = RANK_PERIODS.find(p => p.id === period);
+  const stateMap  = { total, monthly, last_week: lastWeek };
+  const active    = stateMap[period];
+  const periodCfg = RANK_PERIODS.find(p => p.id === period);
   const items = (active.data?.items ?? [])
-  .filter(r => ![...EXCLUDED_URLNAMES].some(u => (r.creator_url || "").includes(u)))
-  .slice(0, periodCfg.top);
-  const top3       = items.slice(0, 3);
-  const rest       = items.slice(3);
-  const genAt      = active.data?.generated_at?.slice(0, 10).replace(/-/g, "/") ?? null;
+    .filter(r => ![...EXCLUDED_URLNAMES].some(u => (r.creator_url || "").includes(u)))
+    .slice(0, periodCfg.top);
+  const top3        = items.slice(0, 3);
+  const rest        = items.slice(3);
+  const genAt       = active.data?.generated_at?.slice(0, 10).replace(/-/g, "/") ?? null;
   const periodLabel = buildPeriodLabel(active.data, period);
 
-  // 期間切替時にチャート非対応ならランク表示に戻す
   useEffect(() => {
     if (!periodCfg.hasChart && viewMode !== "rank") setViewMode("rank");
   }, [period, periodCfg.hasChart]);
@@ -1043,60 +957,35 @@ function LikesRankingPage({ isMobile }) {
 
   return (
     <div className="page-fade" style={{ minHeight: "100vh", background: INK, color: CREAM }}>
-
-      {/* ヘッダー */}
       <div style={{ padding: isMobile ? "28px 16px 0" : "52px 40px 0", maxWidth: 960, margin: "0 auto" }}>
         <span className="badge" style={{ background: C, color: "#fff", marginBottom: 14, display: "inline-block" }}>RANKING</span>
         <h1 style={{ fontFamily: "'Bebas Neue'", fontSize: "clamp(44px,10vw,88px)", lineHeight: .88, marginBottom: 10 }}>
           スキした人たち
         </h1>
         <p style={{ fontSize: 12, color: "#ffffff44", marginBottom: 32, letterSpacing: .5 }}>
-          {active.error
-            ? `⚠️ ${active.error}`
-            : genAt
-              ? `集計日 ${genAt} — 気になる人を見つけたら、プロフィールへ飛んでみて`
-              : "読み込み中…"}
+          {active.error ? `⚠️ ${active.error}` : genAt ? `集計日 ${genAt} — 気になる人を見つけたら、プロフィールへ飛んでみて` : "読み込み中…"}
         </p>
 
-        {/* 期間ピル + ビュー切替 */}
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: periodLabel ? 16 : 40, flexWrap: "wrap" }}>
           {RANK_PERIODS.map(p => (
             <button key={p.id} className="tab-btn" onClick={() => setPeriod(p.id)}
-              style={{
-                padding: isMobile ? "7px 18px" : "9px 24px",
-                borderRadius: 28, fontSize: 11, letterSpacing: 2,
-                fontFamily: "'Syne',sans-serif", fontWeight: 700, textTransform: "uppercase",
-                color:      period === p.id ? "#fff"       : "#ffffff55",
-                background: period === p.id ? C            : "transparent",
-                border:     `1.5px solid ${period === p.id ? C : "#ffffff22"}`,
-                transition: "all .2s cubic-bezier(.22,1,.36,1)",
-              }}
+              style={{ padding: isMobile ? "7px 18px" : "9px 24px", borderRadius: 28, fontSize: 11, letterSpacing: 2, fontFamily: "'Syne',sans-serif", fontWeight: 700, textTransform: "uppercase", color: period === p.id ? "#fff" : "#ffffff55", background: period === p.id ? C : "transparent", border: `1.5px solid ${period === p.id ? C : "#ffffff22"}`, transition: "all .2s cubic-bezier(.22,1,.36,1)" }}
             >
               {p.label}
               {period === p.id && <span style={{ marginLeft: 6, fontSize: 9, opacity: .7 }}>TOP {p.top}</span>}
             </button>
           ))}
-
-          {/* ビュー切替（今月のみ） */}
           {VIEW_MODES.length > 0 && items.length > 0 && (
             <div style={{ marginLeft: "auto", display: "flex", gap: 4 }}>
               {VIEW_MODES.map(v => (
-                <button key={v.id} className="tab-btn" onClick={() => setViewMode(v.id)}
-                  title={v.tip}
-                  style={{
-                    padding: "7px 14px", borderRadius: 20, fontSize: 14,
-                    color:      viewMode === v.id ? CREAM        : "#ffffff33",
-                    background: viewMode === v.id ? "#ffffff18"  : "transparent",
-                    border:     `1px solid ${viewMode === v.id ? "#ffffff44" : "#ffffff18"}`,
-                    transition: "all .18s",
-                  }}
+                <button key={v.id} className="tab-btn" onClick={() => setViewMode(v.id)} title={v.tip}
+                  style={{ padding: "7px 14px", borderRadius: 20, fontSize: 14, color: viewMode === v.id ? CREAM : "#ffffff33", background: viewMode === v.id ? "#ffffff18" : "transparent", border: `1px solid ${viewMode === v.id ? "#ffffff44" : "#ffffff18"}`, transition: "all .18s" }}
                 >{v.icon}</button>
               ))}
             </div>
           )}
         </div>
 
-        {/* 集計期間バッジ */}
         {periodLabel && (
           <div style={{ marginBottom: 32 }}>
             <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#ffffff0a", border: "1px solid #ffffff18", borderRadius: 20, padding: "6px 16px" }}>
@@ -1108,53 +997,24 @@ function LikesRankingPage({ isMobile }) {
       </div>
 
       <div style={{ maxWidth: 960, margin: "0 auto", padding: isMobile ? "0 16px 80px" : "0 40px 80px" }}>
-
         {!active.loaded && <RankSkeleton isMobile={isMobile} />}
+        {active.error && <div style={{ textAlign: "center", padding: "60px 20px", color: "#ffffff22", fontSize: 14 }}>⚠️ {active.error}</div>}
+        {active.loaded && !active.error && items.length === 0 && <div style={{ textAlign: "center", padding: "60px 20px", color: "#ffffff22", fontSize: 14 }}>この期間のデータがありません</div>}
 
-        {active.error && (
-          <div style={{ textAlign: "center", padding: "60px 20px", color: "#ffffff22", fontSize: 14 }}>
-            ⚠️ {active.error}
-          </div>
-        )}
+        {viewMode === "chart" && items.length > 0 && <MonthlyChart items={items} isMobile={isMobile} />}
+        {viewMode === "race"  && <GrowthRaceChart bumpState={bump} isMobile={isMobile} />}
 
-        {active.loaded && !active.error && items.length === 0 && (
-          <div style={{ textAlign: "center", padding: "60px 20px", color: "#ffffff22", fontSize: 14 }}>
-            この期間のデータがありません
-          </div>
-        )}
-
-        {/* チャートビュー */}
-        {viewMode === "chart" && items.length > 0 && (
-          <MonthlyChart items={items} isMobile={isMobile} />
-        )}
-
-        {/* レースビュー */}
-        {viewMode === "race" && (
-          <GrowthRaceChart bumpState={bump} isMobile={isMobile} />
-        )}
-
-        {/* ランキングビュー */}
         {viewMode === "rank" && (
           <>
             {top3.length > 0 && (
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: isMobile ? "1fr" : `repeat(${top3.length},1fr)`,
-                gap: 12, marginBottom: 8,
-              }}>
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : `repeat(${top3.length},1fr)`, gap: 12, marginBottom: 8 }}>
                 {top3.map(row => <HeroCard key={row.like_user_id} row={row} isMobile={isMobile} />)}
               </div>
             )}
             {rest.length > 0 && (
               <div style={{ marginTop: 8 }}>
                 {!isMobile && (
-                  <div style={{
-                    display: "grid", gridTemplateColumns: "56px 1fr 80px 100px 90px",
-                    gap: 16, padding: "8px 20px",
-                    fontSize: 9, color: "#ffffff28",
-                    fontFamily: "'Syne',sans-serif", letterSpacing: 1.5,
-                    borderBottom: "1px solid #ffffff0a",
-                  }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "56px 1fr 80px 100px 90px", gap: 16, padding: "8px 20px", fontSize: 9, color: "#ffffff28", fontFamily: "'Syne',sans-serif", letterSpacing: 1.5, borderBottom: "1px solid #ffffff0a" }}>
                     <div>RANK</div><div>CREATOR</div>
                     <div style={{ textAlign: "right" }}>スキ</div>
                     <div style={{ textAlign: "right" }}>最終スキ日</div>
@@ -1200,13 +1060,7 @@ export default function KitaWrapped() {
     <div style={{ fontFamily: "'Noto Sans JP',sans-serif", background: CREAM, color: INK, minHeight: "100vh", overflowX: "hidden" }}>
 
       {/* ══ スティッキータブナビ ══ */}
-      <div style={{
-        position: "sticky", top: 0, zIndex: 100,
-        background: INK, borderBottom: "1px solid #ffffff14",
-        display: "flex", alignItems: "center",
-        padding: isMobile ? "0 16px" : "0 32px",
-        height: 48,
-      }}>
+      <div style={{ position: "sticky", top: 0, zIndex: 100, background: INK, borderBottom: "1px solid #ffffff14", display: "flex", alignItems: "center", padding: isMobile ? "0 16px" : "0 32px", height: 48 }}>
         <span style={{ fontFamily: "'Bebas Neue'", fontSize: 16, letterSpacing: 3, color: C, marginRight: 24, flexShrink: 0 }}>
           KITA<span style={{ fontFamily: "'Noto Sans JP',sans-serif", fontWeight: 700, fontSize: 12, letterSpacing: 1 }}>core</span>
         </span>
@@ -1215,17 +1069,9 @@ export default function KitaWrapped() {
           { id: "articles",  label: "記事一覧"   },
           { id: "ranking",   label: "ランキング" },
         ].map(t => (
-          <button
-            key={t.id}
-            className="tab-btn"
+          <button key={t.id} className="tab-btn"
             onClick={() => { setTab(t.id); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-            style={{
-              padding:      isMobile ? "0 12px" : "0 20px",
-              height:       48,
-              color:        tab === t.id ? CREAM        : "#ffffff33",
-              borderBottom: `2px solid ${tab === t.id ? C : "transparent"}`,
-              marginBottom: -1,
-            }}
+            style={{ padding: isMobile ? "0 12px" : "0 20px", height: 48, color: tab === t.id ? CREAM : "#ffffff33", borderBottom: `2px solid ${tab === t.id ? C : "transparent"}`, marginBottom: -1 }}
           >{t.label}</button>
         ))}
         <div style={{ flex: 1 }} />
@@ -1252,10 +1098,10 @@ export default function KitaWrapped() {
                 {loading
                   ? [1,2,3,4].map(i => <Skeleton key={i} w={80} h={64} />)
                   : [
-                      { n: data.totalPV.toLocaleString(),       u: "累計PV",    diff: data.pvDiff       },
-                      { n: data.totalSK.toLocaleString(),       u: "累計スキ",  diff: data.skDiff       },
-                      { n: data.lastFollower.toLocaleString(),  u: "フォロワー",diff: data.followerDiff, msg: data.followerMsg },
-                      { n: data.totalArt.toLocaleString(),      u: "総記事数",  diff: data.artDiff      },
+                      { n: data.totalPV.toLocaleString(),      u: "累計PV",    diff: data.pvDiff       },
+                      { n: data.totalSK.toLocaleString(),      u: "累計スキ",  diff: data.skDiff       },
+                      { n: data.lastFollower.toLocaleString(), u: "フォロワー",diff: data.followerDiff, msg: data.followerMsg },
+                      { n: data.totalArt.toLocaleString(),     u: "総記事数",  diff: data.artDiff      },
                     ].map(k => (
                       <div key={k.u}>
                         <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
@@ -1444,9 +1290,7 @@ export default function KitaWrapped() {
                 {loading
                   ? [1,2,3].map(i => <Skeleton key={i} w="100%" h={160} />)
                   : data.worst3.map((w, i) => (
-                    <div
-                      key={i}
-                      className="worst-card"
+                    <div key={i} className="worst-card"
                       onClick={() => setActiveWorst(activeWorst === i ? null : i)}
                       style={{ background: activeWorst === i ? C : "#ffffff0d", border: "1px solid #ffffff18", borderRadius: 14, padding: isMobile ? "18px 14px" : "24px 20px" }}
                     >
@@ -1485,10 +1329,10 @@ export default function KitaWrapped() {
               </h2>
               <div className="trend-grid">
                 {[
-                  { s: "🔥 急上昇", key: "rising", desc: "昨日PVが伸び中。アルゴリズムに乗ってる。",        c: C,          bg: "#d44a0008" },
-                  { s: "🟢 継続",   key: "cont",   desc: "ピークを過ぎても安定して読まれ続ける。",        c: "#22c55e",  bg: "#22c55e08" },
-                  { s: "⚠️ 減速",  key: "slow",   desc: "落ちてきてるが生きてる。リライト候補。",        c: "#ca8a04",  bg: "#ca8a0408" },
-                  { s: "💤 停止",   key: "stop",   desc: "7日間PVほぼゼロ。でも「寿命の証拠」として機能中。", c: "#64748b", bg: "#64748b08" },
+                  { s: "🔥 急上昇", key: "rising", desc: "昨日PVが伸び中。アルゴリズムに乗ってる。",           c: C,          bg: "#d44a0008" },
+                  { s: "🟢 継続",   key: "cont",   desc: "ピークを過ぎても安定して読まれ続ける。",           c: "#22c55e",  bg: "#22c55e08" },
+                  { s: "⚠️ 減速",  key: "slow",   desc: "落ちてきてるが生きてる。リライト候補。",           c: "#ca8a04",  bg: "#ca8a0408" },
+                  { s: "💤 停止",   key: "stop",   desc: "7日間PVほぼゼロ。でも「寿命の証拠」として機能中。", c: "#64748b",  bg: "#64748b08" },
                 ].map(s => {
                   const n     = loading ? 0 : (data[s.key] || 0);
                   const total = loading ? 1 : (data.rising + data.cont + data.slow + data.stop || 1);
