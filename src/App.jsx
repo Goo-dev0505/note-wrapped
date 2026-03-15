@@ -118,6 +118,7 @@ function useIsMobile() {
 }
 
 const DATA_BASE = "/note-wrapped/data/";
+
 function useNoteData() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -136,53 +137,81 @@ function useNoteData() {
       const latestArticleDate = articles.reduce((a,b)=>(a.date||"")>(b.date||"")?a:b).date;
       const latestArticles = articles.filter(r => r.date === latestArticleDate);
 
-      const totalPV = parseInt(latest["ビュー合計"] || latest["pv"] || 0);
-      const totalSK = parseInt(latest["スキ合計"] || latest["sk"] || 0);
+      const totalPV  = parseInt(latest["ビュー合計"] || latest["pv"] || 0);
+      const totalSK  = parseInt(latest["スキ合計"]   || latest["sk"] || 0);
       const totalArt = latestArticles.length;
-      const prevPV = parseInt(prev["ビュー合計"] || prev["pv"] || 0);
-      const prevSK = parseInt(prev["スキ合計"] || prev["sk"] || 0);
-      const prevArt = parseInt(prev["記事数"] || 0);
-      const pvDiff = prevPV > 0 ? totalPV - prevPV : 0;
-      const skDiff = prevSK > 0 ? totalSK - prevSK : 0;
-      const artDiff = prevArt > 0 ? totalArt - prevArt : 0;
-      const firstPV = parseInt(first["ビュー合計"] || first["pv"] || 0);
-      const firstSK = parseInt(first["スキ合計"] || first["sk"] || 0);
+      const prevPV   = parseInt(prev["ビュー合計"]   || prev["pv"]  || 0);
+      const prevSK   = parseInt(prev["スキ合計"]     || prev["sk"]  || 0);
+      const prevArt  = parseInt(prev["記事数"] || 0);
+      const pvDiff   = prevPV  > 0 ? totalPV  - prevPV  : 0;
+      const skDiff   = prevSK  > 0 ? totalSK  - prevSK  : 0;
+      const artDiff  = prevArt > 0 ? totalArt - prevArt : 0;
+      const firstPV  = parseInt(first["ビュー合計"] || first["pv"] || 0);
+      const firstSK  = parseInt(first["スキ合計"]   || first["sk"] || 0);
       const pvGrowth = firstPV > 0 ? Math.round((totalPV - firstPV) / firstPV * 100) : 0;
       const skGrowth = firstSK > 0 ? Math.round((totalSK - firstSK) / firstSK * 100) : 0;
-      const lastFollower = followers.length > 0 ? parseInt(followers[followers.length-1]["フォロワー数"]||0) : 0;
-      const prevFollower = followers.length > 1 ? parseInt(followers[followers.length-2]["フォロワー数"]||0) : lastFollower;
-      const followerDiff = lastFollower - prevFollower;
-      const followerUpMsgs = ["ぇ？今日のワイの記事がいけてるん！？","フォロワー増えとる…なんか怖いんやけど笑","誰かワイのこと好きになってくれたん？ありがとな。","これ、バレたらどうしよ（何が）","ちょっと待って、今日なんかいい記事書いたっけ？"];
+
+      const lastFollower  = followers.length > 0 ? parseInt(followers[followers.length-1]["フォロワー数"]||0) : 0;
+      const prevFollower  = followers.length > 1 ? parseInt(followers[followers.length-2]["フォロワー数"]||0) : lastFollower;
+      const followerDiff  = lastFollower - prevFollower;
+
+      const followerUpMsgs   = ["ぇ？今日のワイの記事がいけてるん！？","フォロワー増えとる…なんか怖いんやけど笑","誰かワイのこと好きになってくれたん？ありがとな。","これ、バレたらどうしよ（何が）","ちょっと待って、今日なんかいい記事書いたっけ？"];
       const followerDownMsgs = ["いや～、フォロワーが減ってもうた！","去った人よ、元気でな。","フォロワー減ったけど、ワイは元気です。","これがnoteの現実やな…（メモしとく）","減った分だけ、残った人が濃いってことにしとく。"];
       const followerFlatMsgs = ["今日はフォロワー動かず。嵐の前の静けさ？","現状維持。悪くない、悪くない。","誰も来ず、誰も去らず。平和な一日。"];
       const followerMsg = followerDiff > 0
         ? followerUpMsgs[Math.abs(followerDiff + new Date().getDate()) % followerUpMsgs.length]
-        : followerDiff < 0 ? followerDownMsgs[Math.abs(Math.abs(followerDiff)+new Date().getDate())%followerDownMsgs.length]
-        : followerFlatMsgs[new Date().getDate()%followerFlatMsgs.length];
-      const step = Math.max(1, Math.floor(daily.length/16));
-      const growthChart = daily.filter((_,i)=>i%step===0||i===daily.length-1)
-        .map(r=>({ d:(r["日付"]||"").replace("2025/","").replace("2026/","").replace(/^0/,""), v:parseInt(r["ビュー合計"]||0), s:parseInt(r["スキ合計"]||0) }));
+        : followerDiff < 0
+          ? followerDownMsgs[Math.abs(Math.abs(followerDiff) + new Date().getDate()) % followerDownMsgs.length]
+          : followerFlatMsgs[new Date().getDate() % followerFlatMsgs.length];
+
+      const step = Math.max(1, Math.floor(daily.length / 16));
+      const growthChart = daily.filter((_,i) => i % step === 0 || i === daily.length - 1)
+        .map(r => ({
+          d: (r["日付"]||"").replace("2025/","").replace("2026/","").replace(/^0/,""),
+          v: parseInt(r["ビュー合計"]||0),
+          s: parseInt(r["スキ合計"]||0),
+        }));
+
       const EMOJIS = ["💀","🔧","🔬","🎨","⚗️"];
-      const top5 = ranking.sort((a,b)=>parseInt(b["期間増加PV"]||0)-parseInt(a["期間増加PV"]||0)).slice(0,5)
-        .map((r,i)=>({ rank:String(i+1).padStart(2,"0"), title:(r["title"]||"").replace(/ #\d+$/,"").slice(0,32), pv:parseInt(r["期間増加PV"]||0), avg:parseFloat(r["1日平均PV"]||0).toFixed(1), emoji:EMOJIS[i] }));
+      const top5 = ranking.sort((a,b) => parseInt(b["期間増加PV"]||0) - parseInt(a["期間増加PV"]||0)).slice(0,5)
+        .map((r,i) => ({
+          rank:  String(i+1).padStart(2,"0"),
+          title: (r["title"]||"").replace(/ #\d+$/,"").slice(0,32),
+          pv:    parseInt(r["期間増加PV"]||0),
+          avg:   parseFloat(r["1日平均PV"]||0).toFixed(1),
+          emoji: EMOJIS[i],
+        }));
+
       const PV_EMOJIS = ["👑","🥈","🥉","🎖️","🏅"];
       const top5PV = latestArticles
         .filter(r => parseInt(r["read_count"]||0) > 0)
         .sort((a,b) => parseInt(b["read_count"]||0) - parseInt(a["read_count"]||0))
-        .slice(0, 5)
-        .map((r,i) => ({ rank:String(i+1).padStart(2,"0"), title:(r["title"]||"").replace(/ #\d+$/,"").slice(0,32), val:parseInt(r["read_count"]||0), emoji:PV_EMOJIS[i] }));
-      const SK_EMOJIS = ["💖","💗","💓","💞","💝"];
-      const skKey = articles[0] && (articles[0]["like_count"]!==undefined ? "like_count" : articles[0]["スキ数"]!==undefined ? "スキ数" : null);
-      const top5SK = skKey ? latestArticles
-        .filter(r => parseInt(r[skKey]||0) > 0)
-        .sort((a,b) => parseInt(b[skKey]||0) - parseInt(a[skKey]||0))
-        .slice(0, 5)
-        .map((r,i) => ({ rank:String(i+1).padStart(2,"0"), title:(r["title"]||"").replace(/ #\d+$/,"").slice(0,32), val:parseInt(r[skKey]||0), emoji:SK_EMOJIS[i] }))
-        : [];
-      const trendCounts = {};
-      trend.forEach(r=>{ const s=r["状態"]||r["state"]||""; trendCounts[s]=(trendCounts[s]||0)+1; });
+        .slice(0,5)
+        .map((r,i) => ({
+          rank:  String(i+1).padStart(2,"0"),
+          title: (r["title"]||"").replace(/ #\d+$/,"").slice(0,32),
+          val:   parseInt(r["read_count"]||0),
+          emoji: PV_EMOJIS[i],
+        }));
 
-      // ── 記事一覧用データ（trend_analysis と articles をマージ）
+      const SK_EMOJIS = ["💖","💗","💓","💞","💝"];
+      const skKey = articles[0] && (articles[0]["like_count"] !== undefined ? "like_count" : articles[0]["スキ数"] !== undefined ? "スキ数" : null);
+      const top5SK = skKey
+        ? latestArticles
+            .filter(r => parseInt(r[skKey]||0) > 0)
+            .sort((a,b) => parseInt(b[skKey]||0) - parseInt(a[skKey]||0))
+            .slice(0,5)
+            .map((r,i) => ({
+              rank:  String(i+1).padStart(2,"0"),
+              title: (r["title"]||"").replace(/ #\d+$/,"").slice(0,32),
+              val:   parseInt(r[skKey]||0),
+              emoji: SK_EMOJIS[i],
+            }))
+        : [];
+
+      const trendCounts = {};
+      trend.forEach(r => { const s = r["状態"]||r["state"]||""; trendCounts[s] = (trendCounts[s]||0) + 1; });
+
       const trendMap = {};
       trend.forEach(r => {
         const key = (r["title"]||r["記事タイトル"]||"").trim();
@@ -191,52 +220,68 @@ function useNoteData() {
       const articleList = latestArticles
         .filter(r => (r["title"]||"").trim() !== "")
         .map(r => {
-          const title = (r["title"]||"").trim();
-          const pv = parseInt(r["read_count"]||0);
-          const sk = skKey ? parseInt(r[skKey]||0) : 0;
+          const title  = (r["title"]||"").trim();
+          const pv     = parseInt(r["read_count"]||0);
+          const sk     = skKey ? parseInt(r[skKey]||0) : 0;
           const skRate = pv > 0 ? parseFloat((sk / pv * 100).toFixed(1)) : 0;
           const status = trendMap[title] || trendMap[title.replace(/ #\d+$/,"")] || "—";
           return { title, pv, sk, skRate, status };
         });
 
       const ROASTS = ["タイトルだけで完結してた。","投稿した本人が一番驚いている。","来ると思ってた。来なかった。","短すぎたのか、長すぎたのか。謎は深まるばかり。","存在は確認されている。"];
-      const worst3 = latestArticles.filter(r=>parseInt(r["read_count"]||0)>0&&!EXCLUDED_TITLES.includes((r["title"]||"").trim()))
-        .sort((a,b)=>parseInt(a["read_count"]||0)-parseInt(b["read_count"]||0)).slice(0,3)
-        .map((r,i)=>({ title:(r["title"]||"").replace(/ #\d+$/,"").slice(0,28), pv:parseInt(r["read_count"]||0), roast:ROASTS[i%ROASTS.length] }));
-      const rising=trendCounts["🔥 急上昇"]||0, cont=trendCounts["🟢 継続"]||0,
-            slow=trendCounts["⚠️ 減速"]||0, stop=trendCounts["💤 停止"]||0;
+      const worst3 = latestArticles
+        .filter(r => parseInt(r["read_count"]||0) > 0 && !EXCLUDED_TITLES.includes((r["title"]||"").trim()))
+        .sort((a,b) => parseInt(a["read_count"]||0) - parseInt(b["read_count"]||0))
+        .slice(0,3)
+        .map((r,i) => ({
+          title: (r["title"]||"").replace(/ #\d+$/,"").slice(0,28),
+          pv:    parseInt(r["read_count"]||0),
+          roast: ROASTS[i % ROASTS.length],
+        }));
+
+      const rising = trendCounts["🔥 急上昇"]||0, cont = trendCounts["🟢 継続"]||0,
+            slow   = trendCounts["⚠️ 減速"] ||0, stop = trendCounts["💤 停止"] ||0;
       const skiRate = latest["スキ率(%)"]||latest["スキ率"]||"—";
+
       setData({
-        totalPV,totalSK,totalArt,pvGrowth,skGrowth,pvDiff,skDiff,artDiff,lastFollower,followerDiff,followerMsg,
-        growthChart,top5,top5PV,top5SK,trendCounts,worst3,skiRate,articleList,
-        tickerText:`🔥 急上昇 ${rising}記事 · 🟢 継続 ${cont}記事 · ⚠️ 減速 ${slow}記事 · 💤 停止 ${stop}記事 · スキ率 ${parseFloat(skiRate).toFixed(1)}% · `,
-        stopPct:totalArt>0?Math.round(stop/(rising+cont+slow+stop)*100):51,
-        rising,cont,slow,stop,updatedAt:latest["日付"]||"",
+        totalPV, totalSK, totalArt, pvGrowth, skGrowth, pvDiff, skDiff, artDiff,
+        lastFollower, followerDiff, followerMsg,
+        growthChart, top5, top5PV, top5SK, trendCounts, worst3, skiRate, articleList,
+        tickerText: `🔥 急上昇 ${rising}記事 · 🟢 継続 ${cont}記事 · ⚠️ 減速 ${slow}記事 · 💤 停止 ${stop}記事 · スキ率 ${parseFloat(skiRate).toFixed(1)}% · `,
+        stopPct: totalArt > 0 ? Math.round(stop / (rising + cont + slow + stop) * 100) : 51,
+        rising, cont, slow, stop,
+        updatedAt: latest["日付"]||"",
       });
-    }).catch(e=>setError(e.message));
-  },[]);
+    }).catch(e => setError(e.message));
+  }, []);
   return { data, error };
 }
 
-function Skeleton({ w="100%", h=32, style:s={} }) {
-  return <div className="skeleton" style={{width:w,height:h,...s}} />;
+function Skeleton({ w = "100%", h = 32, style: s = {} }) {
+  return <div className="skeleton" style={{ width: w, height: h, ...s }} />;
 }
 
-const C="#d44a00", INK="#1a0f00", CREAM="#fffbf2";
+/* ── 定数 ─────────────────────────────────────────── */
+const C    = "#d44a00";
+const INK  = "#1a0f00";
+const CREAM = "#fffbf2";
+
 const EXCLUDED_URLNAMES = new Set(["ktcrs1107"]);
+
 const STATUS_COLOR = {
-  "🔥 急上昇":"#d44a00","🟢 継続":"#22c55e","⚠️ 減速":"#ca8a04","💤 停止":"#475569",
+  "🔥 急上昇": "#d44a00", "🟢 継続": "#22c55e",
+  "⚠️ 減速":   "#ca8a04", "💤 停止": "#475569",
 };
-const STATUS_LIST = ["すべて","🔥 急上昇","🟢 継続","⚠️ 減速","💤 停止"];
+const STATUS_LIST = ["すべて", "🔥 急上昇", "🟢 継続", "⚠️ 減速", "💤 停止"];
 
 /* ══════════════════════════════════════════════
    記事一覧ページ
 ══════════════════════════════════════════════ */
 function ArticleListPage({ data, isMobile }) {
-  const [query, setQuery]             = useState("");
-  const [sortKey, setSortKey]         = useState("pv");
+  const [query,        setQuery]        = useState("");
+  const [sortKey,      setSortKey]      = useState("pv");
   const [statusFilter, setStatusFilter] = useState("すべて");
-  const [page, setPage]               = useState(1);
+  const [page,         setPage]         = useState(1);
   const PER_PAGE = 20;
 
   const filtered = useMemo(() => {
@@ -247,9 +292,9 @@ function ArticleListPage({ data, isMobile }) {
         const matchS = statusFilter === "すべて" || a.status === statusFilter;
         return matchQ && matchS;
       })
-      .sort((a,b) => {
-        if (sortKey === "pv")     return b.pv - a.pv;
-        if (sortKey === "sk")     return b.sk - a.sk;
+      .sort((a, b) => {
+        if (sortKey === "pv")     return b.pv     - a.pv;
+        if (sortKey === "sk")     return b.sk     - a.sk;
         if (sortKey === "skRate") return b.skRate - a.skRate;
         if (sortKey === "title")  return a.title.localeCompare(b.title, "ja");
         return 0;
@@ -257,25 +302,24 @@ function ArticleListPage({ data, isMobile }) {
   }, [data, query, sortKey, statusFilter]);
 
   const totalPages = Math.ceil(filtered.length / PER_PAGE);
-  const paged = filtered.slice((page-1)*PER_PAGE, page*PER_PAGE);
-  const maxPV = data?.articleList?.length ? Math.max(...data.articleList.map(a=>a.pv), 1) : 1;
+  const paged = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+  const maxPV = data?.articleList?.length ? Math.max(...data.articleList.map(a => a.pv), 1) : 1;
 
   useEffect(() => setPage(1), [query, sortKey, statusFilter]);
 
   return (
-    <div className="page-fade" style={{minHeight:"100vh",background:INK,color:CREAM}}>
+    <div className="page-fade" style={{ minHeight: "100vh", background: INK, color: CREAM }}>
 
       {/* ヘッダー */}
-      <div style={{padding:isMobile?"28px 16px 0":"48px 40px 0",maxWidth:960,margin:"0 auto"}}>
-        <span className="badge" style={{background:C,color:"#fff",marginBottom:12,display:"inline-block"}}>ARCHIVE</span>
-        <h1 style={{fontFamily:"'Bebas Neue'",fontSize:"clamp(40px,9vw,80px)",lineHeight:.88,marginBottom:8}}>
+      <div style={{ padding: isMobile ? "28px 16px 0" : "48px 40px 0", maxWidth: 960, margin: "0 auto" }}>
+        <span className="badge" style={{ background: C, color: "#fff", marginBottom: 12, display: "inline-block" }}>ARCHIVE</span>
+        <h1 style={{ fontFamily: "'Bebas Neue'", fontSize: "clamp(40px,9vw,80px)", lineHeight: .88, marginBottom: 8 }}>
           記事一覧
         </h1>
-        <p style={{fontSize:12,color:"#ffffff44",marginBottom:28}}>
+        <p style={{ fontSize: 12, color: "#ffffff44", marginBottom: 28 }}>
           {data ? `全 ${data.articleList.length} 記事 · 検索・フィルタ・ソートで深掘り` : "読み込み中…"}
         </p>
 
-        {/* 検索 */}
         <input
           className="search-input"
           placeholder="🔍  記事タイトルで検索…"
@@ -283,97 +327,85 @@ function ArticleListPage({ data, isMobile }) {
           onChange={e => setQuery(e.target.value)}
         />
 
-        {/* フィルタ＋ソート */}
-        <div style={{marginTop:16,display:"flex",flexWrap:"wrap",gap:8,alignItems:"center"}}>
+        <div style={{ marginTop: 16, display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
           {STATUS_LIST.map(s => (
-            <button key={s} className={`filter-chip${statusFilter===s?" active":""}`} onClick={()=>setStatusFilter(s)}>{s}</button>
+            <button key={s} className={`filter-chip${statusFilter === s ? " active" : ""}`} onClick={() => setStatusFilter(s)}>{s}</button>
           ))}
-          <div style={{flex:1,minWidth:8}} />
+          <div style={{ flex: 1, minWidth: 8 }} />
           {[
-            {k:"pv",label:"PV順"},{k:"sk",label:"スキ順"},{k:"skRate",label:"スキ率順"},{k:"title",label:"タイトル順"},
+            { k: "pv", label: "PV順" }, { k: "sk", label: "スキ順" },
+            { k: "skRate", label: "スキ率順" }, { k: "title", label: "タイトル順" },
           ].map(s => (
-            <button key={s.k} className={`sort-btn${sortKey===s.k?" active":""}`} onClick={()=>setSortKey(s.k)}>{s.label}</button>
+            <button key={s.k} className={`sort-btn${sortKey === s.k ? " active" : ""}`} onClick={() => setSortKey(s.k)}>{s.label}</button>
           ))}
         </div>
 
-        <div style={{marginTop:14,marginBottom:4,fontSize:11,color:"#ffffff33",fontFamily:"'Syne',sans-serif",letterSpacing:1}}>
+        <div style={{ marginTop: 14, marginBottom: 4, fontSize: 11, color: "#ffffff33", fontFamily: "'Syne',sans-serif", letterSpacing: 1 }}>
           {filtered.length} 件表示{query ? ` / 「${query}」` : ""}
         </div>
       </div>
 
       {/* テーブル */}
-      <div style={{maxWidth:960,margin:"0 auto",padding:isMobile?"12px 0 60px":"16px 40px 80px"}}>
+      <div style={{ maxWidth: 960, margin: "0 auto", padding: isMobile ? "12px 0 60px" : "16px 40px 80px" }}>
 
-        {/* ヘッダー行 */}
         <div style={{
-          display:"grid",
-          gridTemplateColumns:isMobile?"1fr 64px":"1fr 80px 80px 80px 130px",
-          gap:isMobile?8:16,
-          padding:isMobile?"8px 16px":"10px 20px",
-          borderBottom:"1px solid #ffffff14",
-          fontSize:10,color:"#ffffff33",
-          fontFamily:"'Syne',sans-serif",letterSpacing:1,
+          display: "grid",
+          gridTemplateColumns: isMobile ? "1fr 64px" : "1fr 80px 80px 80px 130px",
+          gap: isMobile ? 8 : 16,
+          padding: isMobile ? "8px 16px" : "10px 20px",
+          borderBottom: "1px solid #ffffff14",
+          fontSize: 10, color: "#ffffff33",
+          fontFamily: "'Syne',sans-serif", letterSpacing: 1,
         }}>
           <div>TITLE</div>
-          <div style={{textAlign:"right"}}>PV</div>
-          {!isMobile && <><div style={{textAlign:"right"}}>スキ</div><div style={{textAlign:"right"}}>スキ率</div><div style={{textAlign:"center"}}>STATUS</div></>}
+          <div style={{ textAlign: "right" }}>PV</div>
+          {!isMobile && <><div style={{ textAlign: "right" }}>スキ</div><div style={{ textAlign: "right" }}>スキ率</div><div style={{ textAlign: "center" }}>STATUS</div></>}
         </div>
 
         {!data
-          ? [1,2,3,4,5,6,7,8].map(i=>(
-              <div key={i} style={{padding:"14px 20px",borderBottom:"1px solid #ffffff08"}}>
-                <Skeleton w={`${50+i*5}%`} h={16} />
+          ? [1,2,3,4,5,6,7,8].map(i => (
+              <div key={i} style={{ padding: "14px 20px", borderBottom: "1px solid #ffffff08" }}>
+                <Skeleton w={`${50 + i * 5}%`} h={16} />
               </div>
             ))
           : paged.length === 0
-            ? <div style={{textAlign:"center",padding:"60px 20px",color:"#ffffff22",fontSize:14}}>
+            ? <div style={{ textAlign: "center", padding: "60px 20px", color: "#ffffff22", fontSize: 14 }}>
                 該当する記事が見つかりませんでした
               </div>
-            : paged.map((a,i) => {
+            : paged.map((a, i) => {
                 const sc = STATUS_COLOR[a.status] || "#ffffff22";
                 return (
                   <div
                     key={i}
                     className="article-row"
                     style={{
-                      display:"grid",
-                      gridTemplateColumns:isMobile?"1fr 64px":"1fr 80px 80px 80px 130px",
-                      gap:isMobile?8:16,
-                      padding:isMobile?"12px 16px":"14px 20px",
-                      borderBottom:"1px solid #ffffff08",
-                      alignItems:"center",
+                      display: "grid",
+                      gridTemplateColumns: isMobile ? "1fr 64px" : "1fr 80px 80px 80px 130px",
+                      gap: isMobile ? 8 : 16,
+                      padding: isMobile ? "12px 16px" : "14px 20px",
+                      borderBottom: "1px solid #ffffff08",
+                      alignItems: "center",
                     }}
                   >
-                    {/* タイトル＋バー */}
-                    <div style={{minWidth:0}}>
-                      <div style={{fontSize:isMobile?12:13,fontWeight:700,color:CREAM,lineHeight:1.4,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",marginBottom:5}}>
+                    <div style={{ minWidth: 0 }}>
+                      <div style={{ fontSize: isMobile ? 12 : 13, fontWeight: 700, color: CREAM, lineHeight: 1.4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", marginBottom: 5 }}>
                         {a.title}
                       </div>
-                      <div style={{height:2,background:"#ffffff0a",borderRadius:1,overflow:"hidden"}}>
-                        <div style={{height:"100%",background:C,width:`${(a.pv/maxPV)*100}%`,borderRadius:1,opacity:.5}} />
+                      <div style={{ height: 2, background: "#ffffff0a", borderRadius: 1, overflow: "hidden" }}>
+                        <div style={{ height: "100%", background: C, width: `${(a.pv / maxPV) * 100}%`, borderRadius: 1, opacity: .5 }} />
                       </div>
                     </div>
-
-                    {/* PV */}
-                    <div style={{textAlign:"right",fontFamily:"'Bebas Neue'",fontSize:isMobile?18:20,color:C,lineHeight:1}}>
+                    <div style={{ textAlign: "right", fontFamily: "'Bebas Neue'", fontSize: isMobile ? 18 : 20, color: C, lineHeight: 1 }}>
                       {a.pv.toLocaleString()}
                     </div>
-
                     {!isMobile && <>
-                      {/* スキ */}
-                      <div style={{textAlign:"right",fontFamily:"'Bebas Neue'",fontSize:20,color:"#ff9ec4",lineHeight:1}}>
-                        {a.sk}
-                      </div>
-                      {/* スキ率 */}
-                      <div style={{textAlign:"right",fontSize:12,color:"#ffffff55"}}>
-                        {a.skRate}%
-                      </div>
-                      {/* ステータス */}
-                      <div style={{textAlign:"center"}}>
+                      <div style={{ textAlign: "right", fontFamily: "'Bebas Neue'", fontSize: 20, color: "#ff9ec4", lineHeight: 1 }}>{a.sk}</div>
+                      <div style={{ textAlign: "right", fontSize: 12, color: "#ffffff55" }}>{a.skRate}%</div>
+                      <div style={{ textAlign: "center" }}>
                         <span style={{
-                          display:"inline-block",padding:"3px 10px",borderRadius:20,
-                          fontSize:10,fontFamily:"'Syne',sans-serif",letterSpacing:.5,
-                          background:`${sc}22`,color:sc,border:`1px solid ${sc}44`,whiteSpace:"nowrap",
+                          display: "inline-block", padding: "3px 10px", borderRadius: 20,
+                          fontSize: 10, fontFamily: "'Syne',sans-serif", letterSpacing: .5,
+                          background: `${sc}22`, color: sc, border: `1px solid ${sc}44`, whiteSpace: "nowrap",
                         }}>{a.status}</span>
                       </div>
                     </>}
@@ -382,20 +414,19 @@ function ArticleListPage({ data, isMobile }) {
               })
         }
 
-        {/* ページネーション */}
         {totalPages > 1 && (
-          <div style={{display:"flex",justifyContent:"center",gap:8,marginTop:32,flexWrap:"wrap"}}>
-            {Array.from({length:totalPages},(_,i)=>i+1).map(n=>(
+          <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 32, flexWrap: "wrap" }}>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(n => (
               <button
                 key={n}
-                onClick={()=>{ setPage(n); window.scrollTo({top:0,behavior:"smooth"}); }}
+                onClick={() => { setPage(n); window.scrollTo({ top: 0, behavior: "smooth" }); }}
                 style={{
-                  width:36,height:36,borderRadius:"50%",
-                  background:n===page?C:"#ffffff0a",
-                  border:`1px solid ${n===page?C:"#ffffff18"}`,
-                  color:n===page?"#fff":"#ffffff55",
-                  fontFamily:"'Syne',sans-serif",fontSize:11,cursor:"pointer",
-                  transition:"all .18s",
+                  width: 36, height: 36, borderRadius: "50%",
+                  background: n === page ? C : "#ffffff0a",
+                  border: `1px solid ${n === page ? C : "#ffffff18"}`,
+                  color: n === page ? "#fff" : "#ffffff55",
+                  fontFamily: "'Syne',sans-serif", fontSize: 11, cursor: "pointer",
+                  transition: "all .18s",
                 }}
               >{n}</button>
             ))}
@@ -407,31 +438,25 @@ function ArticleListPage({ data, isMobile }) {
 }
 
 /* ══════════════════════════════════════════════
-   ランキングページ
-   - TOP3: ヒーローカード（ホバーでCTA表示）
-   - 4位以下: 横並び行カード（ホバーでスライド＋CTA）
-   - 各期間JSON を遅延fetch（タブ開封時のみ）
-   - JSON: { items[{ rank, creator_name, creator_url,
-             has_profile_url, likes_count, last_like_at }] }
-   - 総合20件 / 月間・今週・先週10件
+   ランキングページ共通設定
 ══════════════════════════════════════════════ */
 const RANK_PERIODS = [
-  { id:"total",     file:"ranking_total.json",    label:"総合",  top:20, hasChart:false },
-  { id:"monthly",   file:"ranking_monthly.json",  label:"今月",  top:10, hasChart:true  },
-  { id:"last_week", file:"ranking_last_week.json", label:"先週", top:10, hasChart:false },
+  { id: "total",     file: "ranking_total.json",    label: "総合", top: 20, hasChart: false },
+  { id: "monthly",   file: "ranking_monthly.json",  label: "今月", top: 10, hasChart: true  },
+  { id: "last_week", file: "ranking_last_week.json", label: "先週", top: 10, hasChart: false },
 ];
 
-const MEDAL = ["👑","🥈","🥉"];
+const MEDAL       = ["👑","🥈","🥉"];
 const MEDAL_COLOR = ["#d44a00","#a0a0a0","#b07c40"];
 
 function useRankingData(file) {
-  const [state, setState] = useState({ data:null, error:null, loaded:false });
+  const [state, setState] = useState({ data: null, error: null, loaded: false });
   useEffect(() => {
     if (state.loaded) return;
     fetch(DATA_BASE + file)
       .then(r => { if (!r.ok) throw new Error(`${file} が見つかりません`); return r.json(); })
-      .then(d  => setState({ data:d, error:null, loaded:true }))
-      .catch(e => setState({ data:null, error:e.message, loaded:true }));
+      .then(d  => setState({ data: d, error: null, loaded: true }))
+      .catch(e => setState({ data: null, error: e.message, loaded: true }));
   }, [file, state.loaded]);
   return state;
 }
@@ -442,34 +467,30 @@ function fmtDate(iso) {
   return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,"0")}/${String(d.getDate()).padStart(2,"0")}`;
 }
 
-/** 期間ラベルを生成する（今月: "2026年3月"、先週: "3/3〜3/9" など） */
 function buildPeriodLabel(data, periodId) {
   if (!data) return null;
   const start = data.period_start ? new Date(data.period_start) : null;
   const end   = data.period_end   ? new Date(data.period_end)   : null;
   if (!start || !end) return null;
-
   if (periodId === "monthly") {
     return `${start.getFullYear()}年${start.getMonth()+1}月`;
   }
   if (periodId === "last_week") {
     const fmt = d => `${d.getMonth()+1}/${d.getDate()}`;
-    // end は display_end（日曜23:59:59）なので+1日して月曜にする
-    const endSun = new Date(end);
-    return `${fmt(start)} 〜 ${fmt(endSun)}`;
+    return `${fmt(start)} 〜 ${fmt(end)}`;
   }
   return null;
 }
 
-/* 今月チャート */
+/* ── 今月チャート（棒グラフ） ─────────────────────── */
 function MonthlyChart({ items, isMobile }) {
   const chartData = [...items]
-    .sort((a,b) => b.likes_count - a.likes_count)
+    .sort((a, b) => b.likes_count - a.likes_count)
     .map(r => ({
-      name: r.creator_name.length > 12 ? r.creator_name.slice(0,11)+"…" : r.creator_name,
+      name:     r.creator_name.length > 12 ? r.creator_name.slice(0, 11) + "…" : r.creator_name,
       fullName: r.creator_name,
-      count: r.likes_count,
-      url: r.has_profile_url ? r.creator_url : null,
+      count:    r.likes_count,
+      url:      r.has_profile_url ? r.creator_url : null,
     }));
 
   const maxCount = Math.max(...chartData.map(d => d.count), 1);
@@ -479,181 +500,242 @@ function MonthlyChart({ items, isMobile }) {
     const d = payload[0].payload;
     return (
       <div style={{
-        background:"#1a0f00", border:`1px solid ${C}55`,
-        borderRadius:10, padding:"10px 14px",
-        fontSize:12, color:CREAM,
-        fontFamily:"'Noto Sans JP',sans-serif",
-        boxShadow:"0 8px 24px #00000088",
+        background: "#1a0f00", border: `1px solid ${C}55`,
+        borderRadius: 10, padding: "10px 14px",
+        fontSize: 12, color: CREAM,
+        fontFamily: "'Noto Sans JP',sans-serif",
+        boxShadow: "0 8px 24px #00000088",
       }}>
-        <div style={{ fontWeight:700, marginBottom:4, maxWidth:200 }}>{d.fullName}</div>
-        <div style={{ fontFamily:"'Bebas Neue'", fontSize:22, color:C, lineHeight:1 }}>
-          {d.count} <span style={{ fontSize:11, color:"#ffffff55", fontFamily:"'Syne',sans-serif" }}>スキ</span>
+        <div style={{ fontWeight: 700, marginBottom: 4, maxWidth: 200 }}>{d.fullName}</div>
+        <div style={{ fontFamily: "'Bebas Neue'", fontSize: 22, color: C, lineHeight: 1 }}>
+          {d.count} <span style={{ fontSize: 11, color: "#ffffff55", fontFamily: "'Syne',sans-serif" }}>スキ</span>
         </div>
       </div>
     );
   };
 
   return (
-    <div style={{ marginTop:8 }}>
-      <ResponsiveContainer width="100%" height={isMobile ? chartData.length*38+20 : chartData.length*44+20}>
+    <div style={{ marginTop: 8 }}>
+      <ResponsiveContainer width="100%" height={isMobile ? chartData.length * 38 + 20 : chartData.length * 44 + 20}>
         <BarChart
           data={chartData}
           layout="vertical"
-          margin={{ top:0, right: isMobile?60:80, left:0, bottom:0 }}
+          margin={{ top: 0, right: isMobile ? 60 : 80, left: 0, bottom: 0 }}
           barCategoryGap="30%"
         >
           <XAxis type="number" hide domain={[0, maxCount * 1.15]} />
           <YAxis
-            type="category" dataKey="name" width={isMobile?110:150}
-            tick={{ fill:"#ffffffaa", fontSize:isMobile?10:12, fontFamily:"'Noto Sans JP',sans-serif" }}
+            type="category" dataKey="name" width={isMobile ? 110 : 150}
+            tick={{ fill: "#ffffffaa", fontSize: isMobile ? 10 : 12, fontFamily: "'Noto Sans JP',sans-serif" }}
             axisLine={false} tickLine={false}
           />
-          <Tooltip content={<CustomTooltip />} cursor={{ fill:"#ffffff08" }} />
+          <Tooltip content={<CustomTooltip />} cursor={{ fill: "#ffffff08" }} />
           <Bar dataKey="count" radius={[0,6,6,0]} isAnimationActive={true} animationDuration={600}>
             {chartData.map((entry, i) => (
               <Cell
                 key={i}
                 fill={i === 0 ? C : i < 3 ? `${C}88` : "#ffffff22"}
                 style={{ cursor: entry.url ? "pointer" : "default" }}
-                onClick={() => entry.url && window.open(entry.url,"_blank","noopener")}
+                onClick={() => entry.url && window.open(entry.url, "_blank", "noopener")}
               />
             ))}
             <LabelList
               dataKey="count"
               position="right"
-              style={{ fill:"#ffffffaa", fontSize:isMobile?11:13, fontFamily:"'Bebas Neue'", letterSpacing:1 }}
+              style={{ fill: "#ffffffaa", fontSize: isMobile ? 11 : 13, fontFamily: "'Bebas Neue'", letterSpacing: 1 }}
             />
           </Bar>
         </BarChart>
       </ResponsiveContainer>
-      <p style={{ fontSize:10, color:"#ffffff28", textAlign:"right", marginTop:8, fontFamily:"'Syne',sans-serif", letterSpacing:1 }}>
+      <p style={{ fontSize: 10, color: "#ffffff28", textAlign: "right", marginTop: 8, fontFamily: "'Syne',sans-serif", letterSpacing: 1 }}>
         バーをクリックでプロフィールへ
       </p>
     </div>
   );
 }
 
-/* 成長レースチャート - ranking_monthly_trace.csv を直接利用 */
+/* ── 成長レース：定数 ─────────────────────────────── */
+// 判別しやすい10色（同系色を避けたパレット）
 const BUMP_COLORS = [
-  "#d44a00","#e8855a","#f5b942","#7dd3a8","#60a5fa",
-  "#a78bfa","#f472b6","#34d399","#fbbf24","#94a3b8",
+  "#d44a00","#60a5fa","#f5b942","#7dd3a8","#f472b6",
+  "#a78bfa","#e8855a","#34d399","#fbbf24","#94a3b8",
+  "#38bdf8","#fb923c","#c084fc","#4ade80","#e879f9",
+  "#facc15","#f87171","#2dd4bf","#818cf8","#a3e635",
 ];
-const BUMP_TOP_N = 10;
+// fetch する最大人数（表示人数の上限）
+const BUMP_FETCH_N = 20;
 
+/* ── useBumpData: ranking_monthly_trace.csv を読み込む ── */
 function useBumpData() {
-  const [state, setState] = useState({ data:null, error:null, loaded:false });
+  const [state, setState] = useState({ data: null, error: null, loaded: false });
+
   useEffect(() => {
     if (state.loaded) return;
     fetch(DATA_BASE + "ranking_monthly_trace.csv")
-      .then(r => { if (!r.ok) throw new Error("ranking_monthly_trace.csv が見つかりません"); return r.text(); })
+      .then(r => {
+        if (!r.ok) throw new Error("ranking_monthly_trace.csv が見つかりません");
+        return r.text();
+      })
       .then(text => {
         const rows = parseCSV(text);
 
-        // 除外・日付ソート
+        // 除外ユーザーを除いた行
         const filtered = rows.filter(r => !EXCLUDED_URLNAMES.has(r.creator_urlname));
+
+        // 日付リスト（昇順）
         const dates = [...new Set(filtered.map(r => r.date))].sort();
+        if (dates.length === 0) {
+          setState({ data: { dates: [], creators: [] }, error: null, loaded: true });
+          return;
+        }
 
-        // 最終日TOP10のユーザーを基準にする
-        const lastDate = dates[dates.length - 1];
-        const lastTop = filtered
-          .filter(r => r.date === lastDate)
-          .sort((a,b) => parseInt(a.rank) - parseInt(b.rank))
-          .slice(0, BUMP_TOP_N);
-
-        const targetIds = lastTop.map(r => r.like_user_id);
-
-        // クリエイター情報
-        const profileMap = {};
-        filtered.forEach(r => { profileMap[r.like_user_id] = r; });
-
-        // 日ごとのランクマップ: { date: { user_id: rank } }
-        const rankByDate = {};
-        dates.forEach(d => { rankByDate[d] = {}; });
+        // ── O(1) lookup map: { userId: { date: row } } ──
+        const rowLookup = {};
         filtered.forEach(r => {
-          if (rankByDate[r.date]) rankByDate[r.date][r.like_user_id] = parseInt(r.rank);
+          if (!rowLookup[r.like_user_id]) rowLookup[r.like_user_id] = {};
+          rowLookup[r.like_user_id][r.date] = r;
         });
 
-        const creators = targetIds.map((uid, i) => {
-          const prof = profileMap[uid];
+        // 最終日の上位 BUMP_FETCH_N（累計降順 → 同点はrank昇順）
+        const lastDate = dates[dates.length - 1];
+        const topRows = filtered
+          .filter(r => r.date === lastDate)
+          .sort((a, b) => {
+            const diff = parseInt(b.likes_count_cumulative) - parseInt(a.likes_count_cumulative);
+            return diff !== 0 ? diff : parseInt(a.rank) - parseInt(b.rank);
+          })
+          .slice(0, BUMP_FETCH_N);
+
+        // クリエイターごとの系列データを構築
+        const creators = topRows.map((lastRow, i) => {
+          const uid = lastRow.like_user_id;
           return {
-            like_user_id: uid,
-            creator_name: prof.creator_name,
-            creator_url:  prof.creator_url,
-            has_profile_url: prof.has_profile_url === "True",
-            color: BUMP_COLORS[i],
-            ranks:  dates.map(d => rankByDate[d][uid] ?? null),
-            counts: dates.map(d => {
-              const row = filtered.find(r => r.date === d && r.like_user_id === uid);
-              return row ? parseInt(row.likes_count_cumulative) : null;
-            }),
+            like_user_id:    uid,
+            creator_name:    lastRow.creator_name   || uid,
+            creator_url:     lastRow.creator_url    || "",
+            has_profile_url: lastRow.has_profile_url === "True",
+            color:           BUMP_COLORS[i % BUMP_COLORS.length],
+            // 日付順の配列（データ欠損はnull）
+            counts:      dates.map(d => rowLookup[uid]?.[d] ? parseInt(rowLookup[uid][d].likes_count_cumulative) : null),
+            dailyCounts: dates.map(d => rowLookup[uid]?.[d] ? parseInt(rowLookup[uid][d].likes_count_daily)      : null),
+            ranks:       dates.map(d => rowLookup[uid]?.[d] ? parseInt(rowLookup[uid][d].rank)                   : null),
+            followers:   dates.map(d => rowLookup[uid]?.[d] ? parseInt(rowLookup[uid][d].follower_count)         : null),
           };
         });
 
-        // X軸ラベル: 3/1, 3/5, … 間引いて表示
+        // X軸ラベル（"3/1" 形式）
         const labelDates = dates.map(d => {
-          const [,m,day] = d.split("-");
+          const [, m, day] = d.split("-");
           return `${parseInt(m)}/${parseInt(day)}`;
         });
 
-        setState({ data:{ dates:labelDates, creators }, error:null, loaded:true });
+        setState({ data: { dates: labelDates, creators }, error: null, loaded: true });
       })
-      .catch(e => setState({ data:null, error:e.message, loaded:true }));
+      .catch(e => setState({ data: null, error: e.message, loaded: true }));
   }, [state.loaded]);
+
   return state;
 }
 
-/* 成長レースチャート（recharts LineChart） */
+/* ── GrowthRaceChart: 折れ線チャート本体 ─────────── */
 function GrowthRaceChart({ bumpState, isMobile }) {
   const [hovered, setHovered] = useState(null);
+  const [hidden,  setHidden]  = useState(new Set()); // 非表示クリエイターのID集合
+  const [topN,    setTopN]    = useState(10);        // 表示人数（10 or 20）
 
+  // ── 状態表示 ──
   if (!bumpState.loaded) return <RankSkeleton isMobile={isMobile} />;
-  if (bumpState.error)   return (
-    <div style={{ textAlign:"center", padding:"60px 20px", color:"#ffffff22", fontSize:14 }}>
+  if (bumpState.error) return (
+    <div style={{ textAlign: "center", padding: "60px 20px", color: "#ffffff22", fontSize: 14 }}>
       ⚠️ {bumpState.error}
     </div>
   );
-  if (!bumpState.data) return null;
+  if (!bumpState.data?.creators?.length) return (
+    <div style={{ textAlign: "center", padding: "60px 20px", color: "#ffffff22", fontSize: 14 }}>
+      データがありません
+    </div>
+  );
 
-  const { dates, creators } = bumpState.data;
+  const { dates, creators: allCreators } = bumpState.data;
+  // topN で絞り込んだクリエイター
+  const creators = allCreators.slice(0, topN);
 
-  // recharts 用: [{date:"3/1", uid1:累計, uid2:累計, ...}, ...]
+  // 凡例クリック：表示/非表示トグル
+  const toggleHidden = uid => {
+    setHidden(prev => {
+      const next = new Set(prev);
+      next.has(uid) ? next.delete(uid) : next.add(uid);
+      return next;
+    });
+  };
+
+  // recharts 用データ: [{ date:"3/1", uid1:累計, uid2:累計, ... }, ...]
   const chartData = dates.map((label, di) => {
     const row = { date: label };
     creators.forEach(c => {
-      row[c.like_user_id] = c.counts[di] ?? null;
+      if (!hidden.has(c.like_user_id)) row[c.like_user_id] = c.counts[di] ?? null;
     });
     return row;
   });
 
-  // カスタムツールチップ
+  // ── カスタムツールチップ ──
   const CustomTooltip = ({ active, payload, label }) => {
     if (!active || !payload?.length) return null;
+    const di = dates.findIndex(d => d === label);
     const sorted = [...payload]
-      .filter(p => p.value !== null)
-      .sort((a,b) => b.value - a.value);
+      .filter(p => p.value != null)
+      .sort((a, b) => b.value - a.value);
+
     return (
       <div style={{
-        background:"#1a0f00", border:`1px solid #ffffff22`,
-        borderRadius:10, padding:"10px 14px", minWidth:160,
-        boxShadow:"0 8px 32px #00000099",
+        background: "#1a0f00", border: "1px solid #ffffff22",
+        borderRadius: 10, padding: "10px 14px", minWidth: 200,
+        boxShadow: "0 8px 32px #00000099",
+        maxHeight: 360, overflowY: "auto",
+        fontFamily: "'Noto Sans JP',sans-serif",
       }}>
-        <div style={{ fontSize:11, color:"#ffffff55", fontFamily:"'Syne',sans-serif",
-          letterSpacing:1, marginBottom:8 }}>{label}</div>
+        {/* 日付ヘッダー */}
+        <div style={{ fontSize: 11, color: "#ffffff55", fontFamily: "'Syne',sans-serif", letterSpacing: 1, marginBottom: 8 }}>
+          {label}
+        </div>
+
         {sorted.map(p => {
           const c = creators.find(cr => cr.like_user_id === p.dataKey);
+          if (!c) return null;
+          const rank     = di >= 0 ? c.ranks[di]       : null;
+          const daily    = di >= 0 ? c.dailyCounts[di]  : null;
+          const follower = di >= 0 ? c.followers[di]    : null;
           return (
-            <div key={p.dataKey} style={{ display:"flex", alignItems:"center",
-              gap:8, marginBottom:4 }}>
-              <span style={{ width:8, height:8, borderRadius:"50%",
-                background:p.stroke, display:"inline-block", flexShrink:0 }} />
-              <span style={{ fontSize:11, color: hovered===p.dataKey ? "#fff" : "#ffffffaa",
-                fontFamily:"'Noto Sans JP',sans-serif", flex:1,
-                overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap",
-                maxWidth:110 }}>
-                {c?.creator_name}
-              </span>
-              <span style={{ fontFamily:"'Bebas Neue'", fontSize:16,
-                color:p.stroke, lineHeight:1, flexShrink:0 }}>{p.value}</span>
+            <div key={p.dataKey} style={{ marginBottom: 8, paddingBottom: 8, borderBottom: "1px solid #ffffff08" }}>
+              {/* 名前 + 順位 */}
+              <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                <span style={{ width: 8, height: 8, borderRadius: "50%", background: p.stroke, display: "inline-block", flexShrink: 0 }} />
+                <span style={{ fontSize: 11, color: "#fff", fontWeight: 700, flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: 150 }}>
+                  {c.creator_name}
+                </span>
+                {rank != null && (
+                  <span style={{ fontSize: 9, color: "#ffffff44", fontFamily: "'Syne',sans-serif", flexShrink: 0 }}>#{rank}位</span>
+                )}
+              </div>
+              {/* 数値グリッド */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2px 12px", paddingLeft: 14, fontSize: 10, color: "#ffffff66" }}>
+                <div>
+                  累計&nbsp;
+                  <span style={{ fontFamily: "'Bebas Neue'", fontSize: 15, color: p.stroke }}>{p.value}</span>
+                </div>
+                {daily != null && (
+                  <div>
+                    本日&nbsp;
+                    <span style={{ fontFamily: "'Bebas Neue'", fontSize: 15, color: "#ffffffaa" }}>+{daily}</span>
+                  </div>
+                )}
+                {follower != null && (
+                  <div style={{ gridColumn: "1/-1" }}>
+                    フォロワー&nbsp;
+                    <span style={{ fontFamily: "'Bebas Neue'", fontSize: 15, color: "#ffffffaa" }}>{follower.toLocaleString()}</span>
+                  </div>
+                )}
+              </div>
             </div>
           );
         })}
@@ -661,265 +743,287 @@ function GrowthRaceChart({ bumpState, isMobile }) {
     );
   };
 
-  // カスタムドット（ホバー中の線のみ大きく）
-  const CustomDot = (props) => {
+  // ホバー中の線のみドット表示
+  const CustomDot = props => {
     const { cx, cy, dataKey, value } = props;
-    if (value === null || value === undefined) return null;
-    const isHov = hovered === dataKey;
-    if (!isHov) return null; // 非ホバー時はドット非表示
+    if (value == null || hovered !== dataKey) return null;
     const c = creators.find(cr => cr.like_user_id === dataKey);
     return <circle cx={cx} cy={cy} r={5} fill={c?.color ?? "#fff"} stroke={INK} strokeWidth={1.5} />;
   };
 
+  const visibleCount = creators.filter(c => !hidden.has(c.like_user_id)).length;
+
   return (
-    <div style={{ marginTop:16 }}>
-      {/* 凡例 */}
-      <div style={{ display:"flex", flexWrap:"wrap", gap:isMobile?6:8, marginBottom:16 }}>
-        {creators.map(c => (
-          <div key={c.like_user_id}
-            style={{ display:"flex", alignItems:"center", gap:5,
-              cursor: c.has_profile_url ? "pointer":"default",
-              opacity: hovered && hovered !== c.like_user_id ? .2 : 1,
-              transition:"opacity .2s" }}
-            onMouseEnter={() => setHovered(c.like_user_id)}
-            onMouseLeave={() => setHovered(null)}
-            onClick={() => c.has_profile_url && window.open(c.creator_url,"_blank","noopener")}
-          >
-            <span style={{ width:10, height:10, borderRadius:"50%",
-              background:c.color, display:"inline-block", flexShrink:0 }} />
-            <span style={{ fontSize:isMobile?9:10, color:"#ffffffaa",
-              fontFamily:"'Noto Sans JP',sans-serif",
-              maxWidth:isMobile?72:120, overflow:"hidden",
-              textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
-              {c.creator_name}
-            </span>
+    <div style={{ marginTop: 16 }}>
+
+      {/* ── 上段コントロール ── */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
+        {/* 表示人数切替（データが10人超のときだけ表示） */}
+        {allCreators.length > 10 && (
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <span style={{ fontSize: 10, color: "#ffffff33", fontFamily: "'Syne',sans-serif", letterSpacing: 1 }}>表示人数</span>
+            {[10, 20].filter(n => n <= allCreators.length).map(n => (
+              <button
+                key={n}
+                className={`sort-btn${topN === n ? " active" : ""}`}
+                style={{ padding: "4px 12px" }}
+                onClick={() => { setTopN(n); setHidden(new Set()); }}
+              >
+                TOP {n}
+              </button>
+            ))}
           </div>
-        ))}
+        )}
+
+        {/* 非表示リセット */}
+        {hidden.size > 0 && (
+          <button
+            className="sort-btn"
+            style={{ padding: "4px 12px", color: C, borderColor: `${C}55` }}
+            onClick={() => setHidden(new Set())}
+          >
+            全員表示
+          </button>
+        )}
       </div>
 
-      {/* 折れ線グラフ */}
-      <ResponsiveContainer width="100%" height={isMobile ? 260 : 340}>
-        <LineChart data={chartData}
-          margin={{ top:8, right: isMobile?8:16, left: isMobile?-16:0, bottom:4 }}>
-          <CartesianGrid stroke="#ffffff0a" vertical={false} />
-          <XAxis dataKey="date"
-            tick={{ fill:"#ffffff44", fontSize:isMobile?9:11,
-              fontFamily:"'Syne',sans-serif" }}
-            axisLine={false} tickLine={false} />
-          <YAxis
-            tick={{ fill:"#ffffff33", fontSize:isMobile?9:10,
-              fontFamily:"'Bebas Neue',sans-serif" }}
-            axisLine={false} tickLine={false}
-            width={isMobile?28:32}
-            label={!isMobile ? {
-              value:"累計スキ数", angle:-90, position:"insideLeft",
-              fill:"#ffffff22", fontSize:10,
-              fontFamily:"'Noto Sans JP',sans-serif", dx:-4,
-            } : undefined}
-          />
-          <Tooltip content={<CustomTooltip />} />
-          {creators.map(c => (
-            <Line
+      {/* ── 凡例（クリックで表示切替 / ホバーでハイライト） ── */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: isMobile ? 6 : 8, marginBottom: 16 }}>
+        {creators.map(c => {
+          const isHid  = hidden.has(c.like_user_id);
+          const dimmed = !isHid && hovered && hovered !== c.like_user_id;
+          return (
+            <div
               key={c.like_user_id}
-              type="monotone"
-              dataKey={c.like_user_id}
-              stroke={c.color}
-              strokeWidth={hovered === c.like_user_id ? 3 : hovered ? 1 : 1.8}
-              strokeOpacity={hovered && hovered !== c.like_user_id ? 0.18 : 1}
-              dot={<CustomDot />}
-              activeDot={hovered === c.like_user_id
-                ? { r:6, fill:c.color, stroke:INK, strokeWidth:2 }
-                : false}
-              connectNulls={false}
-              isAnimationActive={true}
-              animationDuration={800}
-              onMouseEnter={() => setHovered(c.like_user_id)}
+              title={isHid ? "クリックで表示" : "クリックで非表示"}
+              style={{
+                display: "flex", alignItems: "center", gap: 5,
+                cursor: "pointer", userSelect: "none",
+                opacity: isHid || dimmed ? 0.25 : 1,
+                transition: "opacity .18s",
+              }}
+              onClick={() => toggleHidden(c.like_user_id)}
+              onMouseEnter={() => { if (!isHid) setHovered(c.like_user_id); }}
               onMouseLeave={() => setHovered(null)}
-              style={{ cursor: c.has_profile_url ? "pointer" : "default" }}
-              onClick={() => c.has_profile_url && window.open(c.creator_url,"_blank","noopener")}
-            />
-          ))}
-        </LineChart>
-      </ResponsiveContainer>
+            >
+              {/* 非表示時は縁取りのみ */}
+              <span style={{
+                width: 10, height: 10, borderRadius: "50%", display: "inline-block", flexShrink: 0,
+                background:  isHid ? "transparent" : c.color,
+                border:      isHid ? `2px solid ${c.color}` : "none",
+                boxSizing:   "border-box",
+              }} />
+              <span style={{
+                fontSize: isMobile ? 9 : 10, color: "#ffffffaa",
+                fontFamily: "'Noto Sans JP',sans-serif",
+                maxWidth: isMobile ? 72 : 120,
+                overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+                textDecoration: isHid ? "line-through" : "none",
+              }}>
+                {c.has_profile_url
+                  ? <a
+                      href={c.creator_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={e => e.stopPropagation()}
+                      style={{ color: "inherit", textDecoration: "none", pointerEvents: isHid ? "none" : "auto" }}
+                    >{c.creator_name}</a>
+                  : c.creator_name
+                }
+              </span>
+            </div>
+          );
+        })}
+      </div>
 
-      <p style={{ fontSize:10, color:"#ffffff28", textAlign:"right", marginTop:6,
-        fontFamily:"'Syne',sans-serif", letterSpacing:1 }}>
-        凡例・線をクリックでプロフィールへ
+      {/* ── 折れ線チャート ── */}
+      {visibleCount === 0
+        ? (
+          <div style={{ textAlign: "center", padding: "40px 20px", color: "#ffffff22", fontSize: 13 }}>
+            凡例から表示したいクリエイターを選んでください
+          </div>
+        )
+        : (
+          <ResponsiveContainer width="100%" height={isMobile ? 260 : 340}>
+            <LineChart data={chartData} margin={{ top: 8, right: isMobile ? 8 : 16, left: isMobile ? -16 : 0, bottom: 4 }}>
+              <CartesianGrid stroke="#ffffff0a" vertical={false} />
+              <XAxis
+                dataKey="date"
+                tick={{ fill: "#ffffff44", fontSize: isMobile ? 9 : 11, fontFamily: "'Syne',sans-serif" }}
+                axisLine={false} tickLine={false}
+              />
+              <YAxis
+                tick={{ fill: "#ffffff33", fontSize: isMobile ? 9 : 10, fontFamily: "'Bebas Neue',sans-serif" }}
+                axisLine={false} tickLine={false}
+                width={isMobile ? 28 : 32}
+                label={!isMobile ? {
+                  value: "累計スキ数", angle: -90, position: "insideLeft",
+                  fill: "#ffffff22", fontSize: 10,
+                  fontFamily: "'Noto Sans JP',sans-serif", dx: -4,
+                } : undefined}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              {creators.map(c => {
+                if (hidden.has(c.like_user_id)) return null;
+                const isHov = hovered === c.like_user_id;
+                return (
+                  <Line
+                    key={c.like_user_id}
+                    type="monotone"
+                    dataKey={c.like_user_id}
+                    stroke={c.color}
+                    strokeWidth={isHov ? 3 : hovered ? 1 : 1.8}
+                    strokeOpacity={hovered && !isHov ? 0.15 : 1}
+                    dot={<CustomDot />}
+                    activeDot={isHov ? { r: 6, fill: c.color, stroke: INK, strokeWidth: 2 } : false}
+                    connectNulls={false}
+                    isAnimationActive={true}
+                    animationDuration={700}
+                    onMouseEnter={() => setHovered(c.like_user_id)}
+                    onMouseLeave={() => setHovered(null)}
+                    style={{ cursor: c.has_profile_url ? "pointer" : "default" }}
+                    onClick={() => c.has_profile_url && window.open(c.creator_url, "_blank", "noopener")}
+                  />
+                );
+              })}
+            </LineChart>
+          </ResponsiveContainer>
+        )
+      }
+
+      <p style={{ fontSize: 10, color: "#ffffff28", textAlign: "right", marginTop: 6, fontFamily: "'Syne',sans-serif", letterSpacing: 1 }}>
+        凡例クリックで表示/非表示 · 名前または線クリックでプロフィールへ
       </p>
     </div>
   );
 }
 
-/* TOP3 ヒーローカード */
+/* ── TOP3 ヒーローカード ──────────────────────────── */
 function HeroCard({ row, isMobile }) {
-  const idx  = row.rank - 1;
-  const url  = row.has_profile_url ? row.creator_url : null;
-  const mc   = MEDAL_COLOR[idx] ?? "#ffffff33";
+  const idx     = row.rank - 1;
+  const url     = row.has_profile_url ? row.creator_url : null;
+  const mc      = MEDAL_COLOR[idx] ?? "#ffffff33";
   const isFirst = idx === 0;
 
   const inner = (
     <div className="rank-card" style={{
-      background: isFirst
-        ? `linear-gradient(135deg,#2a0f00,#1a0700)`
-        : "#ffffff08",
-      border: `1px solid ${mc}${isFirst?"88":"44"}`,
+      background: isFirst ? `linear-gradient(135deg,#2a0f00,#1a0700)` : "#ffffff08",
+      border: `1px solid ${mc}${isFirst ? "88" : "44"}`,
       padding: isMobile ? "20px 16px" : "28px 24px",
       height: "100%",
       animation: `rankIn .5s cubic-bezier(.22,1,.36,1) ${idx * .08}s both`,
     }}>
-      {/* CTA オーバーレイ */}
       {url && (
         <div className="cta-layer">
           <span className="cta-text">プロフィールへ →</span>
         </div>
       )}
-
-      {/* メダル ＋ 順位 */}
-      <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
         <span style={{ fontSize: isFirst ? 28 : 22 }}>{MEDAL[idx]}</span>
-        <span style={{
-          fontFamily:"'Bebas Neue'",
-          fontSize: isFirst ? (isMobile?52:72) : (isMobile?40:56),
-          color: mc, lineHeight:1, letterSpacing:-1,
-        }}>{String(row.rank).padStart(2,"0")}</span>
+        <span style={{ fontFamily: "'Bebas Neue'", fontSize: isFirst ? (isMobile ? 52 : 72) : (isMobile ? 40 : 56), color: mc, lineHeight: 1, letterSpacing: -1 }}>
+          {String(row.rank).padStart(2, "0")}
+        </span>
       </div>
-
-      {/* 名前 */}
-      <div style={{
-        fontSize: isMobile?13:15, fontWeight:700,
-        color: isFirst ? CREAM : "#ffffffbb",
-        lineHeight:1.4, marginBottom:12,
-        overflow:"hidden", display:"-webkit-box",
-        WebkitLineClamp:2, WebkitBoxOrient:"vertical",
-      }}>
+      <div style={{ fontSize: isMobile ? 13 : 15, fontWeight: 700, color: isFirst ? CREAM : "#ffffffbb", lineHeight: 1.4, marginBottom: 12, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>
         {row.creator_name}
       </div>
-
-      {/* スキ数 */}
-      <div style={{ display:"flex", alignItems:"baseline", gap:6 }}>
-        <span style={{
-          fontFamily:"'Bebas Neue'",
-          fontSize: isFirst ? (isMobile?40:52) : (isMobile?32:40),
-          color: mc, lineHeight:1,
-        }}>{Number(row.likes_count).toLocaleString()}</span>
-        <span style={{ fontSize:11, color:"#ffffff44", fontFamily:"'Syne',sans-serif", letterSpacing:1 }}>スキ</span>
+      <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+        <span style={{ fontFamily: "'Bebas Neue'", fontSize: isFirst ? (isMobile ? 40 : 52) : (isMobile ? 32 : 40), color: mc, lineHeight: 1 }}>
+          {Number(row.likes_count).toLocaleString()}
+        </span>
+        <span style={{ fontSize: 11, color: "#ffffff44", fontFamily: "'Syne',sans-serif", letterSpacing: 1 }}>スキ</span>
       </div>
-
-      {/* 最終スキ日 */}
-      <div style={{ marginTop:10, fontSize:10, color:"#ffffff33", fontFamily:"'Syne',sans-serif", letterSpacing:.5 }}>
+      <div style={{ marginTop: 10, fontSize: 10, color: "#ffffff33", fontFamily: "'Syne',sans-serif", letterSpacing: .5 }}>
         最終 {fmtDate(row.last_like_at)}
       </div>
-
-      {/* URLなし表示 */}
-      {!url && (
-        <div style={{ marginTop:10, fontSize:9, color:"#ffffff22", fontFamily:"'Syne',sans-serif" }}>URL未設定</div>
-      )}
+      {!url && <div style={{ marginTop: 10, fontSize: 9, color: "#ffffff22", fontFamily: "'Syne',sans-serif" }}>URL未設定</div>}
     </div>
   );
 
   return url
-    ? <a href={url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none", display:"block", height:"100%" }}>{inner}</a>
+    ? <a href={url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", display: "block", height: "100%" }}>{inner}</a>
     : inner;
 }
 
-/* 4位以下 行カード */
+/* ── 4位以下 行カード ─────────────────────────────── */
 function RankRow({ row, isMobile }) {
   const url = row.has_profile_url ? row.creator_url : null;
 
   const inner = (
     <div className="rank-row" style={{
-      display:"grid",
+      display: "grid",
       gridTemplateColumns: isMobile ? "48px 1fr 56px" : "56px 1fr 80px 100px 90px",
       gap: isMobile ? 10 : 16,
       padding: isMobile ? "13px 12px" : "15px 20px",
-      alignItems:"center",
-      borderBottom:"1px solid #ffffff08",
+      alignItems: "center",
+      borderBottom: "1px solid #ffffff08",
       animation: `rankIn .4s cubic-bezier(.22,1,.36,1) ${(row.rank - 4) * .04}s both`,
     }}>
-      {/* 順位 */}
-      <div style={{
-        fontFamily:"'Bebas Neue'", fontSize:isMobile?24:28,
-        color:"#ffffff28", lineHeight:1, textAlign:"center",
-      }}>{row.rank}</div>
-
-      {/* 名前 */}
-      <div style={{
-        fontSize:isMobile?12:13, fontWeight:700,
-        color:"#ffffffbb", overflow:"hidden",
-        textOverflow:"ellipsis", whiteSpace:"nowrap",
-      }}>{row.creator_name}</div>
-
-      {/* スキ数 */}
-      <div style={{
-        textAlign:"right", fontFamily:"'Bebas Neue'",
-        fontSize:isMobile?20:22, color:CREAM, lineHeight:1,
-      }}>
-        {Number(row.likes_count).toLocaleString()}
-        <div style={{ fontSize:9, color:"#ffffff28", fontFamily:"'Syne',sans-serif", letterSpacing:.5 }}>スキ</div>
+      <div style={{ fontFamily: "'Bebas Neue'", fontSize: isMobile ? 24 : 28, color: "#ffffff28", lineHeight: 1, textAlign: "center" }}>{row.rank}</div>
+      <div style={{ fontSize: isMobile ? 12 : 13, fontWeight: 700, color: "#ffffffbb", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+        {row.creator_name}
       </div>
-
-      {/* 最終スキ日（PCのみ） */}
+      <div style={{ textAlign: "right", fontFamily: "'Bebas Neue'", fontSize: isMobile ? 20 : 22, color: CREAM, lineHeight: 1 }}>
+        {Number(row.likes_count).toLocaleString()}
+        <div style={{ fontSize: 9, color: "#ffffff28", fontFamily: "'Syne',sans-serif", letterSpacing: .5 }}>スキ</div>
+      </div>
       {!isMobile && (
-        <div style={{ textAlign:"right", fontSize:10, color:"#ffffff33" }}>
-          {fmtDate(row.last_like_at)}
-        </div>
+        <div style={{ textAlign: "right", fontSize: 10, color: "#ffffff33" }}>{fmtDate(row.last_like_at)}</div>
       )}
-
-      {/* CTA（PCのみ） */}
       {!isMobile && (
-        <div className="row-cta" style={{ textAlign:"right" }}>
-          {url
-            ? <span style={{
-                display:"inline-block", padding:"4px 12px", borderRadius:16,
-                fontSize:10, fontFamily:"'Syne',sans-serif", letterSpacing:1,
-                color:"#fff", background:C, whiteSpace:"nowrap",
-              }}>見に行く →</span>
-            : null
-          }
+        <div className="row-cta" style={{ textAlign: "right" }}>
+          {url && (
+            <span style={{ display: "inline-block", padding: "4px 12px", borderRadius: 16, fontSize: 10, fontFamily: "'Syne',sans-serif", letterSpacing: 1, color: "#fff", background: C, whiteSpace: "nowrap" }}>
+              見に行く →
+            </span>
+          )}
         </div>
       )}
     </div>
   );
 
   return url
-    ? <a href={url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none", display:"block" }}>{inner}</a>
+    ? <a href={url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", display: "block" }}>{inner}</a>
     : inner;
 }
 
-/* ローディング skeleton */
+/* ── ローディング skeleton ───────────────────────── */
 function RankSkeleton({ isMobile }) {
   return (
     <>
-      <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr 1fr", gap:12, marginBottom:12 }}>
-        {[0,1,2].map(i => <Skeleton key={i} w="100%" h={isMobile?120:160} style={{ borderRadius:16 }} />)}
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", gap: 12, marginBottom: 12 }}>
+        {[0,1,2].map(i => <Skeleton key={i} w="100%" h={isMobile ? 120 : 160} style={{ borderRadius: 16 }} />)}
       </div>
       {[0,1,2,3].map(i => (
-        <div key={i} style={{ display:"flex", gap:12, padding:"14px 0", borderBottom:"1px solid #ffffff08" }}>
+        <div key={i} style={{ display: "flex", gap: 12, padding: "14px 0", borderBottom: "1px solid #ffffff08" }}>
           <Skeleton w={40} h={18} />
-          <Skeleton w={`${50+i*10}%`} h={18} />
-          <div style={{ marginLeft:"auto" }}><Skeleton w={48} h={18} /></div>
+          <Skeleton w={`${50 + i * 10}%`} h={18} />
+          <div style={{ marginLeft: "auto" }}><Skeleton w={48} h={18} /></div>
         </div>
       ))}
     </>
   );
 }
 
+/* ══════════════════════════════════════════════
+   ランキングページ
+══════════════════════════════════════════════ */
 function LikesRankingPage({ isMobile }) {
-  const [period, setPeriod]     = useState("total");
+  const [period,   setPeriod]   = useState("total");
   const [viewMode, setViewMode] = useState("rank"); // "rank" | "chart" | "race"
 
   const total    = useRankingData("ranking_total.json");
   const monthly  = useRankingData("ranking_monthly.json");
   const lastWeek = useRankingData("ranking_last_week.json");
-  const bump     = useBumpData(); // バンプチャート用（CSV直読み）
+  const bump     = useBumpData();
 
-  const stateMap   = { total, monthly, last_week:lastWeek };
+  const stateMap   = { total, monthly, last_week: lastWeek };
   const active     = stateMap[period];
   const periodCfg  = RANK_PERIODS.find(p => p.id === period);
   const items      = (active.data?.items ?? []).slice(0, periodCfg.top);
   const top3       = items.slice(0, 3);
   const rest       = items.slice(3);
-  const genAt      = active.data?.generated_at?.slice(0,10).replace(/-/g,"/") ?? null;
+  const genAt      = active.data?.generated_at?.slice(0, 10).replace(/-/g, "/") ?? null;
   const periodLabel = buildPeriodLabel(active.data, period);
 
   // 期間切替時にチャート非対応ならランク表示に戻す
@@ -929,22 +1033,22 @@ function LikesRankingPage({ isMobile }) {
 
   const VIEW_MODES = periodCfg.hasChart
     ? [
-        { id:"rank",  icon:"☰", tip:"ランク" },
-        { id:"chart", icon:"▬", tip:"チャート" },
-        { id:"race",  icon:"↗", tip:"レース" },
+        { id: "rank",  icon: "☰", tip: "ランク"   },
+        { id: "chart", icon: "▬", tip: "チャート" },
+        { id: "race",  icon: "↗", tip: "レース"   },
       ]
     : [];
 
   return (
-    <div className="page-fade" style={{ minHeight:"100vh", background:INK, color:CREAM }}>
+    <div className="page-fade" style={{ minHeight: "100vh", background: INK, color: CREAM }}>
 
       {/* ヘッダー */}
-      <div style={{ padding: isMobile?"28px 16px 0":"52px 40px 0", maxWidth:960, margin:"0 auto" }}>
-        <span className="badge" style={{ background:C, color:"#fff", marginBottom:14, display:"inline-block" }}>RANKING</span>
-        <h1 style={{ fontFamily:"'Bebas Neue'", fontSize:"clamp(44px,10vw,88px)", lineHeight:.88, marginBottom:10 }}>
+      <div style={{ padding: isMobile ? "28px 16px 0" : "52px 40px 0", maxWidth: 960, margin: "0 auto" }}>
+        <span className="badge" style={{ background: C, color: "#fff", marginBottom: 14, display: "inline-block" }}>RANKING</span>
+        <h1 style={{ fontFamily: "'Bebas Neue'", fontSize: "clamp(44px,10vw,88px)", lineHeight: .88, marginBottom: 10 }}>
           スキした人たち
         </h1>
-        <p style={{ fontSize:12, color:"#ffffff44", marginBottom:32, letterSpacing:.5 }}>
+        <p style={{ fontSize: 12, color: "#ffffff44", marginBottom: 32, letterSpacing: .5 }}>
           {active.error
             ? `⚠️ ${active.error}`
             : genAt
@@ -953,35 +1057,36 @@ function LikesRankingPage({ isMobile }) {
         </p>
 
         {/* 期間ピル + ビュー切替 */}
-        <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom: periodLabel ? 16 : 40, flexWrap:"wrap" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: periodLabel ? 16 : 40, flexWrap: "wrap" }}>
           {RANK_PERIODS.map(p => (
             <button key={p.id} className="tab-btn" onClick={() => setPeriod(p.id)}
               style={{
-                padding: isMobile?"7px 18px":"9px 24px",
-                borderRadius:28, fontSize:11, letterSpacing:2,
-                fontFamily:"'Syne',sans-serif", fontWeight:700, textTransform:"uppercase",
-                color: period===p.id?"#fff":"#ffffff55",
-                background: period===p.id?C:"transparent",
-                border: `1.5px solid ${period===p.id?C:"#ffffff22"}`,
-                transition:"all .2s cubic-bezier(.22,1,.36,1)",
+                padding: isMobile ? "7px 18px" : "9px 24px",
+                borderRadius: 28, fontSize: 11, letterSpacing: 2,
+                fontFamily: "'Syne',sans-serif", fontWeight: 700, textTransform: "uppercase",
+                color:      period === p.id ? "#fff"       : "#ffffff55",
+                background: period === p.id ? C            : "transparent",
+                border:     `1.5px solid ${period === p.id ? C : "#ffffff22"}`,
+                transition: "all .2s cubic-bezier(.22,1,.36,1)",
               }}
-            >{p.label}
-              {period===p.id && <span style={{ marginLeft:6, fontSize:9, opacity:.7 }}>TOP {p.top}</span>}
+            >
+              {p.label}
+              {period === p.id && <span style={{ marginLeft: 6, fontSize: 9, opacity: .7 }}>TOP {p.top}</span>}
             </button>
           ))}
 
           {/* ビュー切替（今月のみ） */}
           {VIEW_MODES.length > 0 && items.length > 0 && (
-            <div style={{ marginLeft:"auto", display:"flex", gap:4 }}>
+            <div style={{ marginLeft: "auto", display: "flex", gap: 4 }}>
               {VIEW_MODES.map(v => (
                 <button key={v.id} className="tab-btn" onClick={() => setViewMode(v.id)}
                   title={v.tip}
                   style={{
-                    padding:"7px 14px", borderRadius:20, fontSize:14,
-                    color: viewMode===v.id?CREAM:"#ffffff33",
-                    background: viewMode===v.id?"#ffffff18":"transparent",
-                    border:`1px solid ${viewMode===v.id?"#ffffff44":"#ffffff18"}`,
-                    transition:"all .18s",
+                    padding: "7px 14px", borderRadius: 20, fontSize: 14,
+                    color:      viewMode === v.id ? CREAM        : "#ffffff33",
+                    background: viewMode === v.id ? "#ffffff18"  : "transparent",
+                    border:     `1px solid ${viewMode === v.id ? "#ffffff44" : "#ffffff18"}`,
+                    transition: "all .18s",
                   }}
                 >{v.icon}</button>
               ))}
@@ -989,75 +1094,68 @@ function LikesRankingPage({ isMobile }) {
           )}
         </div>
 
-        {/* 集計期間バッジ（今月・先週） */}
+        {/* 集計期間バッジ */}
         {periodLabel && (
-          <div style={{ marginBottom:32 }}>
-            <div style={{
-              display:"inline-flex", alignItems:"center", gap:8,
-              background:"#ffffff0a", border:"1px solid #ffffff18",
-              borderRadius:20, padding:"6px 16px",
-            }}>
-              <span style={{ fontSize:10, color:"#ffffff44", fontFamily:"'Syne',sans-serif", letterSpacing:1 }}>集計期間</span>
-              <span style={{ fontSize:13, fontWeight:700, color:CREAM, fontFamily:"'Noto Sans JP',sans-serif" }}>{periodLabel}</span>
+          <div style={{ marginBottom: 32 }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#ffffff0a", border: "1px solid #ffffff18", borderRadius: 20, padding: "6px 16px" }}>
+              <span style={{ fontSize: 10, color: "#ffffff44", fontFamily: "'Syne',sans-serif", letterSpacing: 1 }}>集計期間</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: CREAM, fontFamily: "'Noto Sans JP',sans-serif" }}>{periodLabel}</span>
             </div>
           </div>
         )}
       </div>
 
-      <div style={{ maxWidth:960, margin:"0 auto", padding: isMobile?"0 16px 80px":"0 40px 80px" }}>
+      <div style={{ maxWidth: 960, margin: "0 auto", padding: isMobile ? "0 16px 80px" : "0 40px 80px" }}>
 
-        {/* ローディング */}
         {!active.loaded && <RankSkeleton isMobile={isMobile} />}
 
-        {/* エラー */}
         {active.error && (
-          <div style={{ textAlign:"center", padding:"60px 20px", color:"#ffffff22", fontSize:14 }}>
+          <div style={{ textAlign: "center", padding: "60px 20px", color: "#ffffff22", fontSize: 14 }}>
             ⚠️ {active.error}
           </div>
         )}
 
-        {/* データなし */}
         {active.loaded && !active.error && items.length === 0 && (
-          <div style={{ textAlign:"center", padding:"60px 20px", color:"#ffffff22", fontSize:14 }}>
+          <div style={{ textAlign: "center", padding: "60px 20px", color: "#ffffff22", fontSize: 14 }}>
             この期間のデータがありません
           </div>
         )}
 
-        {/* ── チャートビュー ── */}
+        {/* チャートビュー */}
         {viewMode === "chart" && items.length > 0 && (
           <MonthlyChart items={items} isMobile={isMobile} />
         )}
 
-        {/* ── レースビュー ── */}
+        {/* レースビュー */}
         {viewMode === "race" && (
           <GrowthRaceChart bumpState={bump} isMobile={isMobile} />
         )}
 
-        {/* ── ランキングビュー ── */}
+        {/* ランキングビュー */}
         {viewMode === "rank" && (
           <>
             {top3.length > 0 && (
               <div style={{
-                display:"grid",
-                gridTemplateColumns: isMobile?"1fr":`repeat(${top3.length},1fr)`,
-                gap:12, marginBottom:8,
+                display: "grid",
+                gridTemplateColumns: isMobile ? "1fr" : `repeat(${top3.length},1fr)`,
+                gap: 12, marginBottom: 8,
               }}>
                 {top3.map(row => <HeroCard key={row.like_user_id} row={row} isMobile={isMobile} />)}
               </div>
             )}
             {rest.length > 0 && (
-              <div style={{ marginTop:8 }}>
+              <div style={{ marginTop: 8 }}>
                 {!isMobile && (
                   <div style={{
-                    display:"grid", gridTemplateColumns:"56px 1fr 80px 100px 90px",
-                    gap:16, padding:"8px 20px",
-                    fontSize:9, color:"#ffffff28",
-                    fontFamily:"'Syne',sans-serif", letterSpacing:1.5,
-                    borderBottom:"1px solid #ffffff0a",
+                    display: "grid", gridTemplateColumns: "56px 1fr 80px 100px 90px",
+                    gap: 16, padding: "8px 20px",
+                    fontSize: 9, color: "#ffffff28",
+                    fontFamily: "'Syne',sans-serif", letterSpacing: 1.5,
+                    borderBottom: "1px solid #ffffff0a",
                   }}>
                     <div>RANK</div><div>CREATOR</div>
-                    <div style={{ textAlign:"right" }}>スキ</div>
-                    <div style={{ textAlign:"right" }}>最終スキ日</div>
+                    <div style={{ textAlign: "right" }}>スキ</div>
+                    <div style={{ textAlign: "right" }}>最終スキ日</div>
                     <div />
                   </div>
                 )}
@@ -1069,152 +1167,7 @@ function LikesRankingPage({ isMobile }) {
       </div>
 
       {items.length > 0 && (
-        <div style={{
-          textAlign:"center", padding:"0 24px 64px",
-          color:"#ffffff28", fontSize:11,
-          fontFamily:"'Syne',sans-serif", letterSpacing:2, textTransform:"uppercase",
-        }}>
-          反応している人から、新しい出会いが見つかる
-        </div>
-      )}
-    </div>
-  );
-}
-
-  return (
-    <div className="page-fade" style={{ minHeight:"100vh", background:INK, color:CREAM }}>
-
-      {/* ヘッダー */}
-      <div style={{ padding: isMobile?"28px 16px 0":"52px 40px 0", maxWidth:960, margin:"0 auto" }}>
-        <span className="badge" style={{ background:C, color:"#fff", marginBottom:14, display:"inline-block" }}>RANKING</span>
-        <h1 style={{ fontFamily:"'Bebas Neue'", fontSize:"clamp(44px,10vw,88px)", lineHeight:.88, marginBottom:10 }}>
-          スキした人たち
-        </h1>
-        <p style={{ fontSize:12, color:"#ffffff44", marginBottom:32, letterSpacing:.5 }}>
-          {active.error
-            ? `⚠️ ${active.error}`
-            : genAt
-              ? `集計日 ${genAt} — 気になる人を見つけたら、プロフィールへ飛んでみて`
-              : "読み込み中…"}
-        </p>
-
-        {/* 期間ピル + ビュー切替 */}
-        <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom: periodLabel ? 16 : 40, flexWrap:"wrap" }}>
-          {RANK_PERIODS.map(p => (
-            <button key={p.id} className="tab-btn" onClick={() => setPeriod(p.id)}
-              style={{
-                padding: isMobile?"7px 18px":"9px 24px",
-                borderRadius:28, fontSize:11, letterSpacing:2,
-                fontFamily:"'Syne',sans-serif", fontWeight:700, textTransform:"uppercase",
-                color: period===p.id?"#fff":"#ffffff55",
-                background: period===p.id?C:"transparent",
-                border: `1.5px solid ${period===p.id?C:"#ffffff22"}`,
-                transition:"all .2s cubic-bezier(.22,1,.36,1)",
-              }}
-            >{p.label}
-              {period===p.id && <span style={{ marginLeft:6, fontSize:9, opacity:.7 }}>TOP {p.top}</span>}
-            </button>
-          ))}
-
-          {/* チャート切替（今月のみ） */}
-          {periodCfg.hasChart && items.length > 0 && (
-            <div style={{ marginLeft:"auto", display:"flex", gap:4 }}>
-              {[{id:"rank",icon:"☰",tip:"ランク"},{id:"chart",icon:"▬",tip:"チャート"}].map(v => (
-                <button key={v.id} className="tab-btn" onClick={() => setViewMode(v.id)}
-                  title={v.tip}
-                  style={{
-                    padding:"7px 14px", borderRadius:20, fontSize:14,
-                    color: viewMode===v.id?CREAM:"#ffffff33",
-                    background: viewMode===v.id?"#ffffff18":"transparent",
-                    border:`1px solid ${viewMode===v.id?"#ffffff44":"#ffffff18"}`,
-                    transition:"all .18s",
-                  }}
-                >{v.icon}</button>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* 集計期間バッジ（今月・先週） */}
-        {periodLabel && (
-          <div style={{ marginBottom:32 }}>
-            <div style={{
-              display:"inline-flex", alignItems:"center", gap:8,
-              background:"#ffffff0a", border:"1px solid #ffffff18",
-              borderRadius:20, padding:"6px 16px",
-            }}>
-              <span style={{ fontSize:10, color:"#ffffff44", fontFamily:"'Syne',sans-serif", letterSpacing:1 }}>集計期間</span>
-              <span style={{ fontSize:13, fontWeight:700, color:CREAM, fontFamily:"'Noto Sans JP',sans-serif" }}>{periodLabel}</span>
-            </div>
-          </div>
-        )}
-      </div>
-
-      <div style={{ maxWidth:960, margin:"0 auto", padding: isMobile?"0 16px 80px":"0 40px 80px" }}>
-
-        {/* ローディング */}
-        {!active.loaded && <RankSkeleton isMobile={isMobile} />}
-
-        {/* エラー */}
-        {active.error && (
-          <div style={{ textAlign:"center", padding:"60px 20px", color:"#ffffff22", fontSize:14 }}>
-            ⚠️ {active.error}
-          </div>
-        )}
-
-        {/* データなし */}
-        {active.loaded && !active.error && items.length === 0 && (
-          <div style={{ textAlign:"center", padding:"60px 20px", color:"#ffffff22", fontSize:14 }}>
-            この期間のデータがありません
-          </div>
-        )}
-
-        {/* ── チャートビュー ── */}
-        {viewMode === "chart" && items.length > 0 && (
-          <MonthlyChart items={items} isMobile={isMobile} />
-        )}
-
-        {/* ── ランキングビュー ── */}
-        {viewMode === "rank" && (
-          <>
-            {top3.length > 0 && (
-              <div style={{
-                display:"grid",
-                gridTemplateColumns: isMobile?"1fr":`repeat(${top3.length},1fr)`,
-                gap:12, marginBottom:8,
-              }}>
-                {top3.map(row => <HeroCard key={row.like_user_id} row={row} isMobile={isMobile} />)}
-              </div>
-            )}
-            {rest.length > 0 && (
-              <div style={{ marginTop:8 }}>
-                {!isMobile && (
-                  <div style={{
-                    display:"grid", gridTemplateColumns:"56px 1fr 80px 100px 90px",
-                    gap:16, padding:"8px 20px",
-                    fontSize:9, color:"#ffffff28",
-                    fontFamily:"'Syne',sans-serif", letterSpacing:1.5,
-                    borderBottom:"1px solid #ffffff0a",
-                  }}>
-                    <div>RANK</div><div>CREATOR</div>
-                    <div style={{ textAlign:"right" }}>スキ</div>
-                    <div style={{ textAlign:"right" }}>最終スキ日</div>
-                    <div />
-                  </div>
-                )}
-                {rest.map(row => <RankRow key={row.like_user_id} row={row} isMobile={isMobile} />)}
-              </div>
-            )}
-          </>
-        )}
-      </div>
-
-      {items.length > 0 && (
-        <div style={{
-          textAlign:"center", padding:"0 24px 64px",
-          color:"#ffffff28", fontSize:11,
-          fontFamily:"'Syne',sans-serif", letterSpacing:2, textTransform:"uppercase",
-        }}>
+        <div style={{ textAlign: "center", padding: "0 24px 64px", color: "#ffffff28", fontSize: 11, fontFamily: "'Syne',sans-serif", letterSpacing: 2, textTransform: "uppercase" }}>
           反応している人から、新しい出会いが見つかる
         </div>
       )}
@@ -1228,54 +1181,54 @@ function LikesRankingPage({ isMobile }) {
 export default function KitaWrapped() {
   const { data, error } = useNoteData();
   const [activeWorst, setActiveWorst] = useState(null);
-  const [tab, setTab] = useState("dashboard");
+  const [tab,         setTab]         = useState("dashboard");
   const isMobile = useIsMobile();
-  const loading = !data;
+  const loading  = !data;
 
   if (error) return (
-    <div style={{background:INK,color:"#f87171",minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontFamily:"monospace",gap:12,padding:24,textAlign:"center"}}>
-      <div style={{fontSize:32}}>⚠️</div>
-      <div style={{fontSize:14}}>CSVが読み込めませんでした</div>
-      <div style={{fontSize:11,color:"#64748b"}}>{error}</div>
-      <div style={{fontSize:11,color:"#475569",marginTop:8}}>public/data/ にCSVを置いてください</div>
+    <div style={{ background: INK, color: "#f87171", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontFamily: "monospace", gap: 12, padding: 24, textAlign: "center" }}>
+      <div style={{ fontSize: 32 }}>⚠️</div>
+      <div style={{ fontSize: 14 }}>CSVが読み込めませんでした</div>
+      <div style={{ fontSize: 11, color: "#64748b" }}>{error}</div>
+      <div style={{ fontSize: 11, color: "#475569", marginTop: 8 }}>public/data/ にCSVを置いてください</div>
     </div>
   );
 
   return (
-    <div style={{fontFamily:"'Noto Sans JP',sans-serif",background:CREAM,color:INK,minHeight:"100vh",overflowX:"hidden"}}>
+    <div style={{ fontFamily: "'Noto Sans JP',sans-serif", background: CREAM, color: INK, minHeight: "100vh", overflowX: "hidden" }}>
 
       {/* ══ スティッキータブナビ ══ */}
       <div style={{
-        position:"sticky",top:0,zIndex:100,
-        background:INK,borderBottom:"1px solid #ffffff14",
-        display:"flex",alignItems:"center",
-        padding:isMobile?"0 16px":"0 32px",
-        height:48,
+        position: "sticky", top: 0, zIndex: 100,
+        background: INK, borderBottom: "1px solid #ffffff14",
+        display: "flex", alignItems: "center",
+        padding: isMobile ? "0 16px" : "0 32px",
+        height: 48,
       }}>
-        <span style={{fontFamily:"'Bebas Neue'",fontSize:16,letterSpacing:3,color:C,marginRight:24,flexShrink:0}}>
-          KITA<span style={{fontFamily:"'Noto Sans JP',sans-serif",fontWeight:700,fontSize:12,letterSpacing:1}}>core</span>
+        <span style={{ fontFamily: "'Bebas Neue'", fontSize: 16, letterSpacing: 3, color: C, marginRight: 24, flexShrink: 0 }}>
+          KITA<span style={{ fontFamily: "'Noto Sans JP',sans-serif", fontWeight: 700, fontSize: 12, letterSpacing: 1 }}>core</span>
         </span>
         {[
-          {id:"dashboard",label:"DASHBOARD"},
-          {id:"articles", label:"記事一覧"},
-          {id:"ranking",  label:"ランキング"},
-        ].map(t=>(
+          { id: "dashboard", label: "DASHBOARD" },
+          { id: "articles",  label: "記事一覧"   },
+          { id: "ranking",   label: "ランキング" },
+        ].map(t => (
           <button
             key={t.id}
             className="tab-btn"
-            onClick={()=>{ setTab(t.id); window.scrollTo({top:0,behavior:"smooth"}); }}
+            onClick={() => { setTab(t.id); window.scrollTo({ top: 0, behavior: "smooth" }); }}
             style={{
-              padding:isMobile?"0 12px":"0 20px",
-              height:48,
-              color:tab===t.id?CREAM:"#ffffff33",
-              borderBottom:`2px solid ${tab===t.id?C:"transparent"}`,
-              marginBottom:-1,
+              padding:      isMobile ? "0 12px" : "0 20px",
+              height:       48,
+              color:        tab === t.id ? CREAM        : "#ffffff33",
+              borderBottom: `2px solid ${tab === t.id ? C : "transparent"}`,
+              marginBottom: -1,
             }}
           >{t.label}</button>
         ))}
-        <div style={{flex:1}} />
-        <span style={{fontFamily:"'Syne',sans-serif",fontSize:9,letterSpacing:1,color:"#ffffff33",flexShrink:0}}>
-          {loading?"—":data.updatedAt}
+        <div style={{ flex: 1 }} />
+        <span style={{ fontFamily: "'Syne',sans-serif", fontSize: 9, letterSpacing: 1, color: "#ffffff33", flexShrink: 0 }}>
+          {loading ? "—" : data.updatedAt}
         </span>
       </div>
 
@@ -1284,93 +1237,94 @@ export default function KitaWrapped() {
         <div className="page-fade">
 
           {/* HERO */}
-          <section style={{minHeight:"100svh",display:"flex",flexDirection:"column",background:INK,color:CREAM,position:"relative",overflow:"hidden"}}>
-            <div style={{position:"absolute",inset:0,backgroundImage:"radial-gradient(circle at 20% 50%,#2a1500,transparent 60%),radial-gradient(circle at 80% 20%,#300a00,transparent 50%)",pointerEvents:"none"}} />
-            <div className="hero-bd fu d1" style={{flex:1,display:"flex",flexDirection:"column",justifyContent:"center",position:"relative",zIndex:1,paddingTop:60}}>
-              <div style={{fontFamily:"'Bebas Neue'",fontSize:"clamp(60px,15vw,160px)",lineHeight:.88,letterSpacing:"-2px",color:CREAM}}>
-                DATA <span style={{color:C}}>×</span> NOTE
+          <section style={{ minHeight: "100svh", display: "flex", flexDirection: "column", background: INK, color: CREAM, position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 20% 50%,#2a1500,transparent 60%),radial-gradient(circle at 80% 20%,#300a00,transparent 50%)", pointerEvents: "none" }} />
+            <div className="hero-bd fu d1" style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", zIndex: 1, paddingTop: 60 }}>
+              <div style={{ fontFamily: "'Bebas Neue'", fontSize: "clamp(60px,15vw,160px)", lineHeight: .88, letterSpacing: "-2px", color: CREAM }}>
+                DATA <span style={{ color: C }}>×</span> NOTE
               </div>
-              <div className="fu d2" style={{fontFamily:"'Syne',sans-serif",fontSize:"clamp(12px,3vw,17px)",color:"#ffffff88",marginTop:20,maxWidth:480,lineHeight:1.7}}>
-                {loading?"データ読み込み中…":`${data.totalArt}本の記事・${data.updatedAt}集計。ログは続く。`}
+              <div className="fu d2" style={{ fontFamily: "'Syne',sans-serif", fontSize: "clamp(12px,3vw,17px)", color: "#ffffff88", marginTop: 20, maxWidth: 480, lineHeight: 1.7 }}>
+                {loading ? "データ読み込み中…" : `${data.totalArt}本の記事・${data.updatedAt}集計。ログは続く。`}
               </div>
               <div className="fu d3 stat-row">
                 {loading
-                  ? [1,2,3,4].map(i=><Skeleton key={i} w={80} h={64} />)
+                  ? [1,2,3,4].map(i => <Skeleton key={i} w={80} h={64} />)
                   : [
-                      {n:data.totalPV.toLocaleString(),u:"累計PV",diff:data.pvDiff},
-                      {n:data.totalSK.toLocaleString(),u:"累計スキ",diff:data.skDiff},
-                      {n:data.lastFollower.toLocaleString(),u:"フォロワー",diff:data.followerDiff,msg:data.followerMsg},
-                      {n:data.totalArt.toLocaleString(),u:"総記事数",diff:data.artDiff},
-                    ].map(k=>(
+                      { n: data.totalPV.toLocaleString(),       u: "累計PV",    diff: data.pvDiff       },
+                      { n: data.totalSK.toLocaleString(),       u: "累計スキ",  diff: data.skDiff       },
+                      { n: data.lastFollower.toLocaleString(),  u: "フォロワー",diff: data.followerDiff, msg: data.followerMsg },
+                      { n: data.totalArt.toLocaleString(),      u: "総記事数",  diff: data.artDiff      },
+                    ].map(k => (
                       <div key={k.u}>
-                        <div style={{display:"flex",alignItems:"baseline",gap:8,flexWrap:"wrap"}}>
-                          <div style={{fontFamily:"'Bebas Neue'",fontSize:"clamp(30px,7vw,60px)",color:C,lineHeight:1}}>{k.n}</div>
-                          {k.diff!==undefined&&k.diff!==0&&(
-                            <div style={{fontSize:11,color:k.diff>0?"#86efac":"#fca5a5",lineHeight:1}}>
-                              <span style={{fontSize:9,opacity:.7,marginRight:3}}>前日比</span>{k.diff>0?`▲${k.diff}`:`▼${Math.abs(k.diff)}`}
+                        <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
+                          <div style={{ fontFamily: "'Bebas Neue'", fontSize: "clamp(30px,7vw,60px)", color: C, lineHeight: 1 }}>{k.n}</div>
+                          {k.diff !== undefined && k.diff !== 0 && (
+                            <div style={{ fontSize: 11, color: k.diff > 0 ? "#86efac" : "#fca5a5", lineHeight: 1 }}>
+                              <span style={{ fontSize: 9, opacity: .7, marginRight: 3 }}>前日比</span>
+                              {k.diff > 0 ? `▲${k.diff}` : `▼${Math.abs(k.diff)}`}
                             </div>
                           )}
                         </div>
-                        <div style={{fontFamily:"'Syne',sans-serif",fontSize:10,color:"#ffffff55",letterSpacing:2,marginTop:4}}>{k.u}</div>
-                        {k.msg&&<div style={{marginTop:6,fontSize:11,color:k.diff>0?"#86efac":k.diff<0?"#fca5a5":"#ffffff66",fontStyle:"italic"}}>{k.msg}</div>}
+                        <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 10, color: "#ffffff55", letterSpacing: 2, marginTop: 4 }}>{k.u}</div>
+                        {k.msg && <div style={{ marginTop: 6, fontSize: 11, color: k.diff > 0 ? "#86efac" : k.diff < 0 ? "#fca5a5" : "#ffffff66", fontStyle: "italic" }}>{k.msg}</div>}
                       </div>
                     ))
                 }
               </div>
             </div>
-            <div style={{position:"absolute",bottom:20,left:"50%",transform:"translateX(-50%)",fontFamily:"'Syne',sans-serif",fontSize:10,letterSpacing:3,color:"#ffffff33"}}>SCROLL ↓</div>
+            <div style={{ position: "absolute", bottom: 20, left: "50%", transform: "translateX(-50%)", fontFamily: "'Syne',sans-serif", fontSize: 10, letterSpacing: 3, color: "#ffffff33" }}>SCROLL ↓</div>
           </section>
 
           {/* TICKER */}
-          <div className="ticker-wrap" style={{background:"#fff8e7"}}>
+          <div className="ticker-wrap" style={{ background: "#fff8e7" }}>
             <div className="ticker-inner">
-              {loading?"　データ読み込み中…　".repeat(8):(data.tickerText+"　").repeat(4)}
+              {loading ? "　データ読み込み中…　".repeat(8) : (data.tickerText + "　").repeat(4)}
             </div>
           </div>
 
           {/* GROWTH */}
-          <section className="sec" style={{maxWidth:900,margin:"0 auto"}}>
+          <section className="sec" style={{ maxWidth: 900, margin: "0 auto" }}>
             <div className="growth-grid">
               <div>
-                <span className="badge" style={{background:C,color:"#fff",marginBottom:16}}>GROWTH</span>
+                <span className="badge" style={{ background: C, color: "#fff", marginBottom: 16 }}>GROWTH</span>
                 {loading
-                  ? <><Skeleton w="80%" h={72} style={{marginTop:12}} /><Skeleton w="60%" h={20} style={{marginTop:16}} /></>
+                  ? <><Skeleton w="80%" h={72} style={{ marginTop: 12 }} /><Skeleton w="60%" h={20} style={{ marginTop: 16 }} /></>
                   : <>
-                    <h2 style={{fontFamily:"'Bebas Neue'",fontSize:"clamp(38px,9vw,80px)",lineHeight:.9,marginTop:12}}>
-                      集計開始→今<br /><span style={{color:C}}>+{data.pvGrowth}%</span>
+                    <h2 style={{ fontFamily: "'Bebas Neue'", fontSize: "clamp(38px,9vw,80px)", lineHeight: .9, marginTop: 12 }}>
+                      集計開始→今<br /><span style={{ color: C }}>+{data.pvGrowth}%</span>
                     </h2>
-                    <p style={{marginTop:20,lineHeight:1.8,color:"#5a3a1a",fontSize:14}}>
+                    <p style={{ marginTop: 20, lineHeight: 1.8, color: "#5a3a1a", fontSize: 14 }}>
                       スキの伸びは <strong>+{data.skGrowth}%</strong>
-                      {data.skGrowth>data.pvGrowth
-                        ?<> とPVを上回る。<br />「数字より質」が育ってる証拠。</>
-                        :data.skGrowth>0
-                        ?<> で成長中。<br />PVと一緒にファンも増やしていこ。</>
-                        :<> は伸び途中。<br />スキされる記事、研究する価値あり。</>}
+                      {data.skGrowth > data.pvGrowth
+                        ? <> とPVを上回る。<br />「数字より質」が育ってる証拠。</>
+                        : data.skGrowth > 0
+                          ? <> で成長中。<br />PVと一緒にファンも増やしていこ。</>
+                          : <> は伸び途中。<br />スキされる記事、研究する価値あり。</>}
                     </p>
-                    <div style={{marginTop:24,display:"flex",gap:20}}>
-                      <div style={{borderLeft:`3px solid ${C}`,paddingLeft:12}}>
-                        <div style={{fontFamily:"'Bebas Neue'",fontSize:28,color:C}}>+{data.skGrowth}%</div>
-                        <div style={{fontSize:11,color:"#999",letterSpacing:1}}>スキ増加率</div>
+                    <div style={{ marginTop: 24, display: "flex", gap: 20 }}>
+                      <div style={{ borderLeft: `3px solid ${C}`, paddingLeft: 12 }}>
+                        <div style={{ fontFamily: "'Bebas Neue'", fontSize: 28, color: C }}>+{data.skGrowth}%</div>
+                        <div style={{ fontSize: 11, color: "#999", letterSpacing: 1 }}>スキ増加率</div>
                       </div>
-                      <div style={{borderLeft:"3px solid #ccc",paddingLeft:12}}>
-                        <div style={{fontFamily:"'Bebas Neue'",fontSize:28,color:INK}}>{parseFloat(data.skiRate).toFixed(1)}%</div>
-                        <div style={{fontSize:11,color:"#999",letterSpacing:1}}>平均スキ率</div>
+                      <div style={{ borderLeft: "3px solid #ccc", paddingLeft: 12 }}>
+                        <div style={{ fontFamily: "'Bebas Neue'", fontSize: 28, color: INK }}>{parseFloat(data.skiRate).toFixed(1)}%</div>
+                        <div style={{ fontSize: 11, color: "#999", letterSpacing: 1 }}>平均スキ率</div>
                       </div>
                     </div>
                   </>
                 }
               </div>
-              <div style={{background:"#fff",borderRadius:16,padding:isMobile?"16px 8px":"24px 16px",boxShadow:"0 4px 32px #d44a0018"}}>
-                <div style={{fontSize:11,color:"#999",letterSpacing:2,marginBottom:8,fontFamily:"'Syne',sans-serif"}}>TOTAL PV GROWTH</div>
+              <div style={{ background: "#fff", borderRadius: 16, padding: isMobile ? "16px 8px" : "24px 16px", boxShadow: "0 4px 32px #d44a0018" }}>
+                <div style={{ fontSize: 11, color: "#999", letterSpacing: 2, marginBottom: 8, fontFamily: "'Syne',sans-serif" }}>TOTAL PV GROWTH</div>
                 {loading
                   ? <Skeleton w="100%" h={160} />
-                  : <ResponsiveContainer width="100%" height={isMobile?150:180}>
+                  : <ResponsiveContainer width="100%" height={isMobile ? 150 : 180}>
                     <LineChart data={data.growthChart}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#f0e8d8" />
-                      <XAxis dataKey="d" tick={{fill:"#aaa",fontSize:9}} interval={isMobile?5:2} />
-                      <YAxis tick={{fill:"#aaa",fontSize:9}} tickFormatter={v=>`${Math.round(v/1000)}K`} width={30} />
+                      <XAxis dataKey="d" tick={{ fill: "#aaa", fontSize: 9 }} interval={isMobile ? 5 : 2} />
+                      <YAxis tick={{ fill: "#aaa", fontSize: 9 }} tickFormatter={v => `${Math.round(v / 1000)}K`} width={30} />
                       <Line type="monotone" dataKey="v" stroke={C} strokeWidth={2.5} dot={false} name="PV" />
-                      <Tooltip contentStyle={{background:INK,border:"none",borderRadius:8,fontSize:12,color:CREAM}} formatter={v=>[v.toLocaleString(),"累計PV"]} />
+                      <Tooltip contentStyle={{ background: INK, border: "none", borderRadius: 8, fontSize: 12, color: CREAM }} formatter={v => [v.toLocaleString(), "累計PV"]} />
                     </LineChart>
                   </ResponsiveContainer>
                 }
@@ -1379,29 +1333,29 @@ export default function KitaWrapped() {
           </section>
 
           {/* TOP5 30日 */}
-          <section className="sec" style={{background:INK,color:CREAM}}>
-            <div style={{maxWidth:900,margin:"0 auto"}}>
-              <div style={{display:"flex",alignItems:"baseline",gap:12,marginBottom:36,flexWrap:"wrap"}}>
-                <span className="badge" style={{background:C,color:"#fff"}}>HALL OF FAME</span>
-                <h2 style={{fontFamily:"'Bebas Neue'",fontSize:"clamp(28px,7vw,64px)",lineHeight:1}}>30日間ランキング</h2>
+          <section className="sec" style={{ background: INK, color: CREAM }}>
+            <div style={{ maxWidth: 900, margin: "0 auto" }}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 12, marginBottom: 36, flexWrap: "wrap" }}>
+                <span className="badge" style={{ background: C, color: "#fff" }}>HALL OF FAME</span>
+                <h2 style={{ fontFamily: "'Bebas Neue'", fontSize: "clamp(28px,7vw,64px)", lineHeight: 1 }}>30日間ランキング</h2>
               </div>
               {loading
-                ? [1,2,3,4,5].map(i=><Skeleton key={i} w="100%" h={56} style={{marginBottom:12}} />)
-                : data.top5.map((a,i)=>(
-                  <div key={i} style={{display:"flex",alignItems:"center",gap:isMobile?10:20,padding:isMobile?"12px 0":"20px 0",borderBottom:"1px solid #ffffff18"}}>
-                    <div className="top5-rank" style={{fontFamily:"'Bebas Neue'",color:i===0?C:"#ffffff22",lineHeight:1}}>{a.rank}</div>
-                    <div style={{fontSize:isMobile?14:18,flexShrink:0}}>{a.emoji}</div>
-                    <div style={{flex:1,minWidth:0}}>
-                      <div style={{fontSize:isMobile?12:14,fontWeight:700,color:i===0?C:CREAM,lineHeight:1.3,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{a.title}</div>
-                      <div style={{fontSize:10,color:"#ffffff44",marginTop:4}}>1日平均 {a.avg} PV</div>
+                ? [1,2,3,4,5].map(i => <Skeleton key={i} w="100%" h={56} style={{ marginBottom: 12 }} />)
+                : data.top5.map((a, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: isMobile ? 10 : 20, padding: isMobile ? "12px 0" : "20px 0", borderBottom: "1px solid #ffffff18" }}>
+                    <div className="top5-rank" style={{ fontFamily: "'Bebas Neue'", color: i === 0 ? C : "#ffffff22", lineHeight: 1 }}>{a.rank}</div>
+                    <div style={{ fontSize: isMobile ? 14 : 18, flexShrink: 0 }}>{a.emoji}</div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: isMobile ? 12 : 14, fontWeight: 700, color: i === 0 ? C : CREAM, lineHeight: 1.3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.title}</div>
+                      <div style={{ fontSize: 10, color: "#ffffff44", marginTop: 4 }}>1日平均 {a.avg} PV</div>
                     </div>
-                    <div style={{textAlign:"right",flexShrink:0}}>
-                      <div className="top5-pv" style={{fontFamily:"'Bebas Neue'",color:i===0?C:CREAM}}>{a.pv}</div>
-                      <div style={{fontSize:10,color:"#ffffff33",letterSpacing:1}}>PV/30日</div>
+                    <div style={{ textAlign: "right", flexShrink: 0 }}>
+                      <div className="top5-pv" style={{ fontFamily: "'Bebas Neue'", color: i === 0 ? C : CREAM }}>{a.pv}</div>
+                      <div style={{ fontSize: 10, color: "#ffffff33", letterSpacing: 1 }}>PV/30日</div>
                     </div>
-                    <div className="top5-bar" style={{width:60,flexShrink:0}}>
-                      <div style={{height:4,background:"#ffffff18",borderRadius:2,overflow:"hidden"}}>
-                        <div style={{height:"100%",background:i===0?C:"#ffffff44",width:`${a.pv/data.top5[0].pv*100}%`,borderRadius:2}} />
+                    <div className="top5-bar" style={{ width: 60, flexShrink: 0 }}>
+                      <div style={{ height: 4, background: "#ffffff18", borderRadius: 2, overflow: "hidden" }}>
+                        <div style={{ height: "100%", background: i === 0 ? C : "#ffffff44", width: `${a.pv / data.top5[0].pv * 100}%`, borderRadius: 2 }} />
                       </div>
                     </div>
                   </div>
@@ -1411,28 +1365,28 @@ export default function KitaWrapped() {
           </section>
 
           {/* 累計PV TOP5 */}
-          <section className="sec" style={{background:"#120800",color:CREAM,borderTop:"1px solid #ffffff0a"}}>
-            <div style={{maxWidth:900,margin:"0 auto"}}>
-              <div style={{display:"flex",alignItems:"baseline",gap:12,marginBottom:36,flexWrap:"wrap"}}>
-                <span className="badge" style={{background:"#ffffff22",color:CREAM}}>ALL TIME</span>
-                <h2 style={{fontFamily:"'Bebas Neue'",fontSize:"clamp(28px,7vw,64px)",lineHeight:1}}>累計PV ランキング</h2>
+          <section className="sec" style={{ background: "#120800", color: CREAM, borderTop: "1px solid #ffffff0a" }}>
+            <div style={{ maxWidth: 900, margin: "0 auto" }}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 12, marginBottom: 36, flexWrap: "wrap" }}>
+                <span className="badge" style={{ background: "#ffffff22", color: CREAM }}>ALL TIME</span>
+                <h2 style={{ fontFamily: "'Bebas Neue'", fontSize: "clamp(28px,7vw,64px)", lineHeight: 1 }}>累計PV ランキング</h2>
               </div>
               {loading
-                ? [1,2,3,4,5].map(i=><Skeleton key={i} w="100%" h={56} style={{marginBottom:12}} />)
-                : data.top5PV.map((a,i)=>(
-                  <div key={i} style={{display:"flex",alignItems:"center",gap:isMobile?10:20,padding:isMobile?"12px 0":"20px 0",borderBottom:"1px solid #ffffff18"}}>
-                    <div className="top5-rank" style={{fontFamily:"'Bebas Neue'",color:i===0?C:"#ffffff22",lineHeight:1}}>{a.rank}</div>
-                    <div style={{fontSize:isMobile?14:18,flexShrink:0}}>{a.emoji}</div>
-                    <div style={{flex:1,minWidth:0}}>
-                      <div style={{fontSize:isMobile?12:14,fontWeight:700,color:i===0?C:CREAM,lineHeight:1.3,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{a.title}</div>
+                ? [1,2,3,4,5].map(i => <Skeleton key={i} w="100%" h={56} style={{ marginBottom: 12 }} />)
+                : data.top5PV.map((a, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: isMobile ? 10 : 20, padding: isMobile ? "12px 0" : "20px 0", borderBottom: "1px solid #ffffff18" }}>
+                    <div className="top5-rank" style={{ fontFamily: "'Bebas Neue'", color: i === 0 ? C : "#ffffff22", lineHeight: 1 }}>{a.rank}</div>
+                    <div style={{ fontSize: isMobile ? 14 : 18, flexShrink: 0 }}>{a.emoji}</div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: isMobile ? 12 : 14, fontWeight: 700, color: i === 0 ? C : CREAM, lineHeight: 1.3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.title}</div>
                     </div>
-                    <div style={{textAlign:"right",flexShrink:0}}>
-                      <div className="top5-pv" style={{fontFamily:"'Bebas Neue'",color:i===0?C:CREAM}}>{a.val.toLocaleString()}</div>
-                      <div style={{fontSize:10,color:"#ffffff33",letterSpacing:1}}>累計PV</div>
+                    <div style={{ textAlign: "right", flexShrink: 0 }}>
+                      <div className="top5-pv" style={{ fontFamily: "'Bebas Neue'", color: i === 0 ? C : CREAM }}>{a.val.toLocaleString()}</div>
+                      <div style={{ fontSize: 10, color: "#ffffff33", letterSpacing: 1 }}>累計PV</div>
                     </div>
-                    <div className="top5-bar" style={{width:60,flexShrink:0}}>
-                      <div style={{height:4,background:"#ffffff18",borderRadius:2,overflow:"hidden"}}>
-                        <div style={{height:"100%",background:i===0?C:"#ffffff44",width:`${a.val/data.top5PV[0].val*100}%`,borderRadius:2}} />
+                    <div className="top5-bar" style={{ width: 60, flexShrink: 0 }}>
+                      <div style={{ height: 4, background: "#ffffff18", borderRadius: 2, overflow: "hidden" }}>
+                        <div style={{ height: "100%", background: i === 0 ? C : "#ffffff44", width: `${a.val / data.top5PV[0].val * 100}%`, borderRadius: 2 }} />
                       </div>
                     </div>
                   </div>
@@ -1442,30 +1396,30 @@ export default function KitaWrapped() {
           </section>
 
           {/* スキ TOP5 */}
-          <section className="sec" style={{background:"#0e0a14",color:CREAM,borderTop:"1px solid #ffffff0a"}}>
-            <div style={{maxWidth:900,margin:"0 auto"}}>
-              <div style={{display:"flex",alignItems:"baseline",gap:12,marginBottom:36,flexWrap:"wrap"}}>
-                <span className="badge" style={{background:"#ff6b9d44",color:"#ff9ec4"}}>LOVE</span>
-                <h2 style={{fontFamily:"'Bebas Neue'",fontSize:"clamp(28px,7vw,64px)",lineHeight:1}}>スキ ランキング</h2>
+          <section className="sec" style={{ background: "#0e0a14", color: CREAM, borderTop: "1px solid #ffffff0a" }}>
+            <div style={{ maxWidth: 900, margin: "0 auto" }}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 12, marginBottom: 36, flexWrap: "wrap" }}>
+                <span className="badge" style={{ background: "#ff6b9d44", color: "#ff9ec4" }}>LOVE</span>
+                <h2 style={{ fontFamily: "'Bebas Neue'", fontSize: "clamp(28px,7vw,64px)", lineHeight: 1 }}>スキ ランキング</h2>
               </div>
               {loading
-                ? [1,2,3,4,5].map(i=><Skeleton key={i} w="100%" h={56} style={{marginBottom:12}} />)
+                ? [1,2,3,4,5].map(i => <Skeleton key={i} w="100%" h={56} style={{ marginBottom: 12 }} />)
                 : data.top5SK.length === 0
-                  ? <div style={{fontSize:13,color:"#ffffff44",padding:"24px 0"}}>スキデータが見つかりませんでした（like_count / スキ数 列を確認してください）</div>
-                  : data.top5SK.map((a,i)=>(
-                    <div key={i} style={{display:"flex",alignItems:"center",gap:isMobile?10:20,padding:isMobile?"12px 0":"20px 0",borderBottom:"1px solid #ffffff18"}}>
-                      <div className="top5-rank" style={{fontFamily:"'Bebas Neue'",color:i===0?"#ff6b9d":"#ffffff22",lineHeight:1}}>{a.rank}</div>
-                      <div style={{fontSize:isMobile?14:18,flexShrink:0}}>{a.emoji}</div>
-                      <div style={{flex:1,minWidth:0}}>
-                        <div style={{fontSize:isMobile?12:14,fontWeight:700,color:i===0?"#ff9ec4":CREAM,lineHeight:1.3,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{a.title}</div>
+                  ? <div style={{ fontSize: 13, color: "#ffffff44", padding: "24px 0" }}>スキデータが見つかりませんでした（like_count / スキ数 列を確認してください）</div>
+                  : data.top5SK.map((a, i) => (
+                    <div key={i} style={{ display: "flex", alignItems: "center", gap: isMobile ? 10 : 20, padding: isMobile ? "12px 0" : "20px 0", borderBottom: "1px solid #ffffff18" }}>
+                      <div className="top5-rank" style={{ fontFamily: "'Bebas Neue'", color: i === 0 ? "#ff6b9d" : "#ffffff22", lineHeight: 1 }}>{a.rank}</div>
+                      <div style={{ fontSize: isMobile ? 14 : 18, flexShrink: 0 }}>{a.emoji}</div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontSize: isMobile ? 12 : 14, fontWeight: 700, color: i === 0 ? "#ff9ec4" : CREAM, lineHeight: 1.3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.title}</div>
                       </div>
-                      <div style={{textAlign:"right",flexShrink:0}}>
-                        <div className="top5-pv" style={{fontFamily:"'Bebas Neue'",color:i===0?"#ff6b9d":CREAM}}>{a.val.toLocaleString()}</div>
-                        <div style={{fontSize:10,color:"#ffffff33",letterSpacing:1}}>スキ数</div>
+                      <div style={{ textAlign: "right", flexShrink: 0 }}>
+                        <div className="top5-pv" style={{ fontFamily: "'Bebas Neue'", color: i === 0 ? "#ff6b9d" : CREAM }}>{a.val.toLocaleString()}</div>
+                        <div style={{ fontSize: 10, color: "#ffffff33", letterSpacing: 1 }}>スキ数</div>
                       </div>
-                      <div className="top5-bar" style={{width:60,flexShrink:0}}>
-                        <div style={{height:4,background:"#ffffff18",borderRadius:2,overflow:"hidden"}}>
-                          <div style={{height:"100%",background:i===0?"#ff6b9d":"#ffffff44",width:`${a.val/data.top5SK[0].val*100}%`,borderRadius:2}} />
+                      <div className="top5-bar" style={{ width: 60, flexShrink: 0 }}>
+                        <div style={{ height: 4, background: "#ffffff18", borderRadius: 2, overflow: "hidden" }}>
+                          <div style={{ height: "100%", background: i === 0 ? "#ff6b9d" : "#ffffff44", width: `${a.val / data.top5SK[0].val * 100}%`, borderRadius: 2 }} />
                         </div>
                       </div>
                     </div>
@@ -1475,45 +1429,45 @@ export default function KitaWrapped() {
           </section>
 
           {/* WORST */}
-          <section className="sec" style={{background:INK,color:CREAM,borderTop:"1px solid #ffffff0a"}}>
-            <div style={{maxWidth:900,margin:"0 auto"}}>
-              <span className="badge" style={{background:"#ffffff22",color:CREAM,marginBottom:12,display:"inline-block"}}>HALL OF SHAME</span>
-              <h2 style={{fontFamily:"'Bebas Neue'",fontSize:"clamp(38px,10vw,80px)",lineHeight:.88,marginBottom:8}}>
-                ワースト記事<br /><span style={{color:"#ffffff44",fontSize:"70%"}}>も、ネタになる。</span>
+          <section className="sec" style={{ background: INK, color: CREAM, borderTop: "1px solid #ffffff0a" }}>
+            <div style={{ maxWidth: 900, margin: "0 auto" }}>
+              <span className="badge" style={{ background: "#ffffff22", color: CREAM, marginBottom: 12, display: "inline-block" }}>HALL OF SHAME</span>
+              <h2 style={{ fontFamily: "'Bebas Neue'", fontSize: "clamp(38px,10vw,80px)", lineHeight: .88, marginBottom: 8 }}>
+                ワースト記事<br /><span style={{ color: "#ffffff44", fontSize: "70%" }}>も、ネタになる。</span>
               </h2>
-              <p style={{fontSize:12,color:"#ffffff44",marginBottom:32,letterSpacing:1}}>
-                {loading?"—":`${data.stopPct}%の記事が「停止」判定。でも失敗ログこそが資産。`}
+              <p style={{ fontSize: 12, color: "#ffffff44", marginBottom: 32, letterSpacing: 1 }}>
+                {loading ? "—" : `${data.stopPct}%の記事が「停止」判定。でも失敗ログこそが資産。`}
               </p>
               <div className="worst-grid">
                 {loading
-                  ? [1,2,3].map(i=><Skeleton key={i} w="100%" h={160} />)
-                  : data.worst3.map((w,i)=>(
+                  ? [1,2,3].map(i => <Skeleton key={i} w="100%" h={160} />)
+                  : data.worst3.map((w, i) => (
                     <div
                       key={i}
                       className="worst-card"
-                      onClick={()=>setActiveWorst(activeWorst===i?null:i)}
-                      style={{background:activeWorst===i?C:"#ffffff0d",border:"1px solid #ffffff18",borderRadius:14,padding:isMobile?"18px 14px":"24px 20px"}}
+                      onClick={() => setActiveWorst(activeWorst === i ? null : i)}
+                      style={{ background: activeWorst === i ? C : "#ffffff0d", border: "1px solid #ffffff18", borderRadius: 14, padding: isMobile ? "18px 14px" : "24px 20px" }}
                     >
-                      <div style={{fontSize:isMobile?24:30,marginBottom:10}}>{["😶","😑","🫣"][i]}</div>
-                      <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:isMobile?12:14,lineHeight:1.3,marginBottom:8,color:CREAM}}>「{w.title}」</div>
-                      <div style={{fontFamily:"'Bebas Neue'",fontSize:isMobile?32:40,color:activeWorst===i?"#fff":C,lineHeight:1}}>{w.pv} PV</div>
-                      {activeWorst===i
-                        ? <div style={{marginTop:14,fontSize:12,lineHeight:1.7,color:"#fff",fontStyle:"italic",borderTop:"1px solid #ffffff44",paddingTop:12}}>💬 {w.roast}</div>
-                        : <div style={{fontSize:10,color:"#ffffff33",marginTop:10}}>タップで詳細 →</div>
+                      <div style={{ fontSize: isMobile ? 24 : 30, marginBottom: 10 }}>{["😶","😑","🫣"][i]}</div>
+                      <div style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, fontSize: isMobile ? 12 : 14, lineHeight: 1.3, marginBottom: 8, color: CREAM }}>「{w.title}」</div>
+                      <div style={{ fontFamily: "'Bebas Neue'", fontSize: isMobile ? 32 : 40, color: activeWorst === i ? "#fff" : C, lineHeight: 1 }}>{w.pv} PV</div>
+                      {activeWorst === i
+                        ? <div style={{ marginTop: 14, fontSize: 12, lineHeight: 1.7, color: "#fff", fontStyle: "italic", borderTop: "1px solid #ffffff44", paddingTop: 12 }}>💬 {w.roast}</div>
+                        : <div style={{ fontSize: 10, color: "#ffffff33", marginTop: 10 }}>タップで詳細 →</div>
                       }
                     </div>
                   ))
                 }
               </div>
-              <div style={{marginTop:28,padding:isMobile?"16px":"24px 28px",background:"#ffffff08",borderRadius:14,border:"1px dashed #ffffff22",display:"flex",alignItems:"center",gap:20,flexWrap:"wrap"}}>
-                <div style={{fontSize:28}}>🏆</div>
-                <div style={{flex:1,minWidth:180}}>
-                  <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:13,color:CREAM}}>
-                    {loading?"—":`全${data.totalArt}記事中、${data.stopPct}%が「活動停止」状態`}
+              <div style={{ marginTop: 28, padding: isMobile ? "16px" : "24px 28px", background: "#ffffff08", borderRadius: 14, border: "1px dashed #ffffff22", display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
+                <div style={{ fontSize: 28 }}>🏆</div>
+                <div style={{ flex: 1, minWidth: 180 }}>
+                  <div style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, fontSize: 13, color: CREAM }}>
+                    {loading ? "—" : `全${data.totalArt}記事中、${data.stopPct}%が「活動停止」状態`}
                   </div>
-                  <div style={{fontSize:12,color:"#ffffff55",marginTop:4,lineHeight:1.6}}>
+                  <div style={{ fontSize: 12, color: "#ffffff55", marginTop: 4, lineHeight: 1.6 }}>
                     「note記事の寿命は5日間」──自ら証明した仮説通り。<br />
-                    <strong style={{color:C}}>失敗データを記事にして一番PVを取ったのがワイや。</strong>
+                    <strong style={{ color: C }}>失敗データを記事にして一番PVを取ったのがワイや。</strong>
                   </div>
                 </div>
               </div>
@@ -1521,37 +1475,38 @@ export default function KitaWrapped() {
           </section>
 
           {/* TREND */}
-          <section className="sec" style={{background:"#fff8e7"}}>
-            <div style={{maxWidth:900,margin:"0 auto"}}>
-              <span className="badge" style={{background:INK,color:CREAM,marginBottom:16,display:"inline-block"}}>STATUS</span>
-              <h2 style={{fontFamily:"'Bebas Neue'",fontSize:"clamp(30px,8vw,64px)",lineHeight:.9,marginBottom:36}}>
+          <section className="sec" style={{ background: "#fff8e7" }}>
+            <div style={{ maxWidth: 900, margin: "0 auto" }}>
+              <span className="badge" style={{ background: INK, color: CREAM, marginBottom: 16, display: "inline-block" }}>STATUS</span>
+              <h2 style={{ fontFamily: "'Bebas Neue'", fontSize: "clamp(30px,8vw,64px)", lineHeight: .9, marginBottom: 36 }}>
                 記事の「今」を<br />4分類で見ると
               </h2>
               <div className="trend-grid">
                 {[
-                  {s:"🔥 急上昇",key:"rising",desc:"昨日PVが伸び中。アルゴリズムに乗ってる。",c:C,bg:"#d44a0008"},
-                  {s:"🟢 継続",key:"cont",desc:"ピークを過ぎても安定して読まれ続ける。",c:"#22c55e",bg:"#22c55e08"},
-                  {s:"⚠️ 減速",key:"slow",desc:"落ちてきてるが生きてる。リライト候補。",c:"#ca8a04",bg:"#ca8a0408"},
-                  {s:"💤 停止",key:"stop",desc:"7日間PVほぼゼロ。でも「寿命の証拠」として機能中。",c:"#64748b",bg:"#64748b08"},
-                ].map(s=>{
-                  const n=loading?0:(data[s.key]||0);
-                  const total=loading?1:(data.rising+data.cont+data.slow+data.stop||1);
+                  { s: "🔥 急上昇", key: "rising", desc: "昨日PVが伸び中。アルゴリズムに乗ってる。",        c: C,          bg: "#d44a0008" },
+                  { s: "🟢 継続",   key: "cont",   desc: "ピークを過ぎても安定して読まれ続ける。",        c: "#22c55e",  bg: "#22c55e08" },
+                  { s: "⚠️ 減速",  key: "slow",   desc: "落ちてきてるが生きてる。リライト候補。",        c: "#ca8a04",  bg: "#ca8a0408" },
+                  { s: "💤 停止",   key: "stop",   desc: "7日間PVほぼゼロ。でも「寿命の証拠」として機能中。", c: "#64748b", bg: "#64748b08" },
+                ].map(s => {
+                  const n     = loading ? 0 : (data[s.key] || 0);
+                  const total = loading ? 1 : (data.rising + data.cont + data.slow + data.stop || 1);
                   return (
-                    <div key={s.s} style={{background:s.bg,border:`1px solid ${s.c}33`,borderRadius:16,padding:isMobile?"16px":"24px"}}>
-                      <div style={{fontSize:15,marginBottom:8}}>{s.s}</div>
-                      <div style={{display:"flex",alignItems:"baseline",gap:8,marginBottom:8}}>
+                    <div key={s.s} style={{ background: s.bg, border: `1px solid ${s.c}33`, borderRadius: 16, padding: isMobile ? "16px" : "24px" }}>
+                      <div style={{ fontSize: 15, marginBottom: 8 }}>{s.s}</div>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 8 }}>
                         {loading
                           ? <Skeleton w={60} h={44} />
-                          : <><span style={{fontFamily:"'Bebas Neue'",fontSize:isMobile?40:52,color:s.c,lineHeight:1}}>{n}</span>
-                            <span style={{fontSize:14,color:s.c,fontWeight:700}}>記事</span>
-                            <span style={{fontSize:12,color:"#999",marginLeft:"auto"}}>{Math.round(n/total*100)}%</span>
+                          : <>
+                            <span style={{ fontFamily: "'Bebas Neue'", fontSize: isMobile ? 40 : 52, color: s.c, lineHeight: 1 }}>{n}</span>
+                            <span style={{ fontSize: 14, color: s.c, fontWeight: 700 }}>記事</span>
+                            <span style={{ fontSize: 12, color: "#999", marginLeft: "auto" }}>{Math.round(n / total * 100)}%</span>
                           </>
                         }
                       </div>
-                      <div style={{height:4,background:`${s.c}22`,borderRadius:2,marginBottom:10,overflow:"hidden"}}>
-                        <div style={{height:"100%",background:s.c,width:`${Math.round(n/total*100)}%`,borderRadius:2,transition:"width .8s"}} />
+                      <div style={{ height: 4, background: `${s.c}22`, borderRadius: 2, marginBottom: 10, overflow: "hidden" }}>
+                        <div style={{ height: "100%", background: s.c, width: `${Math.round(n / total * 100)}%`, borderRadius: 2, transition: "width .8s" }} />
                       </div>
-                      <p style={{fontSize:12,color:"#5a3a1a",lineHeight:1.6}}>{s.desc}</p>
+                      <p style={{ fontSize: 12, color: "#5a3a1a", lineHeight: 1.6 }}>{s.desc}</p>
                     </div>
                   );
                 })}
@@ -1560,15 +1515,15 @@ export default function KitaWrapped() {
           </section>
 
           {/* FOOTER */}
-          <section className="sec" style={{background:INK,color:CREAM,paddingBottom:60,textAlign:"center"}}>
-            <div style={{fontFamily:"'Bebas Neue'",fontSize:"clamp(44px,13vw,110px)",lineHeight:.85,marginBottom:20}}>
-              ログは<span style={{color:C}}>続く。</span>
+          <section className="sec" style={{ background: INK, color: CREAM, paddingBottom: 60, textAlign: "center" }}>
+            <div style={{ fontFamily: "'Bebas Neue'", fontSize: "clamp(44px,13vw,110px)", lineHeight: .85, marginBottom: 20 }}>
+              ログは<span style={{ color: C }}>続く。</span>
             </div>
-            <p style={{fontSize:14,color:"#ffffff55",maxWidth:460,margin:"0 auto",lineHeight:1.8}}>
+            <p style={{ fontSize: 14, color: "#ffffff55", maxWidth: 460, margin: "0 auto", lineHeight: 1.8 }}>
               データで遊び、失敗をネタにし、また書く。<br />KITAcoreのnoteはまだ途中です。
             </p>
-            <div style={{marginTop:36,fontSize:11,fontFamily:"'Syne',sans-serif",letterSpacing:3,color:"#ffffff33",borderBottom:"1px solid #ffffff22",paddingBottom:6,display:"inline-block"}}>
-              {loading?"読み込み中…":`集計日 ${data.updatedAt} — 自動更新中`}
+            <div style={{ marginTop: 36, fontSize: 11, fontFamily: "'Syne',sans-serif", letterSpacing: 3, color: "#ffffff33", borderBottom: "1px solid #ffffff22", paddingBottom: 6, display: "inline-block" }}>
+              {loading ? "読み込み中…" : `集計日 ${data.updatedAt} — 自動更新中`}
             </div>
           </section>
         </div>
