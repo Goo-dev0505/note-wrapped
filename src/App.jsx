@@ -533,7 +533,7 @@ function MonthlyChart({ items, isMobile }) {
   );
 }
 
-/* バンプチャート（順位レース） - ranking_monthly_trace.csv を直接利用 */
+/* 成長レースチャート - ranking_monthly_trace.csv を直接利用 */
 const BUMP_COLORS = [
   "#d44a00","#e8855a","#f5b942","#7dd3a8","#60a5fa",
   "#a78bfa","#f472b6","#34d399","#fbbf24","#94a3b8",
@@ -602,32 +602,74 @@ function useBumpData() {
   return state;
 }
 
-function BumpChart({ bumpState, isMobile }) {
+/* 成長レースチャート（recharts LineChart） */
+function GrowthRaceChart({ bumpState, isMobile }) {
   const [hovered, setHovered] = useState(null);
-  const [tooltip, setTooltip] = useState(null);
 
   if (!bumpState.loaded) return <RankSkeleton isMobile={isMobile} />;
-  if (bumpState.error) return (
-    <div style={{ textAlign:"center", padding:"60px 20px", color:"#ffffff22", fontSize:14 }}>⚠️ {bumpState.error}</div>
+  if (bumpState.error)   return (
+    <div style={{ textAlign:"center", padding:"60px 20px", color:"#ffffff22", fontSize:14 }}>
+      ⚠️ {bumpState.error}
+    </div>
   );
+  if (!bumpState.data) return null;
 
   const { dates, creators } = bumpState.data;
-  const W = dates.length;
 
-  // X軸ラベル間引き（15日あるので5本程度）
-  const labelStep = Math.ceil(W / 6);
+  // recharts 用: [{date:"3/1", uid1:累計, uid2:累計, ...}, ...]
+  const chartData = dates.map((label, di) => {
+    const row = { date: label };
+    creators.forEach(c => {
+      row[c.like_user_id] = c.counts[di] ?? null;
+    });
+    return row;
+  });
 
-  const PAD_L = 20;
-  const PAD_R = isMobile ? 90 : 155;
-  const PAD_T = 36;
-  const PAD_B = 20;
-  const ROW_H = isMobile ? 28 : 34;
-  const H     = PAD_T + ROW_H * BUMP_TOP_N + PAD_B;
-  const colW  = isMobile ? 18 : 24;
-  const SVG_W = PAD_L + colW * W + PAD_R;
+  // カスタムツールチップ
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (!active || !payload?.length) return null;
+    const sorted = [...payload]
+      .filter(p => p.value !== null)
+      .sort((a,b) => b.value - a.value);
+    return (
+      <div style={{
+        background:"#1a0f00", border:`1px solid #ffffff22`,
+        borderRadius:10, padding:"10px 14px", minWidth:160,
+        boxShadow:"0 8px 32px #00000099",
+      }}>
+        <div style={{ fontSize:11, color:"#ffffff55", fontFamily:"'Syne',sans-serif",
+          letterSpacing:1, marginBottom:8 }}>{label}</div>
+        {sorted.map(p => {
+          const c = creators.find(cr => cr.like_user_id === p.dataKey);
+          return (
+            <div key={p.dataKey} style={{ display:"flex", alignItems:"center",
+              gap:8, marginBottom:4 }}>
+              <span style={{ width:8, height:8, borderRadius:"50%",
+                background:p.stroke, display:"inline-block", flexShrink:0 }} />
+              <span style={{ fontSize:11, color: hovered===p.dataKey ? "#fff" : "#ffffffaa",
+                fontFamily:"'Noto Sans JP',sans-serif", flex:1,
+                overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap",
+                maxWidth:110 }}>
+                {c?.creator_name}
+              </span>
+              <span style={{ fontFamily:"'Bebas Neue'", fontSize:16,
+                color:p.stroke, lineHeight:1, flexShrink:0 }}>{p.value}</span>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
 
-  const xPos = wi => PAD_L + colW * wi;
-  const yPos = rank => PAD_T + ROW_H * (rank - 1) + ROW_H / 2;
+  // カスタムドット（ホバー中の線のみ大きく）
+  const CustomDot = (props) => {
+    const { cx, cy, dataKey, value } = props;
+    if (value === null || value === undefined) return null;
+    const isHov = hovered === dataKey;
+    if (!isHov) return null; // 非ホバー時はドット非表示
+    const c = creators.find(cr => cr.like_user_id === dataKey);
+    return <circle cx={cx} cy={cy} r={5} fill={c?.color ?? "#fff"} stroke={INK} strokeWidth={1.5} />;
+  };
 
   return (
     <div style={{ marginTop:16 }}>
@@ -635,318 +677,74 @@ function BumpChart({ bumpState, isMobile }) {
       <div style={{ display:"flex", flexWrap:"wrap", gap:isMobile?6:8, marginBottom:16 }}>
         {creators.map(c => (
           <div key={c.like_user_id}
-            style={{ display:"flex", alignItems:"center", gap:5, cursor: c.has_profile_url?"pointer":"default",
-              opacity: hovered && hovered !== c.like_user_id ? .25 : 1, transition:"opacity .2s" }}
+            style={{ display:"flex", alignItems:"center", gap:5,
+              cursor: c.has_profile_url ? "pointer":"default",
+              opacity: hovered && hovered !== c.like_user_id ? .2 : 1,
+              transition:"opacity .2s" }}
             onMouseEnter={() => setHovered(c.like_user_id)}
             onMouseLeave={() => setHovered(null)}
             onClick={() => c.has_profile_url && window.open(c.creator_url,"_blank","noopener")}
           >
-            <span style={{ width:10, height:10, borderRadius:"50%", background:c.color, display:"inline-block", flexShrink:0 }} />
-            <span style={{ fontSize:isMobile?9:10, color:"#ffffffaa", fontFamily:"'Noto Sans JP',sans-serif",
-              maxWidth:isMobile?68:110, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+            <span style={{ width:10, height:10, borderRadius:"50%",
+              background:c.color, display:"inline-block", flexShrink:0 }} />
+            <span style={{ fontSize:isMobile?9:10, color:"#ffffffaa",
+              fontFamily:"'Noto Sans JP',sans-serif",
+              maxWidth:isMobile?72:120, overflow:"hidden",
+              textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
               {c.creator_name}
             </span>
           </div>
         ))}
       </div>
 
-      {/* SVG */}
-      <div style={{ overflowX:"auto", WebkitOverflowScrolling:"touch" }}>
-        <svg width={SVG_W} height={H} style={{ display:"block" }}>
-
-          {/* 横グリッド（順位） */}
-          {Array.from({length:BUMP_TOP_N},(_,i)=>i+1).map(rank => (
-            <g key={rank}>
-              <line x1={PAD_L} y1={yPos(rank)} x2={PAD_L+colW*W} y2={yPos(rank)}
-                stroke="#ffffff08" strokeWidth={1} />
-              <text x={PAD_L-5} y={yPos(rank)+4} textAnchor="end"
-                fill="#ffffff22" fontSize={isMobile?9:10} fontFamily="'Bebas Neue',sans-serif">{rank}</text>
-            </g>
+      {/* 折れ線グラフ */}
+      <ResponsiveContainer width="100%" height={isMobile ? 260 : 340}>
+        <LineChart data={chartData}
+          margin={{ top:8, right: isMobile?8:16, left: isMobile?-16:0, bottom:4 }}>
+          <CartesianGrid stroke="#ffffff0a" vertical={false} />
+          <XAxis dataKey="date"
+            tick={{ fill:"#ffffff44", fontSize:isMobile?9:11,
+              fontFamily:"'Syne',sans-serif" }}
+            axisLine={false} tickLine={false} />
+          <YAxis
+            tick={{ fill:"#ffffff33", fontSize:isMobile?9:10,
+              fontFamily:"'Bebas Neue',sans-serif" }}
+            axisLine={false} tickLine={false}
+            width={isMobile?28:32}
+            label={!isMobile ? {
+              value:"累計スキ数", angle:-90, position:"insideLeft",
+              fill:"#ffffff22", fontSize:10,
+              fontFamily:"'Noto Sans JP',sans-serif", dx:-4,
+            } : undefined}
+          />
+          <Tooltip content={<CustomTooltip />} />
+          {creators.map(c => (
+            <Line
+              key={c.like_user_id}
+              type="monotone"
+              dataKey={c.like_user_id}
+              stroke={c.color}
+              strokeWidth={hovered === c.like_user_id ? 3 : hovered ? 1 : 1.8}
+              strokeOpacity={hovered && hovered !== c.like_user_id ? 0.18 : 1}
+              dot={<CustomDot />}
+              activeDot={hovered === c.like_user_id
+                ? { r:6, fill:c.color, stroke:INK, strokeWidth:2 }
+                : false}
+              connectNulls={false}
+              isAnimationActive={true}
+              animationDuration={800}
+              onMouseEnter={() => setHovered(c.like_user_id)}
+              onMouseLeave={() => setHovered(null)}
+              style={{ cursor: c.has_profile_url ? "pointer" : "default" }}
+              onClick={() => c.has_profile_url && window.open(c.creator_url,"_blank","noopener")}
+            />
           ))}
-
-          {/* X軸ラベル（間引き） */}
-          {dates.map((label, wi) => wi % labelStep === 0 && (
-            <text key={wi} x={xPos(wi)} y={PAD_T - 14} textAnchor="middle"
-              fill="#ffffff44" fontSize={isMobile?8:10} fontFamily="'Syne',sans-serif">{label}</text>
-          ))}
-
-          {/* 各クリエイター */}
-          {creators.map(c => {
-            const isHov = hovered === c.like_user_id;
-            const opacity = hovered ? (isHov ? 1 : 0.12) : 0.8;
-
-            return (
-              <g key={c.like_user_id}
-                style={{ cursor: c.has_profile_url?"pointer":"default", transition:"opacity .18s", opacity }}
-                onMouseEnter={() => setHovered(c.like_user_id)}
-                onMouseLeave={() => setHovered(null)}
-                onClick={() => c.has_profile_url && window.open(c.creator_url,"_blank","noopener")}
-              >
-                {/* 折れ線 */}
-                {c.ranks.map((rank, wi) => {
-                  if (rank === null || c.ranks[wi+1] === null) return null;
-                  const nextRank = c.ranks[wi+1];
-                  if (nextRank === null) return null;
-                  return (
-                    <line key={wi}
-                      x1={xPos(wi)} y1={yPos(rank)}
-                      x2={xPos(wi+1)} y2={yPos(nextRank)}
-                      stroke={c.color} strokeWidth={isHov ? 2.5 : 1.5}
-                      strokeLinecap="round"
-                      style={{ transition:"stroke-width .15s" }}
-                    />
-                  );
-                })}
-
-                {/* ドット */}
-                {c.ranks.map((rank, wi) => rank !== null && (
-                  <circle key={wi}
-                    cx={xPos(wi)} cy={yPos(rank)} r={isHov ? 5 : 3}
-                    fill={c.color} stroke={INK} strokeWidth={1}
-                    style={{ transition:"r .15s" }}
-                    onMouseEnter={e => { e.stopPropagation(); setTooltip({ xi:xPos(wi), yi:yPos(rank), c, wi }); }}
-                    onMouseLeave={() => setTooltip(null)}
-                  />
-                ))}
-
-                {/* 末尾ラベル */}
-                {(() => {
-                  const lastWi = [...c.ranks].map((r,i)=>[r,i]).filter(([r])=>r!==null).pop();
-                  if (!lastWi) return null;
-                  const [rank, wi] = lastWi;
-                  return (
-                    <text x={xPos(wi)+10} y={yPos(rank)+4}
-                      fill={isHov ? c.color : "#ffffff66"}
-                      fontSize={isMobile?9:11} fontFamily="'Noto Sans JP',sans-serif"
-                      fontWeight={isHov?700:400}
-                      style={{ transition:"fill .15s" }}>
-                      {c.creator_name.length > (isMobile?7:11)
-                        ? c.creator_name.slice(0,isMobile?6:10)+"…"
-                        : c.creator_name}
-                    </text>
-                  );
-                })()}
-              </g>
-            );
-          })}
-
-          {/* ツールチップ */}
-          {tooltip && (() => {
-            const { xi, yi, c, wi } = tooltip;
-            const cnt   = c.counts[wi];
-            const rank  = c.ranks[wi];
-            const tw = 138;
-            const tx = xi + tw + 14 > SVG_W ? xi - tw - 6 : xi + 8;
-            const ty = Math.max(4, yi - 30);
-            return (
-              <g style={{ pointerEvents:"none" }}>
-                <rect x={tx} y={ty} width={tw} height={50} rx={6}
-                  fill="#1a0f00" stroke={`${c.color}88`} strokeWidth={1} />
-                <text x={tx+8} y={ty+15} fill={CREAM} fontSize={10}
-                  fontFamily="'Noto Sans JP',sans-serif" fontWeight={700}>
-                  {c.creator_name.length>14 ? c.creator_name.slice(0,13)+"…" : c.creator_name}
-                </text>
-                <text x={tx+8} y={ty+33} fill={c.color} fontSize={15}
-                  fontFamily="'Bebas Neue',sans-serif">{rank}位</text>
-                <text x={tx+46} y={ty+33} fill="#ffffff55" fontSize={11}
-                  fontFamily="'Bebas Neue',sans-serif">累計{cnt}スキ</text>
-              </g>
-            );
-          })()}
-        </svg>
-      </div>
+        </LineChart>
+      </ResponsiveContainer>
 
       <p style={{ fontSize:10, color:"#ffffff28", textAlign:"right", marginTop:6,
         fontFamily:"'Syne',sans-serif", letterSpacing:1 }}>
-        線・名前をクリックでプロフィールへ / ドットにホバーで詳細
-      </p>
-    </div>
-  );
-}
-  const [hovered, setHovered] = useState(null);
-
-  if (!bumpData) return null;
-  const { weeks, creators, month } = bumpData;
-  const W = weeks.length;
-  const TOP = 10;
-
-  // 全週に1回以上登場したクリエイターのみ（null だらけは除外）
-  const active = creators.filter(c => c.ranks.some(r => r !== null));
-
-  // SVG サイズ計算
-  const PAD_L  = isMobile ? 8  : 12;
-  const PAD_R  = isMobile ? 100 : 160;
-  const PAD_T  = 40;
-  const PAD_B  = 48;
-  const ROW_H  = isMobile ? 32 : 38;
-  const H      = PAD_T + ROW_H * TOP + PAD_B;
-  const colW   = isMobile ? 72 : 100;
-  const SVG_W  = PAD_L + colW * W + PAD_R;
-
-  const xPos = wi => PAD_L + colW * wi + colW / 2;
-  const yPos = rank => PAD_T + ROW_H * (rank - 1) + ROW_H / 2;
-
-  // ツールチップ
-  const [tooltip, setTooltip] = useState(null); // { x, y, creator, weekIdx }
-
-  return (
-    <div style={{ marginTop:16 }}>
-      {/* 凡例 */}
-      <div style={{ display:"flex", flexWrap:"wrap", gap:8, marginBottom:16 }}>
-        {active.map((c, i) => (
-          <div key={c.like_user_id}
-            style={{ display:"flex", alignItems:"center", gap:5, cursor:"pointer", opacity: hovered && hovered!==c.like_user_id ? .3 : 1, transition:"opacity .2s" }}
-            onMouseEnter={() => setHovered(c.like_user_id)}
-            onMouseLeave={() => setHovered(null)}
-            onClick={() => c.creator_url && window.open(c.creator_url,"_blank","noopener")}
-          >
-            <span style={{ width:12, height:12, borderRadius:"50%", background:BUMP_COLORS[i % BUMP_COLORS.length], display:"inline-block", flexShrink:0 }} />
-            <span style={{ fontSize:isMobile?9:10, color:"#ffffffaa", fontFamily:"'Noto Sans JP',sans-serif",
-              maxWidth:isMobile?70:100, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
-              {c.creator_name}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      {/* SVG本体 */}
-      <div style={{ overflowX:"auto", WebkitOverflowScrolling:"touch" }}>
-        <svg width={SVG_W} height={H} style={{ display:"block" }}>
-
-          {/* 横グリッド（順位ライン） */}
-          {Array.from({length:TOP},(_,i)=>i+1).map(rank => (
-            <g key={rank}>
-              <line
-                x1={PAD_L} y1={yPos(rank)}
-                x2={PAD_L + colW * W} y2={yPos(rank)}
-                stroke="#ffffff0a" strokeWidth={1}
-              />
-              <text x={PAD_L - 4} y={yPos(rank)+4} textAnchor="end"
-                fill="#ffffff22" fontSize={isMobile?9:10}
-                fontFamily="'Bebas Neue',sans-serif">
-                {rank}
-              </text>
-            </g>
-          ))}
-
-          {/* 週ラベル（X軸） */}
-          {weeks.map((label, wi) => (
-            <text key={wi} x={xPos(wi)} y={PAD_T - 14} textAnchor="middle"
-              fill="#ffffff55" fontSize={isMobile?9:11}
-              fontFamily="'Syne',sans-serif" letterSpacing={0.5}>
-              {label}
-            </text>
-          ))}
-
-          {/* 各クリエイターの線とドット */}
-          {active.map((c, ci) => {
-            const color = BUMP_COLORS[ci % BUMP_COLORS.length];
-            const isHov = hovered === c.like_user_id;
-            const opacity = hovered ? (isHov ? 1 : 0.15) : 0.75;
-
-            // 線セグメント（nullをまたがない）
-            const segments = [];
-            for (let wi = 0; wi < W - 1; wi++) {
-              if (c.ranks[wi] !== null && c.ranks[wi+1] !== null) {
-                segments.push([wi, wi+1]);
-              }
-            }
-
-            return (
-              <g key={c.like_user_id}
-                style={{ cursor:"pointer", transition:"opacity .2s", opacity }}
-                onMouseEnter={() => setHovered(c.like_user_id)}
-                onMouseLeave={() => setHovered(null)}
-                onClick={() => c.creator_url && window.open(c.creator_url,"_blank","noopener")}
-              >
-                {/* 線 */}
-                {segments.map(([w1,w2],si) => (
-                  <line key={si}
-                    x1={xPos(w1)} y1={yPos(c.ranks[w1])}
-                    x2={xPos(w2)} y2={yPos(c.ranks[w2])}
-                    stroke={color} strokeWidth={isHov ? 3 : 1.5}
-                    strokeLinecap="round"
-                    style={{ transition:"stroke-width .2s" }}
-                  />
-                ))}
-
-                {/* ドット + 順位数字 */}
-                {c.ranks.map((rank, wi) => rank !== null && (
-                  <g key={wi}
-                    onMouseEnter={e => setTooltip({ x:xPos(wi), y:yPos(rank), creator:c, weekIdx:wi })}
-                    onMouseLeave={() => setTooltip(null)}
-                  >
-                    <circle cx={xPos(wi)} cy={yPos(rank)} r={isHov ? 7 : 5}
-                      fill={color} stroke={INK} strokeWidth={isHov ? 2 : 1.5}
-                      style={{ transition:"r .15s" }}
-                    />
-                    {isHov && (
-                      <text x={xPos(wi)} y={yPos(rank)+4} textAnchor="middle"
-                        fill="#fff" fontSize={8} fontFamily="'Bebas Neue',sans-serif">
-                        {rank}
-                      </text>
-                    )}
-                  </g>
-                ))}
-
-                {/* 最終週の名前ラベル */}
-                {(() => {
-                  const lastRank = [...c.ranks].reverse().find(r => r !== null);
-                  const lastWi   = c.ranks.lastIndexOf(lastRank);
-                  if (lastRank === null || lastWi === undefined) return null;
-                  return (
-                    <text
-                      x={xPos(lastWi) + 14} y={yPos(lastRank) + 4}
-                      fill={isHov ? color : "#ffffff88"}
-                      fontSize={isMobile ? 9 : 11}
-                      fontFamily="'Noto Sans JP',sans-serif"
-                      fontWeight={isHov ? 700 : 400}
-                      style={{ transition:"fill .2s, font-weight .2s" }}
-                    >
-                      {c.creator_name.length > (isMobile?8:12)
-                        ? c.creator_name.slice(0, isMobile?7:11) + "…"
-                        : c.creator_name}
-                    </text>
-                  );
-                })()}
-              </g>
-            );
-          })}
-
-          {/* ホバーツールチップ */}
-          {tooltip && (() => {
-            const { x, y, creator, weekIdx } = tooltip;
-            const cnt = creator.counts[weekIdx];
-            const rank = creator.ranks[weekIdx];
-            const name = creator.creator_name;
-            const tw = isMobile ? 120 : 148;
-            const tx = x + tw + 20 > SVG_W ? x - tw - 10 : x + 10;
-            const ty = Math.max(4, y - 28);
-            return (
-              <g>
-                <rect x={tx} y={ty} width={tw} height={52} rx={6}
-                  fill="#1a0f00" stroke={`${C}66`} strokeWidth={1} />
-                <text x={tx+8} y={ty+16} fill={CREAM} fontSize={10}
-                  fontFamily="'Noto Sans JP',sans-serif" fontWeight={700}>
-                  {name.length > 12 ? name.slice(0,11)+"…" : name}
-                </text>
-                <text x={tx+8} y={ty+32} fill={C} fontSize={14}
-                  fontFamily="'Bebas Neue',sans-serif">
-                  {rank}位
-                </text>
-                <text x={tx+40} y={ty+32} fill="#ffffff55" fontSize={10}
-                  fontFamily="'Bebas Neue',sans-serif">
-                  {cnt}スキ
-                </text>
-              </g>
-            );
-          })()}
-        </svg>
-      </div>
-
-      <p style={{ fontSize:10, color:"#ffffff28", textAlign:"right", marginTop:8,
-        fontFamily:"'Syne',sans-serif", letterSpacing:1 }}>
-        線・名前をクリックでプロフィールへ
+        凡例・線をクリックでプロフィールへ
       </p>
     </div>
   );
@@ -1232,7 +1030,7 @@ function LikesRankingPage({ isMobile }) {
 
         {/* ── レースビュー ── */}
         {viewMode === "race" && (
-          <BumpChart bumpState={bump} isMobile={isMobile} />
+          <GrowthRaceChart bumpState={bump} isMobile={isMobile} />
         )}
 
         {/* ── ランキングビュー ── */}
