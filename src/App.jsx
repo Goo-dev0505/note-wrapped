@@ -33,6 +33,36 @@ styleEl.textContent = `
   .search-input::placeholder{color:#ffffff33;}
   .page-fade{animation:fadeIn .4s cubic-bezier(.22,1,.36,1) both;}
 
+  /* ── ランキングカード ── */
+  @keyframes rankIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+  .rank-card{
+    position:relative;cursor:pointer;border-radius:16px;overflow:hidden;
+    transition:transform .25s cubic-bezier(.22,1,.36,1), box-shadow .25s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .rank-card:hover{transform:translateY(-4px) scale(1.015);box-shadow:0 20px 48px #00000077;}
+  .rank-card:active{transform:scale(.98);}
+  .rank-card .cta-layer{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,#d44a00dd,#8b2900cc);
+    opacity:0;transition:opacity .22s;pointer-events:none;
+  }
+  .rank-card:hover .cta-layer{opacity:1;}
+  .rank-card .cta-text{
+    font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:3px;
+    color:#fff;text-transform:uppercase;
+    transform:translateY(8px);transition:transform .24s cubic-bezier(.22,1,.36,1);
+  }
+  .rank-card:hover .cta-text{transform:translateY(0);}
+  .rank-row{
+    border-radius:10px;overflow:hidden;
+    transition:background .16s,transform .2s cubic-bezier(.22,1,.36,1);cursor:pointer;
+  }
+  .rank-row:hover{background:#ffffff0d!important;transform:translateX(6px);}
+  .rank-row:active{transform:scale(.99);}
+  .rank-row .row-cta{opacity:0;transition:opacity .16s;}
+  .rank-row:hover .row-cta{opacity:1;}
+
   .sec { padding: 80px 32px; }
   .hero-hd { padding: 24px 32px; }
   .hero-bd { padding: 0 32px 48px; }
@@ -377,212 +407,309 @@ function ArticleListPage({ data, isMobile }) {
 
 /* ══════════════════════════════════════════════
    ランキングページ
-   - 各期間JSONをタブ切替時に遅延fetch（初回のみ）
-   - JSON構造: { ranking_type, generated_at, items: [...] }
-   - items フィールド: rank / creator_name / creator_url /
-     has_profile_url / likes_count / last_like_at / like_user_id
+   - TOP3: ヒーローカード（ホバーでCTA表示）
+   - 4位以下: 横並び行カード（ホバーでスライド＋CTA）
+   - 各期間JSON を遅延fetch（タブ開封時のみ）
+   - JSON: { items[{ rank, creator_name, creator_url,
+             has_profile_url, likes_count, last_like_at }] }
+   - 総合20件 / 月間・今週・先週10件
 ══════════════════════════════════════════════ */
 const RANK_PERIODS = [
-  { id: "total",     file: "ranking_total.json",     label: "総合"  },
-  { id: "monthly",   file: "ranking_monthly.json",   label: "今月"  },
-  { id: "this_week", file: "ranking_this_week.json",  label: "今週"  },
-  { id: "last_week", file: "ranking_last_week.json",  label: "先週"  },
+  { id:"total",     file:"ranking_total.json",    label:"総合",  top:20 },
+  { id:"monthly",   file:"ranking_monthly.json",  label:"今月",  top:10 },
+  { id:"this_week", file:"ranking_this_week.json", label:"今週", top:10 },
+  { id:"last_week", file:"ranking_last_week.json", label:"先週", top:10 },
 ];
 
+const MEDAL = ["👑","🥈","🥉"];
+const MEDAL_COLOR = ["#d44a00","#a0a0a0","#b07c40"];
+
 function useRankingData(file) {
-  const [state, setState] = useState({ data: null, error: null, loaded: false });
+  const [state, setState] = useState({ data:null, error:null, loaded:false });
   useEffect(() => {
     if (state.loaded) return;
     fetch(DATA_BASE + file)
       .then(r => { if (!r.ok) throw new Error(`${file} が見つかりません`); return r.json(); })
-      .then(d  => setState({ data: d, error: null,    loaded: true }))
-      .catch(e => setState({ data: null, error: e.message, loaded: true }));
+      .then(d  => setState({ data:d, error:null, loaded:true }))
+      .catch(e => setState({ data:null, error:e.message, loaded:true }));
   }, [file, state.loaded]);
   return state;
 }
 
-function RankingTable({ items, error, loaded, isMobile }) {
-  function formatDate(iso) {
-    if (!iso) return "—";
-    const d = new Date(iso);
-    return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,"0")}/${String(d.getDate()).padStart(2,"0")}`;
-  }
+function fmtDate(iso) {
+  if (!iso) return "—";
+  const d = new Date(iso);
+  return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,"0")}/${String(d.getDate()).padStart(2,"0")}`;
+}
 
-  if (!loaded) return (
+/* TOP3 ヒーローカード */
+function HeroCard({ row, isMobile }) {
+  const idx  = row.rank - 1;
+  const url  = row.has_profile_url ? row.creator_url : null;
+  const mc   = MEDAL_COLOR[idx] ?? "#ffffff33";
+  const isFirst = idx === 0;
+
+  const inner = (
+    <div className="rank-card" style={{
+      background: isFirst
+        ? `linear-gradient(135deg,#2a0f00,#1a0700)`
+        : "#ffffff08",
+      border: `1px solid ${mc}${isFirst?"88":"44"}`,
+      padding: isMobile ? "20px 16px" : "28px 24px",
+      height: "100%",
+      animation: `rankIn .5s cubic-bezier(.22,1,.36,1) ${idx * .08}s both`,
+    }}>
+      {/* CTA オーバーレイ */}
+      {url && (
+        <div className="cta-layer">
+          <span className="cta-text">プロフィールへ →</span>
+        </div>
+      )}
+
+      {/* メダル ＋ 順位 */}
+      <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16 }}>
+        <span style={{ fontSize: isFirst ? 28 : 22 }}>{MEDAL[idx]}</span>
+        <span style={{
+          fontFamily:"'Bebas Neue'",
+          fontSize: isFirst ? (isMobile?52:72) : (isMobile?40:56),
+          color: mc, lineHeight:1, letterSpacing:-1,
+        }}>{String(row.rank).padStart(2,"0")}</span>
+      </div>
+
+      {/* 名前 */}
+      <div style={{
+        fontSize: isMobile?13:15, fontWeight:700,
+        color: isFirst ? CREAM : "#ffffffbb",
+        lineHeight:1.4, marginBottom:12,
+        overflow:"hidden", display:"-webkit-box",
+        WebkitLineClamp:2, WebkitBoxOrient:"vertical",
+      }}>
+        {row.creator_name}
+      </div>
+
+      {/* スキ数 */}
+      <div style={{ display:"flex", alignItems:"baseline", gap:6 }}>
+        <span style={{
+          fontFamily:"'Bebas Neue'",
+          fontSize: isFirst ? (isMobile?40:52) : (isMobile?32:40),
+          color: mc, lineHeight:1,
+        }}>{Number(row.likes_count).toLocaleString()}</span>
+        <span style={{ fontSize:11, color:"#ffffff44", fontFamily:"'Syne',sans-serif", letterSpacing:1 }}>スキ</span>
+      </div>
+
+      {/* 最終スキ日 */}
+      <div style={{ marginTop:10, fontSize:10, color:"#ffffff33", fontFamily:"'Syne',sans-serif", letterSpacing:.5 }}>
+        最終 {fmtDate(row.last_like_at)}
+      </div>
+
+      {/* URLなし表示 */}
+      {!url && (
+        <div style={{ marginTop:10, fontSize:9, color:"#ffffff22", fontFamily:"'Syne',sans-serif" }}>URL未設定</div>
+      )}
+    </div>
+  );
+
+  return url
+    ? <a href={url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none", display:"block", height:"100%" }}>{inner}</a>
+    : inner;
+}
+
+/* 4位以下 行カード */
+function RankRow({ row, isMobile }) {
+  const url = row.has_profile_url ? row.creator_url : null;
+
+  const inner = (
+    <div className="rank-row" style={{
+      display:"grid",
+      gridTemplateColumns: isMobile ? "48px 1fr 56px" : "56px 1fr 80px 100px 90px",
+      gap: isMobile ? 10 : 16,
+      padding: isMobile ? "13px 12px" : "15px 20px",
+      alignItems:"center",
+      borderBottom:"1px solid #ffffff08",
+      animation: `rankIn .4s cubic-bezier(.22,1,.36,1) ${(row.rank - 4) * .04}s both`,
+    }}>
+      {/* 順位 */}
+      <div style={{
+        fontFamily:"'Bebas Neue'", fontSize:isMobile?24:28,
+        color:"#ffffff28", lineHeight:1, textAlign:"center",
+      }}>{row.rank}</div>
+
+      {/* 名前 */}
+      <div style={{
+        fontSize:isMobile?12:13, fontWeight:700,
+        color:"#ffffffbb", overflow:"hidden",
+        textOverflow:"ellipsis", whiteSpace:"nowrap",
+      }}>{row.creator_name}</div>
+
+      {/* スキ数 */}
+      <div style={{
+        textAlign:"right", fontFamily:"'Bebas Neue'",
+        fontSize:isMobile?20:22, color:CREAM, lineHeight:1,
+      }}>
+        {Number(row.likes_count).toLocaleString()}
+        <div style={{ fontSize:9, color:"#ffffff28", fontFamily:"'Syne',sans-serif", letterSpacing:.5 }}>スキ</div>
+      </div>
+
+      {/* 最終スキ日（PCのみ） */}
+      {!isMobile && (
+        <div style={{ textAlign:"right", fontSize:10, color:"#ffffff33" }}>
+          {fmtDate(row.last_like_at)}
+        </div>
+      )}
+
+      {/* CTA（PCのみ） */}
+      {!isMobile && (
+        <div className="row-cta" style={{ textAlign:"right" }}>
+          {url
+            ? <span style={{
+                display:"inline-block", padding:"4px 12px", borderRadius:16,
+                fontSize:10, fontFamily:"'Syne',sans-serif", letterSpacing:1,
+                color:"#fff", background:C, whiteSpace:"nowrap",
+              }}>見に行く →</span>
+            : null
+          }
+        </div>
+      )}
+    </div>
+  );
+
+  return url
+    ? <a href={url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none", display:"block" }}>{inner}</a>
+    : inner;
+}
+
+/* ローディング skeleton */
+function RankSkeleton({ isMobile }) {
+  return (
     <>
-      {[1,2,3,4,5,6,7].map(i => (
-        <div key={i} style={{ padding: isMobile ? "14px 16px" : "16px 20px", borderBottom: "1px solid #ffffff08", display:"flex", gap:16, alignItems:"center" }}>
-          <Skeleton w={36} h={36} />
-          <Skeleton w={`${40+i*8}%`} h={16} />
+      <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr 1fr", gap:12, marginBottom:12 }}>
+        {[0,1,2].map(i => <Skeleton key={i} w="100%" h={isMobile?120:160} style={{ borderRadius:16 }} />)}
+      </div>
+      {[0,1,2,3].map(i => (
+        <div key={i} style={{ display:"flex", gap:12, padding:"14px 0", borderBottom:"1px solid #ffffff08" }}>
+          <Skeleton w={40} h={18} />
+          <Skeleton w={`${50+i*10}%`} h={18} />
+          <div style={{ marginLeft:"auto" }}><Skeleton w={48} h={18} /></div>
         </div>
       ))}
     </>
   );
-
-  if (error) return (
-    <div style={{ textAlign:"center", padding:"60px 20px", color:"#ffffff22", fontSize:14 }}>⚠️ {error}</div>
-  );
-
-  if (!items?.length) return (
-    <div style={{ textAlign:"center", padding:"60px 20px", color:"#ffffff22", fontSize:14 }}>この期間のデータがありません</div>
-  );
-
-  return items.map((row) => {
-    const isTop = row.rank === 1;
-    const url   = row.has_profile_url ? row.creator_url : null;
-    return (
-      <div
-        key={row.like_user_id}
-        className="article-row"
-        style={{
-          display: "grid",
-          gridTemplateColumns: isMobile ? "44px 1fr 64px" : "56px 1fr 80px 120px 110px",
-          gap: isMobile ? 8 : 16,
-          padding: isMobile ? "14px 16px" : "16px 20px",
-          borderBottom: "1px solid #ffffff08",
-          alignItems: "center",
-          background: isTop ? "#d44a0010" : "transparent",
-        }}
-      >
-        {/* 順位 */}
-        <div style={{
-          fontFamily: "'Bebas Neue'",
-          fontSize: isTop ? (isMobile?32:40) : (isMobile?22:28),
-          color: isTop ? C : "#ffffff22",
-          lineHeight: 1, textAlign: "center",
-        }}>
-          {row.rank}
-        </div>
-
-        {/* クリエイター名 */}
-        <div style={{ minWidth:0 }}>
-          {isTop && (
-            <span className="badge" style={{ background:C, color:"#fff", fontSize:9, marginBottom:4, display:"inline-block" }}>👑 TOP</span>
-          )}
-          <div style={{
-            fontSize: isMobile?12:14, fontWeight:700,
-            color: isTop ? CREAM : "#ffffffcc",
-            overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", lineHeight:1.4,
-          }}>
-            {url
-              ? <a href={url} target="_blank" rel="noopener noreferrer"
-                   style={{ color:"inherit", textDecoration:"none", borderBottom:`1px solid ${C}44` }}
-                   onMouseEnter={e=>e.target.style.borderBottomColor=C}
-                   onMouseLeave={e=>e.target.style.borderBottomColor=`${C}44`}>
-                   {row.creator_name}
-                </a>
-              : <span style={{ color:"#ffffff44" }}>{row.creator_name}</span>
-            }
-          </div>
-        </div>
-
-        {/* スキ数 */}
-        <div style={{ textAlign:"right", fontFamily:"'Bebas Neue'", fontSize:isMobile?22:26, color:isTop?C:CREAM, lineHeight:1 }}>
-          {Number(row.likes_count).toLocaleString()}
-          <div style={{ fontSize:10, color:"#ffffff33", fontFamily:"'Syne',sans-serif", letterSpacing:1 }}>スキ</div>
-        </div>
-
-        {/* 最終スキ日（PCのみ） */}
-        {!isMobile && (
-          <div style={{ textAlign:"right", fontSize:11, color:"#ffffff44", lineHeight:1.6 }}>
-            <div>{formatDate(row.last_like_at)}</div>
-            <div style={{ fontSize:9, color:"#ffffff22", letterSpacing:.5 }}>最終スキ</div>
-          </div>
-        )}
-
-        {/* 見に行くボタン（PCのみ） */}
-        {!isMobile && (
-          <div style={{ textAlign:"right" }}>
-            {url
-              ? <a href={url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
-                  <span style={{
-                    display:"inline-block", padding:"5px 14px", borderRadius:20,
-                    fontSize:10, fontFamily:"'Syne',sans-serif", letterSpacing:1,
-                    color:CREAM, border:`1px solid ${C}66`, cursor:"pointer", transition:"all .18s",
-                  }}
-                  onMouseEnter={e=>{ e.currentTarget.style.background=C; e.currentTarget.style.borderColor=C; }}
-                  onMouseLeave={e=>{ e.currentTarget.style.background="transparent"; e.currentTarget.style.borderColor=`${C}66`; }}
-                  >見に行く →</span>
-                </a>
-              : <span style={{ fontSize:10, color:"#ffffff22", fontFamily:"'Syne',sans-serif" }}>URLなし</span>
-            }
-          </div>
-        )}
-      </div>
-    );
-  });
 }
 
 function LikesRankingPage({ isMobile }) {
   const [period, setPeriod] = useState("total");
-  const current = RANK_PERIODS.find(p => p.id === period);
 
-  // タブごとに独立したfetch状態を持つ（切替時のみ初回fetch）
-  const total     = useRankingData("ranking_total.json");
-  const monthly   = useRankingData("ranking_monthly.json");
-  const thisWeek  = useRankingData("ranking_this_week.json");
-  const lastWeek  = useRankingData("ranking_last_week.json");
+  const total    = useRankingData("ranking_total.json");
+  const monthly  = useRankingData("ranking_monthly.json");
+  const thisWeek = useRankingData("ranking_this_week.json");
+  const lastWeek = useRankingData("ranking_last_week.json");
 
-  const stateMap  = { total, monthly, this_week: thisWeek, last_week: lastWeek };
-  const active    = stateMap[period];
-  const items     = active.data?.items ?? null;
-  const genAt     = active.data?.generated_at?.slice(0,10).replace(/-/g,"/") ?? null;
+  const stateMap = { total, monthly, this_week:thisWeek, last_week:lastWeek };
+  const active   = stateMap[period];
+  const periodCfg = RANK_PERIODS.find(p => p.id === period);
+  const items    = (active.data?.items ?? []).slice(0, periodCfg.top);
+  const top3     = items.slice(0, 3);
+  const rest     = items.slice(3);
+  const genAt    = active.data?.generated_at?.slice(0,10).replace(/-/g,"/") ?? null;
 
   return (
     <div className="page-fade" style={{ minHeight:"100vh", background:INK, color:CREAM }}>
 
       {/* ヘッダー */}
-      <div style={{ padding: isMobile?"28px 16px 0":"48px 40px 0", maxWidth:960, margin:"0 auto" }}>
-        <span className="badge" style={{ background:C, color:"#fff", marginBottom:12, display:"inline-block" }}>RANKING</span>
-        <h1 style={{ fontFamily:"'Bebas Neue'", fontSize:"clamp(40px,9vw,80px)", lineHeight:.88, marginBottom:8 }}>
+      <div style={{ padding: isMobile?"28px 16px 0":"52px 40px 0", maxWidth:960, margin:"0 auto" }}>
+        <span className="badge" style={{ background:C, color:"#fff", marginBottom:14, display:"inline-block" }}>RANKING</span>
+        <h1 style={{ fontFamily:"'Bebas Neue'", fontSize:"clamp(44px,10vw,88px)", lineHeight:.88, marginBottom:10 }}>
           スキした人たち
         </h1>
-        <p style={{ fontSize:12, color:"#ffffff44", marginBottom:28 }}>
+        <p style={{ fontSize:12, color:"#ffffff44", marginBottom:32, letterSpacing:.5 }}>
           {active.error
-            ? active.error
+            ? `⚠️ ${active.error}`
             : genAt
-              ? `集計日 ${genAt} — 反応してくれたクリエイターから、新しい出会いへ`
+              ? `集計日 ${genAt} — 気になる人を見つけたら、プロフィールへ飛んでみて`
               : "読み込み中…"}
         </p>
 
-        {/* 期間タブ */}
-        <div style={{ display:"flex", gap:4, marginBottom:32 }}>
+        {/* 期間ピル */}
+        <div style={{ display:"flex", gap:8, marginBottom:40, flexWrap:"wrap" }}>
           {RANK_PERIODS.map(p => (
             <button key={p.id} className="tab-btn" onClick={() => setPeriod(p.id)}
               style={{
-                padding: isMobile?"8px 16px":"9px 24px",
-                borderRadius:24, fontSize:12, letterSpacing:1,
-                color: period===p.id?"#fff":"#ffffff44",
-                background: period===p.id?C:"#ffffff0a",
-                border: `1px solid ${period===p.id?C:"#ffffff18"}`,
-                transition:"all .18s",
+                padding: isMobile?"7px 18px":"9px 24px",
+                borderRadius:28, fontSize:11, letterSpacing:2,
+                fontFamily:"'Syne',sans-serif", fontWeight:700, textTransform:"uppercase",
+                color: period===p.id?"#fff":"#ffffff55",
+                background: period===p.id?C:"transparent",
+                border: `1.5px solid ${period===p.id?C:"#ffffff22"}`,
+                transition:"all .2s cubic-bezier(.22,1,.36,1)",
               }}
-            >{p.label}</button>
+            >{p.label}
+              {period===p.id && <span style={{ marginLeft:6, fontSize:9, opacity:.7 }}>TOP {p.top}</span>}
+            </button>
           ))}
         </div>
       </div>
 
-      {/* テーブル */}
-      <div style={{ maxWidth:960, margin:"0 auto", padding: isMobile?"0 0 80px":"0 40px 80px" }}>
-        <div style={{
-          display:"grid",
-          gridTemplateColumns: isMobile?"44px 1fr 64px":"56px 1fr 80px 120px 110px",
-          gap: isMobile?8:16,
-          padding: isMobile?"8px 16px":"10px 20px",
-          borderBottom:"1px solid #ffffff14",
-          fontSize:10, color:"#ffffff33",
-          fontFamily:"'Syne',sans-serif", letterSpacing:1,
-        }}>
-          <div>RANK</div><div>CREATOR</div>
-          <div style={{ textAlign:"right" }}>スキ数</div>
-          {!isMobile && <><div style={{ textAlign:"right" }}>最終スキ日</div><div /></>}
-        </div>
+      <div style={{ maxWidth:960, margin:"0 auto", padding: isMobile?"0 16px 80px":"0 40px 80px" }}>
 
-        <RankingTable items={items} error={active.error} loaded={active.loaded} isMobile={isMobile} />
+        {/* ローディング */}
+        {!active.loaded && <RankSkeleton isMobile={isMobile} />}
+
+        {/* エラー */}
+        {active.error && (
+          <div style={{ textAlign:"center", padding:"60px 20px", color:"#ffffff22", fontSize:14 }}>
+            ⚠️ {active.error}
+          </div>
+        )}
+
+        {/* データなし */}
+        {active.loaded && !active.error && items.length === 0 && (
+          <div style={{ textAlign:"center", padding:"60px 20px", color:"#ffffff22", fontSize:14 }}>
+            この期間のデータがありません
+          </div>
+        )}
+
+        {/* TOP3 カードグリッド */}
+        {top3.length > 0 && (
+          <div style={{
+            display:"grid",
+            gridTemplateColumns: isMobile?"1fr":`repeat(${top3.length},1fr)`,
+            gap:12, marginBottom:8,
+          }}>
+            {top3.map(row => <HeroCard key={row.like_user_id} row={row} isMobile={isMobile} />)}
+          </div>
+        )}
+
+        {/* 4位以下 */}
+        {rest.length > 0 && (
+          <div style={{ marginTop:8 }}>
+            {/* 列ヘッダー（PCのみ） */}
+            {!isMobile && (
+              <div style={{
+                display:"grid", gridTemplateColumns:"56px 1fr 80px 100px 90px",
+                gap:16, padding:"8px 20px 8px",
+                fontSize:9, color:"#ffffff28",
+                fontFamily:"'Syne',sans-serif", letterSpacing:1.5,
+                borderBottom:"1px solid #ffffff0a",
+              }}>
+                <div>RANK</div><div>CREATOR</div>
+                <div style={{ textAlign:"right" }}>スキ</div>
+                <div style={{ textAlign:"right" }}>最終スキ日</div>
+                <div />
+              </div>
+            )}
+            {rest.map(row => <RankRow key={row.like_user_id} row={row} isMobile={isMobile} />)}
+          </div>
+        )}
       </div>
 
-      {items?.length > 0 && (
-        <div style={{ textAlign:"center", padding:"0 24px 60px", color:"#ffffff33", fontSize:11, fontFamily:"'Syne',sans-serif", letterSpacing:1 }}>
+      {/* フッターコピー */}
+      {items.length > 0 && (
+        <div style={{
+          textAlign:"center", padding:"0 24px 64px",
+          color:"#ffffff28", fontSize:11,
+          fontFamily:"'Syne',sans-serif", letterSpacing:2,
+          textTransform:"uppercase",
+        }}>
           反応している人から、新しい出会いが見つかる
         </div>
       )}
