@@ -223,6 +223,7 @@ function Skeleton({ w="100%", h=32, style:s={} }) {
 }
 
 const C="#d44a00", INK="#1a0f00", CREAM="#fffbf2";
+const EXCLUDED_URLNAMES = new Set(["ktcrs1107"]);
 const STATUS_COLOR = {
   "🔥 急上昇":"#d44a00","🟢 継続":"#22c55e","⚠️ 減速":"#ca8a04","💤 停止":"#475569",
 };
@@ -532,6 +533,425 @@ function MonthlyChart({ items, isMobile }) {
   );
 }
 
+/* バンプチャート（順位レース） - ranking_monthly_trace.csv を直接利用 */
+const BUMP_COLORS = [
+  "#d44a00","#e8855a","#f5b942","#7dd3a8","#60a5fa",
+  "#a78bfa","#f472b6","#34d399","#fbbf24","#94a3b8",
+];
+const BUMP_TOP_N = 10;
+
+function useBumpData() {
+  const [state, setState] = useState({ data:null, error:null, loaded:false });
+  useEffect(() => {
+    if (state.loaded) return;
+    fetch(DATA_BASE + "ranking_monthly_trace.csv")
+      .then(r => { if (!r.ok) throw new Error("ranking_monthly_trace.csv が見つかりません"); return r.text(); })
+      .then(text => {
+        const rows = parseCSV(text);
+
+        // 除外・日付ソート
+        const filtered = rows.filter(r => !EXCLUDED_URLNAMES.has(r.creator_urlname));
+        const dates = [...new Set(filtered.map(r => r.date))].sort();
+
+        // 最終日TOP10のユーザーを基準にする
+        const lastDate = dates[dates.length - 1];
+        const lastTop = filtered
+          .filter(r => r.date === lastDate)
+          .sort((a,b) => parseInt(a.rank) - parseInt(b.rank))
+          .slice(0, BUMP_TOP_N);
+
+        const targetIds = lastTop.map(r => r.like_user_id);
+
+        // クリエイター情報
+        const profileMap = {};
+        filtered.forEach(r => { profileMap[r.like_user_id] = r; });
+
+        // 日ごとのランクマップ: { date: { user_id: rank } }
+        const rankByDate = {};
+        dates.forEach(d => { rankByDate[d] = {}; });
+        filtered.forEach(r => {
+          if (rankByDate[r.date]) rankByDate[r.date][r.like_user_id] = parseInt(r.rank);
+        });
+
+        const creators = targetIds.map((uid, i) => {
+          const prof = profileMap[uid];
+          return {
+            like_user_id: uid,
+            creator_name: prof.creator_name,
+            creator_url:  prof.creator_url,
+            has_profile_url: prof.has_profile_url === "True",
+            color: BUMP_COLORS[i],
+            ranks:  dates.map(d => rankByDate[d][uid] ?? null),
+            counts: dates.map(d => {
+              const row = filtered.find(r => r.date === d && r.like_user_id === uid);
+              return row ? parseInt(row.likes_count_cumulative) : null;
+            }),
+          };
+        });
+
+        // X軸ラベル: 3/1, 3/5, … 間引いて表示
+        const labelDates = dates.map(d => {
+          const [,m,day] = d.split("-");
+          return `${parseInt(m)}/${parseInt(day)}`;
+        });
+
+        setState({ data:{ dates:labelDates, creators }, error:null, loaded:true });
+      })
+      .catch(e => setState({ data:null, error:e.message, loaded:true }));
+  }, [state.loaded]);
+  return state;
+}
+
+function BumpChart({ bumpState, isMobile }) {
+  const [hovered, setHovered] = useState(null);
+  const [tooltip, setTooltip] = useState(null);
+
+  if (!bumpState.loaded) return <RankSkeleton isMobile={isMobile} />;
+  if (bumpState.error) return (
+    <div style={{ textAlign:"center", padding:"60px 20px", color:"#ffffff22", fontSize:14 }}>⚠️ {bumpState.error}</div>
+  );
+
+  const { dates, creators } = bumpState.data;
+  const W = dates.length;
+
+  // X軸ラベル間引き（15日あるので5本程度）
+  const labelStep = Math.ceil(W / 6);
+
+  const PAD_L = 20;
+  const PAD_R = isMobile ? 90 : 155;
+  const PAD_T = 36;
+  const PAD_B = 20;
+  const ROW_H = isMobile ? 28 : 34;
+  const H     = PAD_T + ROW_H * BUMP_TOP_N + PAD_B;
+  const colW  = isMobile ? 18 : 24;
+  const SVG_W = PAD_L + colW * W + PAD_R;
+
+  const xPos = wi => PAD_L + colW * wi;
+  const yPos = rank => PAD_T + ROW_H * (rank - 1) + ROW_H / 2;
+
+  return (
+    <div style={{ marginTop:16 }}>
+      {/* 凡例 */}
+      <div style={{ display:"flex", flexWrap:"wrap", gap:isMobile?6:8, marginBottom:16 }}>
+        {creators.map(c => (
+          <div key={c.like_user_id}
+            style={{ display:"flex", alignItems:"center", gap:5, cursor: c.has_profile_url?"pointer":"default",
+              opacity: hovered && hovered !== c.like_user_id ? .25 : 1, transition:"opacity .2s" }}
+            onMouseEnter={() => setHovered(c.like_user_id)}
+            onMouseLeave={() => setHovered(null)}
+            onClick={() => c.has_profile_url && window.open(c.creator_url,"_blank","noopener")}
+          >
+            <span style={{ width:10, height:10, borderRadius:"50%", background:c.color, display:"inline-block", flexShrink:0 }} />
+            <span style={{ fontSize:isMobile?9:10, color:"#ffffffaa", fontFamily:"'Noto Sans JP',sans-serif",
+              maxWidth:isMobile?68:110, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+              {c.creator_name}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* SVG */}
+      <div style={{ overflowX:"auto", WebkitOverflowScrolling:"touch" }}>
+        <svg width={SVG_W} height={H} style={{ display:"block" }}>
+
+          {/* 横グリッド（順位） */}
+          {Array.from({length:BUMP_TOP_N},(_,i)=>i+1).map(rank => (
+            <g key={rank}>
+              <line x1={PAD_L} y1={yPos(rank)} x2={PAD_L+colW*W} y2={yPos(rank)}
+                stroke="#ffffff08" strokeWidth={1} />
+              <text x={PAD_L-5} y={yPos(rank)+4} textAnchor="end"
+                fill="#ffffff22" fontSize={isMobile?9:10} fontFamily="'Bebas Neue',sans-serif">{rank}</text>
+            </g>
+          ))}
+
+          {/* X軸ラベル（間引き） */}
+          {dates.map((label, wi) => wi % labelStep === 0 && (
+            <text key={wi} x={xPos(wi)} y={PAD_T - 14} textAnchor="middle"
+              fill="#ffffff44" fontSize={isMobile?8:10} fontFamily="'Syne',sans-serif">{label}</text>
+          ))}
+
+          {/* 各クリエイター */}
+          {creators.map(c => {
+            const isHov = hovered === c.like_user_id;
+            const opacity = hovered ? (isHov ? 1 : 0.12) : 0.8;
+
+            return (
+              <g key={c.like_user_id}
+                style={{ cursor: c.has_profile_url?"pointer":"default", transition:"opacity .18s", opacity }}
+                onMouseEnter={() => setHovered(c.like_user_id)}
+                onMouseLeave={() => setHovered(null)}
+                onClick={() => c.has_profile_url && window.open(c.creator_url,"_blank","noopener")}
+              >
+                {/* 折れ線 */}
+                {c.ranks.map((rank, wi) => {
+                  if (rank === null || c.ranks[wi+1] === null) return null;
+                  const nextRank = c.ranks[wi+1];
+                  if (nextRank === null) return null;
+                  return (
+                    <line key={wi}
+                      x1={xPos(wi)} y1={yPos(rank)}
+                      x2={xPos(wi+1)} y2={yPos(nextRank)}
+                      stroke={c.color} strokeWidth={isHov ? 2.5 : 1.5}
+                      strokeLinecap="round"
+                      style={{ transition:"stroke-width .15s" }}
+                    />
+                  );
+                })}
+
+                {/* ドット */}
+                {c.ranks.map((rank, wi) => rank !== null && (
+                  <circle key={wi}
+                    cx={xPos(wi)} cy={yPos(rank)} r={isHov ? 5 : 3}
+                    fill={c.color} stroke={INK} strokeWidth={1}
+                    style={{ transition:"r .15s" }}
+                    onMouseEnter={e => { e.stopPropagation(); setTooltip({ xi:xPos(wi), yi:yPos(rank), c, wi }); }}
+                    onMouseLeave={() => setTooltip(null)}
+                  />
+                ))}
+
+                {/* 末尾ラベル */}
+                {(() => {
+                  const lastWi = [...c.ranks].map((r,i)=>[r,i]).filter(([r])=>r!==null).pop();
+                  if (!lastWi) return null;
+                  const [rank, wi] = lastWi;
+                  return (
+                    <text x={xPos(wi)+10} y={yPos(rank)+4}
+                      fill={isHov ? c.color : "#ffffff66"}
+                      fontSize={isMobile?9:11} fontFamily="'Noto Sans JP',sans-serif"
+                      fontWeight={isHov?700:400}
+                      style={{ transition:"fill .15s" }}>
+                      {c.creator_name.length > (isMobile?7:11)
+                        ? c.creator_name.slice(0,isMobile?6:10)+"…"
+                        : c.creator_name}
+                    </text>
+                  );
+                })()}
+              </g>
+            );
+          })}
+
+          {/* ツールチップ */}
+          {tooltip && (() => {
+            const { xi, yi, c, wi } = tooltip;
+            const cnt   = c.counts[wi];
+            const rank  = c.ranks[wi];
+            const tw = 138;
+            const tx = xi + tw + 14 > SVG_W ? xi - tw - 6 : xi + 8;
+            const ty = Math.max(4, yi - 30);
+            return (
+              <g style={{ pointerEvents:"none" }}>
+                <rect x={tx} y={ty} width={tw} height={50} rx={6}
+                  fill="#1a0f00" stroke={`${c.color}88`} strokeWidth={1} />
+                <text x={tx+8} y={ty+15} fill={CREAM} fontSize={10}
+                  fontFamily="'Noto Sans JP',sans-serif" fontWeight={700}>
+                  {c.creator_name.length>14 ? c.creator_name.slice(0,13)+"…" : c.creator_name}
+                </text>
+                <text x={tx+8} y={ty+33} fill={c.color} fontSize={15}
+                  fontFamily="'Bebas Neue',sans-serif">{rank}位</text>
+                <text x={tx+46} y={ty+33} fill="#ffffff55" fontSize={11}
+                  fontFamily="'Bebas Neue',sans-serif">累計{cnt}スキ</text>
+              </g>
+            );
+          })()}
+        </svg>
+      </div>
+
+      <p style={{ fontSize:10, color:"#ffffff28", textAlign:"right", marginTop:6,
+        fontFamily:"'Syne',sans-serif", letterSpacing:1 }}>
+        線・名前をクリックでプロフィールへ / ドットにホバーで詳細
+      </p>
+    </div>
+  );
+}
+  const [hovered, setHovered] = useState(null);
+
+  if (!bumpData) return null;
+  const { weeks, creators, month } = bumpData;
+  const W = weeks.length;
+  const TOP = 10;
+
+  // 全週に1回以上登場したクリエイターのみ（null だらけは除外）
+  const active = creators.filter(c => c.ranks.some(r => r !== null));
+
+  // SVG サイズ計算
+  const PAD_L  = isMobile ? 8  : 12;
+  const PAD_R  = isMobile ? 100 : 160;
+  const PAD_T  = 40;
+  const PAD_B  = 48;
+  const ROW_H  = isMobile ? 32 : 38;
+  const H      = PAD_T + ROW_H * TOP + PAD_B;
+  const colW   = isMobile ? 72 : 100;
+  const SVG_W  = PAD_L + colW * W + PAD_R;
+
+  const xPos = wi => PAD_L + colW * wi + colW / 2;
+  const yPos = rank => PAD_T + ROW_H * (rank - 1) + ROW_H / 2;
+
+  // ツールチップ
+  const [tooltip, setTooltip] = useState(null); // { x, y, creator, weekIdx }
+
+  return (
+    <div style={{ marginTop:16 }}>
+      {/* 凡例 */}
+      <div style={{ display:"flex", flexWrap:"wrap", gap:8, marginBottom:16 }}>
+        {active.map((c, i) => (
+          <div key={c.like_user_id}
+            style={{ display:"flex", alignItems:"center", gap:5, cursor:"pointer", opacity: hovered && hovered!==c.like_user_id ? .3 : 1, transition:"opacity .2s" }}
+            onMouseEnter={() => setHovered(c.like_user_id)}
+            onMouseLeave={() => setHovered(null)}
+            onClick={() => c.creator_url && window.open(c.creator_url,"_blank","noopener")}
+          >
+            <span style={{ width:12, height:12, borderRadius:"50%", background:BUMP_COLORS[i % BUMP_COLORS.length], display:"inline-block", flexShrink:0 }} />
+            <span style={{ fontSize:isMobile?9:10, color:"#ffffffaa", fontFamily:"'Noto Sans JP',sans-serif",
+              maxWidth:isMobile?70:100, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+              {c.creator_name}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* SVG本体 */}
+      <div style={{ overflowX:"auto", WebkitOverflowScrolling:"touch" }}>
+        <svg width={SVG_W} height={H} style={{ display:"block" }}>
+
+          {/* 横グリッド（順位ライン） */}
+          {Array.from({length:TOP},(_,i)=>i+1).map(rank => (
+            <g key={rank}>
+              <line
+                x1={PAD_L} y1={yPos(rank)}
+                x2={PAD_L + colW * W} y2={yPos(rank)}
+                stroke="#ffffff0a" strokeWidth={1}
+              />
+              <text x={PAD_L - 4} y={yPos(rank)+4} textAnchor="end"
+                fill="#ffffff22" fontSize={isMobile?9:10}
+                fontFamily="'Bebas Neue',sans-serif">
+                {rank}
+              </text>
+            </g>
+          ))}
+
+          {/* 週ラベル（X軸） */}
+          {weeks.map((label, wi) => (
+            <text key={wi} x={xPos(wi)} y={PAD_T - 14} textAnchor="middle"
+              fill="#ffffff55" fontSize={isMobile?9:11}
+              fontFamily="'Syne',sans-serif" letterSpacing={0.5}>
+              {label}
+            </text>
+          ))}
+
+          {/* 各クリエイターの線とドット */}
+          {active.map((c, ci) => {
+            const color = BUMP_COLORS[ci % BUMP_COLORS.length];
+            const isHov = hovered === c.like_user_id;
+            const opacity = hovered ? (isHov ? 1 : 0.15) : 0.75;
+
+            // 線セグメント（nullをまたがない）
+            const segments = [];
+            for (let wi = 0; wi < W - 1; wi++) {
+              if (c.ranks[wi] !== null && c.ranks[wi+1] !== null) {
+                segments.push([wi, wi+1]);
+              }
+            }
+
+            return (
+              <g key={c.like_user_id}
+                style={{ cursor:"pointer", transition:"opacity .2s", opacity }}
+                onMouseEnter={() => setHovered(c.like_user_id)}
+                onMouseLeave={() => setHovered(null)}
+                onClick={() => c.creator_url && window.open(c.creator_url,"_blank","noopener")}
+              >
+                {/* 線 */}
+                {segments.map(([w1,w2],si) => (
+                  <line key={si}
+                    x1={xPos(w1)} y1={yPos(c.ranks[w1])}
+                    x2={xPos(w2)} y2={yPos(c.ranks[w2])}
+                    stroke={color} strokeWidth={isHov ? 3 : 1.5}
+                    strokeLinecap="round"
+                    style={{ transition:"stroke-width .2s" }}
+                  />
+                ))}
+
+                {/* ドット + 順位数字 */}
+                {c.ranks.map((rank, wi) => rank !== null && (
+                  <g key={wi}
+                    onMouseEnter={e => setTooltip({ x:xPos(wi), y:yPos(rank), creator:c, weekIdx:wi })}
+                    onMouseLeave={() => setTooltip(null)}
+                  >
+                    <circle cx={xPos(wi)} cy={yPos(rank)} r={isHov ? 7 : 5}
+                      fill={color} stroke={INK} strokeWidth={isHov ? 2 : 1.5}
+                      style={{ transition:"r .15s" }}
+                    />
+                    {isHov && (
+                      <text x={xPos(wi)} y={yPos(rank)+4} textAnchor="middle"
+                        fill="#fff" fontSize={8} fontFamily="'Bebas Neue',sans-serif">
+                        {rank}
+                      </text>
+                    )}
+                  </g>
+                ))}
+
+                {/* 最終週の名前ラベル */}
+                {(() => {
+                  const lastRank = [...c.ranks].reverse().find(r => r !== null);
+                  const lastWi   = c.ranks.lastIndexOf(lastRank);
+                  if (lastRank === null || lastWi === undefined) return null;
+                  return (
+                    <text
+                      x={xPos(lastWi) + 14} y={yPos(lastRank) + 4}
+                      fill={isHov ? color : "#ffffff88"}
+                      fontSize={isMobile ? 9 : 11}
+                      fontFamily="'Noto Sans JP',sans-serif"
+                      fontWeight={isHov ? 700 : 400}
+                      style={{ transition:"fill .2s, font-weight .2s" }}
+                    >
+                      {c.creator_name.length > (isMobile?8:12)
+                        ? c.creator_name.slice(0, isMobile?7:11) + "…"
+                        : c.creator_name}
+                    </text>
+                  );
+                })()}
+              </g>
+            );
+          })}
+
+          {/* ホバーツールチップ */}
+          {tooltip && (() => {
+            const { x, y, creator, weekIdx } = tooltip;
+            const cnt = creator.counts[weekIdx];
+            const rank = creator.ranks[weekIdx];
+            const name = creator.creator_name;
+            const tw = isMobile ? 120 : 148;
+            const tx = x + tw + 20 > SVG_W ? x - tw - 10 : x + 10;
+            const ty = Math.max(4, y - 28);
+            return (
+              <g>
+                <rect x={tx} y={ty} width={tw} height={52} rx={6}
+                  fill="#1a0f00" stroke={`${C}66`} strokeWidth={1} />
+                <text x={tx+8} y={ty+16} fill={CREAM} fontSize={10}
+                  fontFamily="'Noto Sans JP',sans-serif" fontWeight={700}>
+                  {name.length > 12 ? name.slice(0,11)+"…" : name}
+                </text>
+                <text x={tx+8} y={ty+32} fill={C} fontSize={14}
+                  fontFamily="'Bebas Neue',sans-serif">
+                  {rank}位
+                </text>
+                <text x={tx+40} y={ty+32} fill="#ffffff55" fontSize={10}
+                  fontFamily="'Bebas Neue',sans-serif">
+                  {cnt}スキ
+                </text>
+              </g>
+            );
+          })()}
+        </svg>
+      </div>
+
+      <p style={{ fontSize:10, color:"#ffffff28", textAlign:"right", marginTop:8,
+        fontFamily:"'Syne',sans-serif", letterSpacing:1 }}>
+        線・名前をクリックでプロフィールへ
+      </p>
+    </div>
+  );
+}
+
 /* TOP3 ヒーローカード */
 function HeroCard({ row, isMobile }) {
   const idx  = row.rank - 1;
@@ -688,11 +1108,12 @@ function RankSkeleton({ isMobile }) {
 
 function LikesRankingPage({ isMobile }) {
   const [period, setPeriod]     = useState("total");
-  const [viewMode, setViewMode] = useState("rank"); // "rank" | "chart"
+  const [viewMode, setViewMode] = useState("rank"); // "rank" | "chart" | "race"
 
   const total    = useRankingData("ranking_total.json");
   const monthly  = useRankingData("ranking_monthly.json");
   const lastWeek = useRankingData("ranking_last_week.json");
+  const bump     = useBumpData(); // バンプチャート用（CSV直読み）
 
   const stateMap   = { total, monthly, last_week:lastWeek };
   const active     = stateMap[period];
@@ -705,8 +1126,162 @@ function LikesRankingPage({ isMobile }) {
 
   // 期間切替時にチャート非対応ならランク表示に戻す
   useEffect(() => {
-    if (!periodCfg.hasChart) setViewMode("rank");
+    if (!periodCfg.hasChart && viewMode !== "rank") setViewMode("rank");
   }, [period, periodCfg.hasChart]);
+
+  const VIEW_MODES = periodCfg.hasChart
+    ? [
+        { id:"rank",  icon:"☰", tip:"ランク" },
+        { id:"chart", icon:"▬", tip:"チャート" },
+        { id:"race",  icon:"↗", tip:"レース" },
+      ]
+    : [];
+
+  return (
+    <div className="page-fade" style={{ minHeight:"100vh", background:INK, color:CREAM }}>
+
+      {/* ヘッダー */}
+      <div style={{ padding: isMobile?"28px 16px 0":"52px 40px 0", maxWidth:960, margin:"0 auto" }}>
+        <span className="badge" style={{ background:C, color:"#fff", marginBottom:14, display:"inline-block" }}>RANKING</span>
+        <h1 style={{ fontFamily:"'Bebas Neue'", fontSize:"clamp(44px,10vw,88px)", lineHeight:.88, marginBottom:10 }}>
+          スキした人たち
+        </h1>
+        <p style={{ fontSize:12, color:"#ffffff44", marginBottom:32, letterSpacing:.5 }}>
+          {active.error
+            ? `⚠️ ${active.error}`
+            : genAt
+              ? `集計日 ${genAt} — 気になる人を見つけたら、プロフィールへ飛んでみて`
+              : "読み込み中…"}
+        </p>
+
+        {/* 期間ピル + ビュー切替 */}
+        <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom: periodLabel ? 16 : 40, flexWrap:"wrap" }}>
+          {RANK_PERIODS.map(p => (
+            <button key={p.id} className="tab-btn" onClick={() => setPeriod(p.id)}
+              style={{
+                padding: isMobile?"7px 18px":"9px 24px",
+                borderRadius:28, fontSize:11, letterSpacing:2,
+                fontFamily:"'Syne',sans-serif", fontWeight:700, textTransform:"uppercase",
+                color: period===p.id?"#fff":"#ffffff55",
+                background: period===p.id?C:"transparent",
+                border: `1.5px solid ${period===p.id?C:"#ffffff22"}`,
+                transition:"all .2s cubic-bezier(.22,1,.36,1)",
+              }}
+            >{p.label}
+              {period===p.id && <span style={{ marginLeft:6, fontSize:9, opacity:.7 }}>TOP {p.top}</span>}
+            </button>
+          ))}
+
+          {/* ビュー切替（今月のみ） */}
+          {VIEW_MODES.length > 0 && items.length > 0 && (
+            <div style={{ marginLeft:"auto", display:"flex", gap:4 }}>
+              {VIEW_MODES.map(v => (
+                <button key={v.id} className="tab-btn" onClick={() => setViewMode(v.id)}
+                  title={v.tip}
+                  style={{
+                    padding:"7px 14px", borderRadius:20, fontSize:14,
+                    color: viewMode===v.id?CREAM:"#ffffff33",
+                    background: viewMode===v.id?"#ffffff18":"transparent",
+                    border:`1px solid ${viewMode===v.id?"#ffffff44":"#ffffff18"}`,
+                    transition:"all .18s",
+                  }}
+                >{v.icon}</button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* 集計期間バッジ（今月・先週） */}
+        {periodLabel && (
+          <div style={{ marginBottom:32 }}>
+            <div style={{
+              display:"inline-flex", alignItems:"center", gap:8,
+              background:"#ffffff0a", border:"1px solid #ffffff18",
+              borderRadius:20, padding:"6px 16px",
+            }}>
+              <span style={{ fontSize:10, color:"#ffffff44", fontFamily:"'Syne',sans-serif", letterSpacing:1 }}>集計期間</span>
+              <span style={{ fontSize:13, fontWeight:700, color:CREAM, fontFamily:"'Noto Sans JP',sans-serif" }}>{periodLabel}</span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div style={{ maxWidth:960, margin:"0 auto", padding: isMobile?"0 16px 80px":"0 40px 80px" }}>
+
+        {/* ローディング */}
+        {!active.loaded && <RankSkeleton isMobile={isMobile} />}
+
+        {/* エラー */}
+        {active.error && (
+          <div style={{ textAlign:"center", padding:"60px 20px", color:"#ffffff22", fontSize:14 }}>
+            ⚠️ {active.error}
+          </div>
+        )}
+
+        {/* データなし */}
+        {active.loaded && !active.error && items.length === 0 && (
+          <div style={{ textAlign:"center", padding:"60px 20px", color:"#ffffff22", fontSize:14 }}>
+            この期間のデータがありません
+          </div>
+        )}
+
+        {/* ── チャートビュー ── */}
+        {viewMode === "chart" && items.length > 0 && (
+          <MonthlyChart items={items} isMobile={isMobile} />
+        )}
+
+        {/* ── レースビュー ── */}
+        {viewMode === "race" && (
+          <BumpChart bumpState={bump} isMobile={isMobile} />
+        )}
+
+        {/* ── ランキングビュー ── */}
+        {viewMode === "rank" && (
+          <>
+            {top3.length > 0 && (
+              <div style={{
+                display:"grid",
+                gridTemplateColumns: isMobile?"1fr":`repeat(${top3.length},1fr)`,
+                gap:12, marginBottom:8,
+              }}>
+                {top3.map(row => <HeroCard key={row.like_user_id} row={row} isMobile={isMobile} />)}
+              </div>
+            )}
+            {rest.length > 0 && (
+              <div style={{ marginTop:8 }}>
+                {!isMobile && (
+                  <div style={{
+                    display:"grid", gridTemplateColumns:"56px 1fr 80px 100px 90px",
+                    gap:16, padding:"8px 20px",
+                    fontSize:9, color:"#ffffff28",
+                    fontFamily:"'Syne',sans-serif", letterSpacing:1.5,
+                    borderBottom:"1px solid #ffffff0a",
+                  }}>
+                    <div>RANK</div><div>CREATOR</div>
+                    <div style={{ textAlign:"right" }}>スキ</div>
+                    <div style={{ textAlign:"right" }}>最終スキ日</div>
+                    <div />
+                  </div>
+                )}
+                {rest.map(row => <RankRow key={row.like_user_id} row={row} isMobile={isMobile} />)}
+              </div>
+            )}
+          </>
+        )}
+      </div>
+
+      {items.length > 0 && (
+        <div style={{
+          textAlign:"center", padding:"0 24px 64px",
+          color:"#ffffff28", fontSize:11,
+          fontFamily:"'Syne',sans-serif", letterSpacing:2, textTransform:"uppercase",
+        }}>
+          反応している人から、新しい出会いが見つかる
+        </div>
+      )}
+    </div>
+  );
+}
 
   return (
     <div className="page-fade" style={{ minHeight:"100vh", background:INK, color:CREAM }}>
