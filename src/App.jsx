@@ -1050,12 +1050,18 @@ function PickupPage({ isMobile }) {
   };
 
   const magazines = [
-    { title: "KITAcore’s AI Art Gallery", desc: "KITAcore が制作した AIアート作品だけを集めたギャラリー。", count: 12, url: "https://note.com/ktcrs1107/m/m98debce90244" },
-    { title: "Note運営データ分析", desc: "Note運営したデータから見えたことを記載した記事を整理。", count: 8, url: "https://note.com/ktcrs1107/m/mb3b409c964fe" },
-    { title: "Prompt Engineering Studio", desc: "KITAcore が日々つくり続けている 構造化プロンプト・実践プロンプトのアーカイブ。", count: 8, url: "https://note.com/ktcrs1107/m/m33ce42803732" },
-    { title: "データ分析", desc: "KITAcore がデータ分析した記事のアーカイブ。", count: 8, url: "https://note.com/ktcrs1107/m/me49a0bad66e8" },
-    { title: "Python冒険記", desc: "Pythonの試行錯誤を面白おかしく書いてみた。", count: 5, url: "https://note.com/ktcrs1107/m/md1c85d0a934b" },
+    { title: "KITAcoreマガジン KITAcore’s AI Art Gallery", desc: "KITAcore が制作した AIアート作品だけを集めたギャラリー。", count: 12, url: "https://note.com/ktcrs1107/m/m98debce90244" },
+    { title: "KITAcoreマガジン Note運営データ分析", desc: "Note運営したデータから見えたことを記載した記事を整理。", count: 8, url: "https://note.com/ktcrs1107/m/mb3b409c964fe" },
+    { title: "KITAcoreマガジン Prompt Engineering Studio", desc: "KITAcore が日々つくり続けている 構造化プロンプト・実践プロンプトのアーカイブ。", count: 8, url: "https://note.com/ktcrs1107/m/m33ce42803732" },
+    { title: "KITAcoreマガジン データ分析", desc: "KITAcore がデータ分析した記事のアーカイブ。", count: 8, url: "https://note.com/ktcrs1107/m/me49a0bad66e8" },
+    { title: "KITAcoreマガジン Python冒険記", desc: "Pythonの試行錯誤を面白おかしく書いてみた。", count: 5, url: "https://note.com/ktcrs1107/m/md1c85d0a934b" },
     { title: "共同マガジン『AI-LA（アイラ）』", desc: "共同参加中のマガジン", count: 5, url: "https://note.com/supertoraneko/m/mc6810aa41870" },
+    { title: "共同マガジン『漆黒の絶対領域』", desc: "共同参加中のマガジン", count: 5, url: "https://note.com/hitsuji_natsume/m/m41a7aa3dcc38" },
+    { title: "共同マガジン『集まれ！白銀の髪同盟』", desc: "共同参加中のマガジン", count: 5, url: "https://note.com/reipichu/m/m8fb499ecbcbb" },
+    { title: "共同マガジン『ダークファンタジー好き集まれ_深淵図書館』", desc: "共同参加中のマガジン", count: 5, url: "https://note.com/shio_batapopcorn/m/mc085f157d924" },
+    { title: "共同マガジン『OASOBI会』", desc: "共同参加中のマガジン", count: 5, url: "https://note.com/maiyu_x_ai/m/m96728bd6b208" },
+    { title: "共同マガジン『note×AI活用推進マガジン』", desc: "共同参加中のマガジン", count: 5, url: "https://note.com/mugimugi92/m/md2a022132e8f" },
+    { title: "KITAcore専用『今後も見る記事一覧』", desc: "ワイのおすすめ記事", count: 5, url: "https://note.com/ktcrs1107/m/m779b42e18707" },
   ];
 
   const paidArticles = [
@@ -1063,6 +1069,9 @@ function PickupPage({ isMobile }) {
     { title: "「群衆で構成された巨大な○○」をもっと自由に作る", price: "¥980", url: "https://note.com/ktcrs1107/n/n07197895a3e9" },
     { title: "Noteの閲覧数・スキ数を自動で収集する方法", price: "¥980", url: "https://note.com/ktcrs1107/n/ne2bb6d38c4e3" },
     { title: "【ロジック解説】データ構造から逆算したnoteタグ戦略の深淵", price: "¥980", url: "https://note.com/ktcrs1107/n/n1d32162cd219" },
+    { title: "【詳細版】Platformは、なぜ推しのアルゴリズムを公開したのか", price: "¥300", url: "https://note.com/ktcrs1107/n/n5f991f7606e9" },
+    { title: "【プロンプト公開版】切り抜き×逆光×投影の再現", price: "¥490", url: "https://note.com/ktcrs1107/n/n86e1c6ff59e1" },
+    { title: "「プロンプト解説」“水彩迷子”を救ったのは「妖怪」と「4つの縛り」だった。", price: "¥980", url: "https://note.com/ktcrs1107/n/n0323b9955abb" },
   ];
   // ▲ ここまで ▲
 
