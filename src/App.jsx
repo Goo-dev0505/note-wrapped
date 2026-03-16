@@ -960,7 +960,7 @@ function LikesRankingPage({ isMobile }) {
       <div style={{ padding: isMobile ? "28px 16px 0" : "52px 40px 0", maxWidth: 960, margin: "0 auto" }}>
         <span className="badge" style={{ background: C, color: "#fff", marginBottom: 14, display: "inline-block" }}>RANKING</span>
         <h1 style={{ fontFamily: "'Bebas Neue'", fontSize: "clamp(44px,10vw,88px)", lineHeight: .88, marginBottom: 10 }}>
-          スキした人たち
+          スキしてくれた人たち
         </h1>
         <p style={{ fontSize: 12, color: "#ffffff44", marginBottom: 32, letterSpacing: .5 }}>
           {active.error ? `⚠️ ${active.error}` : genAt ? `集計日 ${genAt} — 気になる人を見つけたら、プロフィールへ飛んでみて` : "読み込み中…"}
