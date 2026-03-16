@@ -1038,7 +1038,7 @@ function LikesRankingPage({ isMobile }) {
   );
 }
 /* ══════════════════════════════════════════════
-   おすすめ・ピックアップページ (PickupPage) - Ver 4.0 (Original Hybrid)
+   おすすめ・ピックアップページ (PickupPage) - Ver 4.1 (Full Recovery)
 ══════════════════════════════════════════════ */
 function PickupPage({ isMobile }) {
   
@@ -1051,7 +1051,7 @@ function PickupPage({ isMobile }) {
     },
     {
       title: "FOUNDATION",
-      desc: "材料エンジニアがなぜAIとデータに溺れるのか。活動の原点と背景を綴った自己紹介記事。",
+      desc: "エンジニアがなぜAIとデータに溺れるのか。活動の原点と背景を綴った自己紹介記事。",
       url: "https://note.com/ktcrs1107/n/nf6f966037a54", 
       tag: "ABOUT ME"
     }
@@ -1082,27 +1082,43 @@ function PickupPage({ isMobile }) {
     }
   ];
 
+  // 3. 有料記事（ここを3カテゴリーに完全復旧！）
   const premiumGroups = [
     {
       name: "STRATEGY & LOGIC",
       items: [
         { title: "初速スキとバズの相関分析：その因果関係を解明する", tag: "ANALYSIS", url: "https://note.com/ktcrs1107/n/n5f594f849c4b" },
-        { title: "データ構造から逆算したnoteタグ戦略の深淵", tag: "STRATEGY", url: "https://note.com/ktcrs1107/n/n1d32162cd219" },
         { title: "Note閲覧数・スキ数の自動収集システム実装ガイド", tag: "TOOL", url: "https://note.com/ktcrs1107/n/ne2bb6d38c4e3" },
+        { title: "データ構造から逆算したnoteタグ戦略の深淵", tag: "STRATEGY", url: "https://note.com/ktcrs1107/n/n1d32162cd219" },
+        { title: "Platformアルゴリズム公開の背景とその意図を読み解く", tag: "LOGIC", url: "https://note.com/ktcrs1107/n/n5f991f7606e9" },
         { title: "全記事データの自動抽出とスプレッドシート連携法", tag: "AUTO", url: "https://note.com/ktcrs1107/n/ndb86a66932ee" },
         { title: "Note非公式APIの機能解析と活用可能性の整理", tag: "REPORT", url: "https://note.com/ktcrs1107/n/n3ab972786aa0" },
-        { title: "Platformアルゴリズム公開の背景とその意図を読み解く", tag: "LOGIC", url: "https://note.com/ktcrs1107/n/n5f991f7606e9" },
+      ]
+    },
+    {
+      name: "ARTISTRY & TECHNIQUES",
+      items: [
+        { title: "群衆プロンプトの自由制御：巨大な集合体を生成する技法", tag: "TECH", url: "https://note.com/ktcrs1107/n/n07197895a3e9" },
+        { title: "プロンプト公開版：切り抜き×逆光×投影の再現技法", tag: "ART", url: "https://note.com/ktcrs1107/n/n86e1c6ff59e1" },
+        { title: "水彩迷子を救った「妖怪」と「4つの縛り」の解説", tag: "WATERCOLOR", url: "https://note.com/ktcrs1107/n/n0323b9955abb" },
+        { title: "文字にキャラを埋め込むプロンプト設計", tag: "TYPE", url: "https://note.com/ktcrs1107/n/n5c5913089d08" },
+        { title: "アメコミホラーを制御するYAML構造化とコンパイル技法", tag: "YAML", url: "https://note.com/ktcrs1107/n/nd9fa08da2f22" },
+        { title: "ダブルエクスポージャー再現：混ぜない、重ねる投影の技法", tag: "DOUBLE", url: "https://note.com/ktcrs1107/n/nb392a506a3e1" },
+        { title: "12干支に変換するキーと11体コピペ集", tag: "ZODIAC", url: "https://note.com/ktcrs1107/n/nfe75462bec74" },
+        { title: "Nano Banana Proで映画BTSごっこを楽しむ沼の話", tag: "PRO", url: "https://note.com/ktcrs1107/n/n8787acd84304" },
       ]
     },
     {
       name: "PROMPT ENGINEERING",
       items: [
-        { title: "群衆プロンプトの自由制御：巨大な集合体を生成する技法", tag: "TECH", url: "https://note.com/ktcrs1107/n/n07197895a3e9" },
-        { title: "YAML構造化とコンパイルによる精密制御", tag: "YAML", url: "https://note.com/ktcrs1107/n/nd9fa08da2f22" },
-        { title: "ダブルエクスポージャー再現：混ぜない、重ねる投影の技法", tag: "ART", url: "https://note.com/ktcrs1107/n/nb392a506a3e1" },
         { title: "JSON構造プロンプトの汎用化：あらゆる対象への横展開フレーム", tag: "FRAME", url: "https://note.com/ktcrs1107/n/n023ff6bdcf19" },
-        { title: "NanoBanana 構造化設計：画像生成を「運」から「論理」へ", tag: "ENGINE", url: "https://note.com/ktcrs1107/n/n12201dd9b5ff" },
+        { title: "NanoBanana 構造化設計：画像生成を運から論理へ変える全貌", tag: "ENGINE", url: "https://note.com/ktcrs1107/n/n12201dd9b5ff" },
         { title: "プロンプト順序が生成結果に与える影響の定量的考察", tag: "STUDY", url: "https://note.com/ktcrs1107/n/n1cb447965e43" },
+        { title: "衆院選×日経平均：AIに株価シナリオを描かせてみる実験", tag: "ECONOMY", url: "https://note.com/ktcrs1107/n/n4c64f88ab49b" },
+        { title: "KITAcore流プロンプトエンジニアリング：呪文を卒業するカリキュラム", tag: "CURRICULUM", url: "https://note.com/ktcrs1107/n/nfb6b2d84dfc9" },
+        { title: "AIにプロの調査ルールを移植し、リサーチを効率化する技法", tag: "ANALYST", url: "https://note.com/ktcrs1107/n/n38437d0f3242" },
+        { title: "プロンプトエンジニアリングにおける「ズル技」の体系化", tag: "HACK", url: "https://note.com/ktcrs1107/n/n8ded3116a32b" },
+        { title: "AIとの対話ログから自己の思考傾向を丸裸にする試み", tag: "LOG", url: "https://note.com/ktcrs1107/n/ne2173e797345" },
       ]
     }
   ];
@@ -1158,7 +1174,7 @@ function PickupPage({ isMobile }) {
           </section>
         ))}
 
-        {/* ── 03. RESOURCE INDEX ── */}
+        {/* ── 03. PREMIUM RESOURCE INDEX ── */}
         <section>
           <div style={{ fontSize: 14, fontFamily: "'Bebas Neue'", letterSpacing: 2, color: "#ff9ec4", borderBottom: "1px solid #ff9ec444", paddingBottom: 8, marginBottom: 20 }}>
             03. PREMIUM RESOURCE
