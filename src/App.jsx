@@ -1051,9 +1051,9 @@ function PickupPage({ isMobile }) {
       tag: "MUST READ"
     },
     {
-      title: "【自己紹介】材料エンジニアがAIとデータ分析に溺れる理由",
+      title: "エンジニアがAIとデータ分析に溺れる理由",
       desc: "研究者としてのバックグラウンドがどうAI活用に繋がっているのか。ワイの活動の原点や。",
-      url: "https://note.com/ktcrs1107/n/nf6f966037a54", 
+      url: "https://note.com/ktcrs1107/n/n0f919ece03f2", 
       tag: "ABOUT ME"
     }
   ];
@@ -1096,6 +1096,8 @@ function PickupPage({ isMobile }) {
         { title: "Noteの閲覧数・スキ数を自動で収集する方法", price: "¥980", url: "https://note.com/ktcrs1107/n/ne2bb6d38c4e3" },
         { title: "【ロジック解説】データ構造から逆算したnoteタグ戦略の深淵", price: "¥980", url: "https://note.com/ktcrs1107/n/n1d32162cd219" },
         { title: "【詳細版】Platformは、なぜ推しのアルゴリズムを公開したのか", price: "¥300", url: "https://note.com/ktcrs1107/n/n5f991f7606e9" },
+        { title: "全記事PV/スキ/コメント＋投稿日を吸い上げてスプシに保存する方法", price: "¥1980", url: "https://note.com/ktcrs1107/n/ndb86a66932ee" },
+        { title: "Note非公式APIでできることを整理してみた", price: "¥480", url: "https://note.com/ktcrs1107/n/n3ab972786aa0" },
       ]
     },
     {
@@ -1105,6 +1107,18 @@ function PickupPage({ isMobile }) {
         { title: "「群衆で構成された巨大な○○」をもっと自由に作る", price: "¥980", url: "https://note.com/ktcrs1107/n/n07197895a3e9" },
         { title: "【プロンプト公開版】切り抜き×逆光×投影の再現", price: "¥490", url: "https://note.com/ktcrs1107/n/n86e1c6ff59e1" },
         { title: "「プロンプト解説」“水彩迷子”を救ったのは「妖怪」と「4つの縛り」だった。", price: "¥980", url: "https://note.com/ktcrs1107/n/n0323b9955abb" },
+        { title: "【プロンプト付き】文字にキャラを埋め込む", price: "¥980", url: "https://note.com/ktcrs1107/n/n5c5913089d08" },
+      ]
+    },
+    // ▼ ここに3つ目を追加！
+    {
+      name: "PRIMOT",
+      desc: "プロンプト記事",
+      items: [
+        { title: "【プロンプト順序が生成結果に与える影響", price: "¥980", url: "https://note.com/ktcrs1107/n/n1cb447965e43" },
+        { title: "衆院選×日経平均：AIに「株価シナリオ」描かせてみる", price: "¥200", url: "https://note.com/ktcrs1107/n/n4c64f88ab49b" },
+        { title: "【保存版】呪文を卒業し、知能を設計せよ。KITAcore流「プロンプトエンジニアリング」カリキュラム", price: "¥200", url: "https://note.com/ktcrs1107/n/nfb6b2d84dfc9" },
+        { title: "調査を「楽」にするために、AIに「プロの調査ルール」を移植してみた｜アナリスト・プロンプト", price: "¥980", url: "https://note.com/ktcrs1107/n/n38437d0f3242" },
       ]
     }
   ];
