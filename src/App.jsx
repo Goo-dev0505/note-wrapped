@@ -1038,130 +1038,161 @@ function LikesRankingPage({ isMobile }) {
   );
 }
 /* ══════════════════════════════════════════════
-   おすすめ・ピックアップページ (PickupPage)
+   おすすめ・ピックアップページ (PickupPage) - Ver 2.0
 ══════════════════════════════════════════════ */
 function PickupPage({ isMobile }) {
-  // ▼ ここを自分の記事やマガジンの情報に書き換えるだけやで ▼
-  const heroArticle = {
-    title: "KITAcoreのAI×思考ログへようこそ",
-    desc: "感覚ではなく、構造でAIを制御する。安定して高品質な画像を生成するためのプロンプトエンジニアリング実践手法。まずはこの記事から読んでみてほしい。",
-    url: "https://note.com/ktcrs1107/n/nd946a5f905a2", // 実際のURLを入れる
-    tag: "MUST READ"
-  };
-
-  const magazines = [
-    { title: "KITAcoreマガジン KITAcore’s AI Art Gallery", desc: "KITAcore が制作した AIアート作品だけを集めたギャラリー。", count: 12, url: "https://note.com/ktcrs1107/m/m98debce90244" },
-    { title: "KITAcoreマガジン Note運営データ分析", desc: "Note運営したデータから見えたことを記載した記事を整理。", count: 8, url: "https://note.com/ktcrs1107/m/mb3b409c964fe" },
-    { title: "KITAcoreマガジン Prompt Engineering Studio", desc: "KITAcore が日々つくり続けている 構造化プロンプト・実践プロンプトのアーカイブ。", count: 8, url: "https://note.com/ktcrs1107/m/m33ce42803732" },
-    { title: "KITAcoreマガジン データ分析", desc: "KITAcore がデータ分析した記事のアーカイブ。", count: 8, url: "https://note.com/ktcrs1107/m/me49a0bad66e8" },
-    { title: "KITAcoreマガジン Python冒険記", desc: "Pythonの試行錯誤を面白おかしく書いてみた。", count: 5, url: "https://note.com/ktcrs1107/m/md1c85d0a934b" },
-    { title: "共同マガジン『AI-LA（アイラ）』", desc: "共同参加中のマガジン", count: 5, url: "https://note.com/supertoraneko/m/mc6810aa41870" },
-    { title: "共同マガジン『漆黒の絶対領域』", desc: "共同参加中のマガジン", count: 5, url: "https://note.com/hitsuji_natsume/m/m41a7aa3dcc38" },
-    { title: "共同マガジン『集まれ！白銀の髪同盟』", desc: "共同参加中のマガジン", count: 5, url: "https://note.com/reipichu/m/m8fb499ecbcbb" },
-    { title: "共同マガジン『ダークファンタジー好き集まれ_深淵図書館』", desc: "共同参加中のマガジン", count: 5, url: "https://note.com/shio_batapopcorn/m/mc085f157d924" },
-    { title: "共同マガジン『OASOBI会』", desc: "共同参加中のマガジン", count: 5, url: "https://note.com/maiyu_x_ai/m/m96728bd6b208" },
-    { title: "共同マガジン『note×AI活用推進マガジン』", desc: "共同参加中のマガジン", count: 5, url: "https://note.com/mugimugi92/m/md2a022132e8f" },
-    { title: "KITAcore専用『今後も見る記事一覧』", desc: "ワイのおすすめ記事", count: 5, url: "https://note.com/ktcrs1107/m/m779b42e18707" },
+  
+  // 1. おすすめ記事（複数対応）
+  const heroArticles = [
+    {
+      title: "KITAcoreのAI×思考ログへようこそ",
+      desc: "感覚ではなく、構造でAIを制御する。安定して高品質な画像を生成するためのプロンプトエンジニアリング実践手法。まずはこの記事から読んでみてほしい。",
+      url: "https://note.com/ktcrs1107/n/nd946a5f905a2",
+      tag: "MUST READ"
+    },
+    {
+      title: "【自己紹介】材料エンジニアがAIとデータ分析に溺れる理由",
+      desc: "研究者としてのバックグラウンドがどうAI活用に繋がっているのか。ワイの活動の原点や。",
+      url: "https://note.com/ktcrs1107/n/nf6f966037a54", 
+      tag: "ABOUT ME"
+    }
   ];
 
-  const paidArticles = [
-    { title: "noteの「初速スキ」とバズはほんまに関係あるんか？", price: "¥4980", url: "https://note.com/ktcrs1107/n/n5f594f849c4b" },
-    { title: "「群衆で構成された巨大な○○」をもっと自由に作る", price: "¥980", url: "https://note.com/ktcrs1107/n/n07197895a3e9" },
-    { title: "Noteの閲覧数・スキ数を自動で収集する方法", price: "¥980", url: "https://note.com/ktcrs1107/n/ne2bb6d38c4e3" },
-    { title: "【ロジック解説】データ構造から逆算したnoteタグ戦略の深淵", price: "¥980", url: "https://note.com/ktcrs1107/n/n1d32162cd219" },
-    { title: "【詳細版】Platformは、なぜ推しのアルゴリズムを公開したのか", price: "¥300", url: "https://note.com/ktcrs1107/n/n5f991f7606e9" },
-    { title: "【プロンプト公開版】切り抜き×逆光×投影の再現", price: "¥490", url: "https://note.com/ktcrs1107/n/n86e1c6ff59e1" },
-    { title: "「プロンプト解説」“水彩迷子”を救ったのは「妖怪」と「4つの縛り」だった。", price: "¥980", url: "https://note.com/ktcrs1107/n/n0323b9955abb" },
+  // 2. マガジンググループ（自身と共同を分離）
+  const magazineGroups = [
+    {
+      name: "PERSONAL COLLECTIONS",
+      desc: "研究者 KITAcore の専門領域と試行錯誤のアーカイブ",
+      items: [
+        { title: "KITAcore’s AI Art Gallery", desc: "制作したAIアート作品だけを集めたギャラリー。", count: 12, url: "https://note.com/ktcrs1107/m/m98debce90244", icon: "🎨" },
+        { title: "Note運営データ分析", desc: "運営データから見えた裏側を整理。", count: 8, url: "https://note.com/ktcrs1107/m/mb3b409c964fe", icon: "📈" },
+        { title: "Prompt Engineering Studio", desc: "構造化プロンプトのアーカイブ。", count: 8, url: "https://note.com/ktcrs1107/m/m33ce42803732", icon: "🔧" },
+        { title: "データ分析アーカイブ", desc: "データ分析した記事の記録。", count: 8, url: "https://note.com/ktcrs1107/m/me49a0bad66e8", icon: "🔬" },
+        { title: "Python冒険記", desc: "Pythonの試行錯誤を面白おかしく。", count: 5, url: "https://note.com/ktcrs1107/m/md1c85d0a934b", icon: "🐍" },
+        { title: "今後も見る記事一覧", desc: "ワイの特選おすすめ記事。", count: 5, url: "https://note.com/ktcrs1107/m/m779b42e18707", icon: "🔖" },
+      ]
+    },
+    {
+      name: "COLLABORATIONS",
+      desc: "共創の場。多様な視点が混ざり合う共同マガジン",
+      items: [
+        { title: "AI-LA（アイラ）", desc: "共同参加中のマガジン。", count: 5, url: "https://note.com/supertoraneko/m/mc6810aa41870", icon: "🤝" },
+        { title: "漆黒の絶対領域", desc: "共同参加中のマガジン。", count: 5, url: "https://note.com/hitsuji_natsume/m/m41a7aa3dcc38", icon: "🌑" },
+        { title: "集まれ！白銀の髪同盟", desc: "共同参加中のマガジン。", count: 5, url: "https://note.com/reipichu/m/m8fb499ecbcbb", icon: "❄️" },
+        { title: "ダークファンタジー好き集まれ", desc: "共同参加中のマガジン。", count: 5, url: "https://note.com/shio_batapopcorn/m/mc085f157d924", icon: "🏛️" },
+        { title: "OASOBI会", desc: "共同参加中のマガジン。", count: 5, url: "https://note.com/maiyu_x_ai/m/m96728bd6b208", icon: "🎉" },
+        { title: "note×AI活用推進", desc: "共同参加中のマガジン。", count: 5, url: "https://note.com/mugimugi92/m/md2a022132e8f", icon: "🚀" },
+      ]
+    }
   ];
-  // ▲ ここまで ▲
+
+  // 3. 有料記事（カテゴリー別に分類）
+  const paidCategories = [
+    {
+      name: "STRATEGY & LOGIC",
+      desc: "データ構造から逆算したプラットフォーム攻略",
+      items: [
+        { title: "noteの「初速スキ」とバズはほんまに関係あるんか？", price: "¥4,980", url: "https://note.com/ktcrs1107/n/n5f594f849c4b" },
+        { title: "Noteの閲覧数・スキ数を自動で収集する方法", price: "¥980", url: "https://note.com/ktcrs1107/n/ne2bb6d38c4e3" },
+        { title: "【ロジック解説】データ構造から逆算したnoteタグ戦略の深淵", price: "¥980", url: "https://note.com/ktcrs1107/n/n1d32162cd219" },
+        { title: "【詳細版】Platformは、なぜ推しのアルゴリズムを公開したのか", price: "¥300", url: "https://note.com/ktcrs1107/n/n5f991f7606e9" },
+      ]
+    },
+    {
+      name: "PROMPT & ARTISTRY",
+      desc: "感性を構造化する生成AIの魔術",
+      items: [
+        { title: "「群衆で構成された巨大な○○」をもっと自由に作る", price: "¥980", url: "https://note.com/ktcrs1107/n/n07197895a3e9" },
+        { title: "【プロンプト公開版】切り抜き×逆光×投影の再現", price: "¥490", url: "https://note.com/ktcrs1107/n/n86e1c6ff59e1" },
+        { title: "「プロンプト解説」“水彩迷子”を救ったのは「妖怪」と「4つの縛り」だった。", price: "¥980", url: "https://note.com/ktcrs1107/n/n0323b9955abb" },
+      ]
+    }
+  ];
 
   return (
     <div className="page-fade" style={{ minHeight: "100vh", background: "#1a0f00", color: "#fffbf2", paddingBottom: 80 }}>
-      {/* ヘッダー */}
       <div style={{ padding: isMobile ? "28px 16px 0" : "52px 40px 0", maxWidth: 960, margin: "0 auto" }}>
          <span className="badge" style={{ background: "#d44a00", color: "#fff", marginBottom: 14, display: "inline-block" }}>CURATION</span>
          <h1 style={{ fontFamily: "'Bebas Neue'", fontSize: "clamp(44px,10vw,88px)", lineHeight: .88, marginBottom: 10 }}>
            PICK UP & SERIES
          </h1>
-         <p style={{ fontSize: 12, color: "#ffffff44", marginBottom: 32, letterSpacing: .5 }}>
-           膨大なログから厳選した、今すぐ読んでほしい記事とマガジン群。
-         </p>
       </div>
 
       <div style={{ maxWidth: 960, margin: "0 auto", padding: isMobile ? "0 16px" : "0 40px" }}>
 
-        {/* 1. MUST READ (必読記事 - 大きく目立たせる) */}
-        <section style={{ marginBottom: 48 }}>
+        {/* ── 01. RECOMMENDATIONS ── */}
+        <section style={{ marginBottom: 60 }}>
           <div style={{ fontSize: 14, fontFamily: "'Bebas Neue'", letterSpacing: 2, color: "#d44a00", borderBottom: "1px solid #d44a0055", paddingBottom: 8, marginBottom: 20 }}>
             01. START HERE
           </div>
-          <a href={heroArticle.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", display: "block" }}>
-            <div style={{ background: "linear-gradient(135deg, #2a0f00, #1a0700)", border: "1px solid #d44a0088", borderRadius: 16, padding: isMobile ? "24px 20px" : "40px 32px", transition: "transform .2s, box-shadow .2s", cursor: "pointer" }}
-                 onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 20px 40px #00000088"; }}
-                 onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; }}>
-              <span className="badge" style={{ background: "#d44a00", color: "#fff", marginBottom: 16 }}>{heroArticle.tag}</span>
-              <h2 style={{ fontSize: isMobile ? 20 : 28, fontWeight: 700, color: "#fffbf2", lineHeight: 1.4, marginBottom: 16 }}>
-                {heroArticle.title}
-              </h2>
-              <p style={{ fontSize: 13, color: "#ffffffaa", lineHeight: 1.7, maxWidth: 600 }}>
-                {heroArticle.desc}
-              </p>
-              <div style={{ marginTop: 24, fontSize: 11, fontFamily: "'Syne',sans-serif", letterSpacing: 1, color: "#d44a00", fontWeight: 700 }}>
-                記事を読む →
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "2fr 1.2fr", gap: 16 }}>
+            <a href={heroArticles[0].url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+              <div style={{ background: "linear-gradient(135deg, #2a0f00, #1a0700)", border: "1px solid #d44a0088", borderRadius: 16, padding: isMobile ? "24px 20px" : "32px", height: "100%", transition: "all .2s" }} className="rank-card">
+                <span className="badge" style={{ background: "#d44a00", color: "#fff", marginBottom: 16 }}>{heroArticles[0].tag}</span>
+                <h2 style={{ fontSize: isMobile ? 20 : 26, fontWeight: 700, color: "#fffbf2", lineHeight: 1.3, marginBottom: 12 }}>{heroArticles[0].title}</h2>
+                <p style={{ fontSize: 13, color: "#ffffffaa", lineHeight: 1.6 }}>{heroArticles[0].desc}</p>
               </div>
-            </div>
-          </a>
-        </section>
-
-        {/* 2. MAGAZINES (マガジン - グリッドで並べる) */}
-        <section style={{ marginBottom: 48 }}>
-          <div style={{ fontSize: 14, fontFamily: "'Bebas Neue'", letterSpacing: 2, color: "#ffffff55", borderBottom: "1px solid #ffffff18", paddingBottom: 8, marginBottom: 20 }}>
-            02. MAGAZINES
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 16 }}>
-            {magazines.map((mag, i) => (
-              <a key={i} href={mag.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-                <div style={{ background: "#ffffff08", border: "1px solid #ffffff14", borderRadius: 12, padding: "20px", height: "100%", transition: "background .2s", cursor: "pointer" }}
-                     onMouseEnter={e => e.currentTarget.style.background = "#ffffff12"}
-                     onMouseLeave={e => e.currentTarget.style.background = "#ffffff08"}>
-                  <div style={{ fontSize: 24, marginBottom: 12 }}>📚</div>
-                  <h3 style={{ fontSize: 15, fontWeight: 700, color: "#fffbf2", marginBottom: 8, lineHeight: 1.4 }}>{mag.title}</h3>
-                  <p style={{ fontSize: 12, color: "#ffffff66", lineHeight: 1.6, marginBottom: 16 }}>{mag.desc}</p>
-                  <div style={{ fontSize: 10, fontFamily: "'Syne',sans-serif", color: "#ffffff44", marginTop: "auto" }}>
-                    {mag.count} ARTICLES
-                  </div>
+            </a>
+            {heroArticles.slice(1).map((hero, idx) => (
+              <a key={idx} href={hero.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                <div style={{ background: "#ffffff08", border: "1px solid #ffffff14", borderRadius: 16, padding: "24px", height: "100%", transition: "all .2s" }} className="rank-card">
+                   <span className="badge" style={{ background: "#ffffff22", color: "#ffffff88", marginBottom: 12 }}>{hero.tag}</span>
+                   <h3 style={{ fontSize: 16, fontWeight: 700, color: "#fffbf2", marginBottom: 10 }}>{hero.title}</h3>
+                   <p style={{ fontSize: 11, color: "#ffffff66", lineHeight: 1.5 }}>{hero.desc}</p>
                 </div>
               </a>
             ))}
           </div>
         </section>
 
-        {/* 3. PREMIUM (有料記事 - リスト形式でスッキリと) */}
+        {/* ── 02. MAGAZINES ── */}
+        {magazineGroups.map((group, gIdx) => (
+          <section key={gIdx} style={{ marginBottom: 60 }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: 12, borderBottom: "1px solid #ffffff18", paddingBottom: 8, marginBottom: 20 }}>
+              <div style={{ fontSize: 14, fontFamily: "'Bebas Neue'", letterSpacing: 2, color: "#ffffff55" }}>{`02-${gIdx+1}. ${group.name}`}</div>
+              {!isMobile && <div style={{ fontSize: 11, color: "#ffffff22" }}>{group.desc}</div>}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 16 }}>
+              {group.items.map((mag, i) => (
+                <a key={i} href={mag.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                  <div style={{ background: "#ffffff08", border: "1px solid #ffffff14", borderRadius: 12, padding: "20px", height: "100%", transition: "all .2s" }} className="rank-row">
+                    <div style={{ fontSize: 24, marginBottom: 12 }}>{mag.icon}</div>
+                    <h3 style={{ fontSize: 13, fontWeight: 700, color: "#fffbf2", marginBottom: 8, lineHeight: 1.4 }}>{mag.title}</h3>
+                    <p style={{ fontSize: 11, color: "#ffffff55", lineHeight: 1.5, marginBottom: 12 }}>{mag.desc}</p>
+                    <div style={{ fontSize: 9, fontFamily: "'Syne',sans-serif", color: "#ffffff22", marginTop: "auto" }}>{mag.count} ARTICLES</div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
+        ))}
+
+        {/* ── 03. PREMIUM ARTICLES ── */}
         <section>
           <div style={{ fontSize: 14, fontFamily: "'Bebas Neue'", letterSpacing: 2, color: "#ff9ec4", borderBottom: "1px solid #ff9ec444", paddingBottom: 8, marginBottom: 20 }}>
-            03. PREMIUM ARTICLES
+            03. PREMIUM ARCHIVE
           </div>
-          <div style={{ background: "#0e0a14", border: "1px solid #ff6b9d33", borderRadius: 12, overflow: "hidden" }}>
-            {paidArticles.map((article, i) => (
-              <a key={i} href={article.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", display: "block" }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 20px", borderBottom: i === paidArticles.length - 1 ? "none" : "1px solid #ffffff14", transition: "background .2s" }}
-                     onMouseEnter={e => e.currentTarget.style.background = "#ffffff0a"}
-                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                  <div style={{ fontSize: isMobile ? 13 : 14, fontWeight: 700, color: "#fffbf2", paddingRight: 16, lineHeight: 1.4 }}>
-                    {article.title}
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
-                    <span style={{ fontFamily: "'Bebas Neue'", fontSize: 16, color: "#ff9ec4" }}>{article.price}</span>
-                    <span style={{ display: "inline-block", padding: "4px 12px", borderRadius: 20, background: "#ff6b9d22", border: "1px solid #ff6b9d44", color: "#ff9ec4", fontSize: 10, fontFamily: "'Syne',sans-serif", fontWeight: 700, whiteSpace: "nowrap" }}>
-                      詳細へ →
-                    </span>
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
+          {paidCategories.map((cat, cIdx) => (
+            <div key={cIdx} style={{ marginBottom: 32 }}>
+              <div style={{ fontSize: 10, fontFamily: "'Syne',sans-serif", color: "#ff9ec4", marginBottom: 12, opacity: 0.8, letterSpacing: 1 }}>{cat.name}</div>
+              <div style={{ background: "#ffffff05", border: "1px solid #ffffff0a", borderRadius: 12, overflow: "hidden" }}>
+                {cat.items.map((article, i) => (
+                  <a key={i} href={article.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", display: "block" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 20px", borderBottom: i === cat.items.length - 1 ? "none" : "1px solid #ffffff08", transition: "background .2s" }}
+                         onMouseEnter={e => e.currentTarget.style.background = "#ffffff0a"}
+                         onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+                      <div style={{ fontSize: isMobile ? 12 : 13, fontWeight: 700, color: "#fffbf2", lineHeight: 1.4, flex: 1, paddingRight: 16 }}>{article.title}</div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
+                        <span style={{ fontFamily: "'Bebas Neue'", fontSize: 16, color: "#ff9ec4" }}>{article.price}</span>
+                        {!isMobile && <span style={{ color: "#ff9ec4", fontSize: 10 }}>→</span>}
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
         </section>
-
       </div>
     </div>
   );
