@@ -1043,22 +1043,22 @@ function LikesRankingPage({ isMobile }) {
 function PickupPage({ isMobile }) {
   // ▼ ここを自分の記事やマガジンの情報に書き換えるだけやで ▼
   const heroArticle = {
-    title: "JSONとYAMLで作る、AI画像生成の完璧なプロンプト構造",
+    title: "KITAcoreのAI×思考ログへようこそ",
     desc: "感覚ではなく、構造でAIを制御する。安定して高品質な画像を生成するためのプロンプトエンジニアリング実践手法。まずはこの記事から読んでみてほしい。",
-    url: "https://note.com/...", // 実際のURLを入れる
+    url: "https://note.com/ktcrs1107/n/nd946a5f905a2", // 実際のURLを入れる
     tag: "MUST READ"
   };
 
   const magazines = [
-    { title: "ポータブルオーディオ探求録", desc: "NOBUNAGA LabsやAstell&Kernなど、至高の音を求める沼の記録。", count: 12, url: "https://note.com/..." },
-    { title: "データ分析とPython実装", desc: "日々のデータを可視化し、インフォグラフィックにまとめる技術。", count: 8, url: "https://note.com/..." },
-    { title: "定置用蓄電池ビジネス最前線", desc: "エネルギーマネジメントの未来と、次世代バッテリーの可能性について。", count: 5, url: "https://note.com/..." }
+    { title: "KITAcore’s AI Art Gallery", desc: "KITAcore が制作した AIアート作品だけを集めたギャラリー。", count: 12, url: "https://note.com/ktcrs1107/m/m98debce90244" },
+    { title: "Note運営データ分析", desc: "Note運営したデータから見えたことを記載した記事を整理。", count: 8, url: "https://note.com/ktcrs1107/m/mb3b409c964fe" },
+    { title: "Python冒険記", desc: "Pythonの試行錯誤を面白おかしく書いてみた。", count: 5, url: "https://note.com/ktcrs1107/m/md1c85d0a934b" }
   ];
 
   const paidArticles = [
-    { title: "ISO 27001認証取得のロードマップ完全版", price: "¥500", url: "https://note.com/..." },
-    { title: "美しいインフォグラフィックを作るための配色とレイアウトの法則", price: "¥300", url: "https://note.com/..." },
-    { title: "プロフェッショナルのためのプロンプトライティング講座", price: "¥980", url: "https://note.com/..." }
+    { title: "noteの「初速スキ」とバズはほんまに関係あるんか？", price: "¥4980", url: "https://note.com/ktcrs1107/n/n5f594f849c4b" },
+    { title: "「群衆で構成された巨大な○○」をもっと自由に作る", price: "¥980", url: "https://note.com/ktcrs1107/n/n07197895a3e9" },
+    { title: "Noteの閲覧数・スキ数を自動で収集する方法", price: "¥980", url: "https://note.com/ktcrs1107/n/ne2bb6d38c4e3" }
   ];
   // ▲ ここまで ▲
 
