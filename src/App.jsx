@@ -1037,7 +1037,122 @@ function LikesRankingPage({ isMobile }) {
     </div>
   );
 }
+/* ══════════════════════════════════════════════
+   おすすめ・ピックアップページ (PickupPage)
+══════════════════════════════════════════════ */
+function PickupPage({ isMobile }) {
+  // ▼ ここを自分の記事やマガジンの情報に書き換えるだけやで ▼
+  const heroArticle = {
+    title: "JSONとYAMLで作る、AI画像生成の完璧なプロンプト構造",
+    desc: "感覚ではなく、構造でAIを制御する。安定して高品質な画像を生成するためのプロンプトエンジニアリング実践手法。まずはこの記事から読んでみてほしい。",
+    url: "https://note.com/...", // 実際のURLを入れる
+    tag: "MUST READ"
+  };
 
+  const magazines = [
+    { title: "ポータブルオーディオ探求録", desc: "NOBUNAGA LabsやAstell&Kernなど、至高の音を求める沼の記録。", count: 12, url: "https://note.com/..." },
+    { title: "データ分析とPython実装", desc: "日々のデータを可視化し、インフォグラフィックにまとめる技術。", count: 8, url: "https://note.com/..." },
+    { title: "定置用蓄電池ビジネス最前線", desc: "エネルギーマネジメントの未来と、次世代バッテリーの可能性について。", count: 5, url: "https://note.com/..." }
+  ];
+
+  const paidArticles = [
+    { title: "ISO 27001認証取得のロードマップ完全版", price: "¥500", url: "https://note.com/..." },
+    { title: "美しいインフォグラフィックを作るための配色とレイアウトの法則", price: "¥300", url: "https://note.com/..." },
+    { title: "プロフェッショナルのためのプロンプトライティング講座", price: "¥980", url: "https://note.com/..." }
+  ];
+  // ▲ ここまで ▲
+
+  return (
+    <div className="page-fade" style={{ minHeight: "100vh", background: "#1a0f00", color: "#fffbf2", paddingBottom: 80 }}>
+      {/* ヘッダー */}
+      <div style={{ padding: isMobile ? "28px 16px 0" : "52px 40px 0", maxWidth: 960, margin: "0 auto" }}>
+         <span className="badge" style={{ background: "#d44a00", color: "#fff", marginBottom: 14, display: "inline-block" }}>CURATION</span>
+         <h1 style={{ fontFamily: "'Bebas Neue'", fontSize: "clamp(44px,10vw,88px)", lineHeight: .88, marginBottom: 10 }}>
+           PICK UP & SERIES
+         </h1>
+         <p style={{ fontSize: 12, color: "#ffffff44", marginBottom: 32, letterSpacing: .5 }}>
+           膨大なログから厳選した、今すぐ読んでほしい記事とマガジン群。
+         </p>
+      </div>
+
+      <div style={{ maxWidth: 960, margin: "0 auto", padding: isMobile ? "0 16px" : "0 40px" }}>
+
+        {/* 1. MUST READ (必読記事 - 大きく目立たせる) */}
+        <section style={{ marginBottom: 48 }}>
+          <div style={{ fontSize: 14, fontFamily: "'Bebas Neue'", letterSpacing: 2, color: "#d44a00", borderBottom: "1px solid #d44a0055", paddingBottom: 8, marginBottom: 20 }}>
+            01. START HERE
+          </div>
+          <a href={heroArticle.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", display: "block" }}>
+            <div style={{ background: "linear-gradient(135deg, #2a0f00, #1a0700)", border: "1px solid #d44a0088", borderRadius: 16, padding: isMobile ? "24px 20px" : "40px 32px", transition: "transform .2s, box-shadow .2s", cursor: "pointer" }}
+                 onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 20px 40px #00000088"; }}
+                 onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; }}>
+              <span className="badge" style={{ background: "#d44a00", color: "#fff", marginBottom: 16 }}>{heroArticle.tag}</span>
+              <h2 style={{ fontSize: isMobile ? 20 : 28, fontWeight: 700, color: "#fffbf2", lineHeight: 1.4, marginBottom: 16 }}>
+                {heroArticle.title}
+              </h2>
+              <p style={{ fontSize: 13, color: "#ffffffaa", lineHeight: 1.7, maxWidth: 600 }}>
+                {heroArticle.desc}
+              </p>
+              <div style={{ marginTop: 24, fontSize: 11, fontFamily: "'Syne',sans-serif", letterSpacing: 1, color: "#d44a00", fontWeight: 700 }}>
+                記事を読む →
+              </div>
+            </div>
+          </a>
+        </section>
+
+        {/* 2. MAGAZINES (マガジン - グリッドで並べる) */}
+        <section style={{ marginBottom: 48 }}>
+          <div style={{ fontSize: 14, fontFamily: "'Bebas Neue'", letterSpacing: 2, color: "#ffffff55", borderBottom: "1px solid #ffffff18", paddingBottom: 8, marginBottom: 20 }}>
+            02. MAGAZINES
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 16 }}>
+            {magazines.map((mag, i) => (
+              <a key={i} href={mag.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                <div style={{ background: "#ffffff08", border: "1px solid #ffffff14", borderRadius: 12, padding: "20px", height: "100%", transition: "background .2s", cursor: "pointer" }}
+                     onMouseEnter={e => e.currentTarget.style.background = "#ffffff12"}
+                     onMouseLeave={e => e.currentTarget.style.background = "#ffffff08"}>
+                  <div style={{ fontSize: 24, marginBottom: 12 }}>📚</div>
+                  <h3 style={{ fontSize: 15, fontWeight: 700, color: "#fffbf2", marginBottom: 8, lineHeight: 1.4 }}>{mag.title}</h3>
+                  <p style={{ fontSize: 12, color: "#ffffff66", lineHeight: 1.6, marginBottom: 16 }}>{mag.desc}</p>
+                  <div style={{ fontSize: 10, fontFamily: "'Syne',sans-serif", color: "#ffffff44", marginTop: "auto" }}>
+                    {mag.count} ARTICLES
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        {/* 3. PREMIUM (有料記事 - リスト形式でスッキリと) */}
+        <section>
+          <div style={{ fontSize: 14, fontFamily: "'Bebas Neue'", letterSpacing: 2, color: "#ff9ec4", borderBottom: "1px solid #ff9ec444", paddingBottom: 8, marginBottom: 20 }}>
+            03. PREMIUM ARTICLES
+          </div>
+          <div style={{ background: "#0e0a14", border: "1px solid #ff6b9d33", borderRadius: 12, overflow: "hidden" }}>
+            {paidArticles.map((article, i) => (
+              <a key={i} href={article.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", display: "block" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 20px", borderBottom: i === paidArticles.length - 1 ? "none" : "1px solid #ffffff14", transition: "background .2s" }}
+                     onMouseEnter={e => e.currentTarget.style.background = "#ffffff0a"}
+                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+                  <div style={{ fontSize: isMobile ? 13 : 14, fontWeight: 700, color: "#fffbf2", paddingRight: 16, lineHeight: 1.4 }}>
+                    {article.title}
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
+                    <span style={{ fontFamily: "'Bebas Neue'", fontSize: 16, color: "#ff9ec4" }}>{article.price}</span>
+                    <span style={{ display: "inline-block", padding: "4px 12px", borderRadius: 20, background: "#ff6b9d22", border: "1px solid #ff6b9d44", color: "#ff9ec4", fontSize: 10, fontFamily: "'Syne',sans-serif", fontWeight: 700, whiteSpace: "nowrap" }}>
+                      詳細へ →
+                    </span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+
+      </div>
+    </div>
+  );
+}
 /* ══════════════════════════════════════════════
    メインコンポーネント
 ══════════════════════════════════════════════ */
@@ -1067,6 +1182,7 @@ export default function KitaWrapped() {
         </span>
         {[
           { id: "dashboard", label: "DASHBOARD" },
+          { id: "pickup",    label: "おすすめ" },
           { id: "articles",  label: "記事一覧"   },
           { id: "ranking",   label: "ランキング" },
         ].map(t => (
@@ -1376,6 +1492,9 @@ export default function KitaWrapped() {
         </div>
       )}
 
+      {/* ══ おすすめ ══ */}
+      {tab === "pickup" && <PickupPage isMobile={isMobile} />}
+      
       {/* ══ 記事一覧 ══ */}
       {tab === "articles" && <ArticleListPage data={data} isMobile={isMobile} />}
 
