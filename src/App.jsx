@@ -1052,13 +1052,17 @@ function PickupPage({ isMobile }) {
   const magazines = [
     { title: "KITAcore’s AI Art Gallery", desc: "KITAcore が制作した AIアート作品だけを集めたギャラリー。", count: 12, url: "https://note.com/ktcrs1107/m/m98debce90244" },
     { title: "Note運営データ分析", desc: "Note運営したデータから見えたことを記載した記事を整理。", count: 8, url: "https://note.com/ktcrs1107/m/mb3b409c964fe" },
-    { title: "Python冒険記", desc: "Pythonの試行錯誤を面白おかしく書いてみた。", count: 5, url: "https://note.com/ktcrs1107/m/md1c85d0a934b" }
+    { title: "Prompt Engineering Studio", desc: "KITAcore が日々つくり続けている 構造化プロンプト・実践プロンプトのアーカイブ。", count: 8, url: "https://note.com/ktcrs1107/m/m33ce42803732" },
+    { title: "データ分析", desc: "KITAcore がデータ分析した記事のアーカイブ。", count: 8, url: "https://note.com/ktcrs1107/m/me49a0bad66e8" },
+    { title: "Python冒険記", desc: "Pythonの試行錯誤を面白おかしく書いてみた。", count: 5, url: "https://note.com/ktcrs1107/m/md1c85d0a934b" },
+    { title: "共同マガジン『AI-LA（アイラ）』", desc: "共同参加中のマガジン", count: 5, url: "https://note.com/supertoraneko/m/mc6810aa41870" },
   ];
 
   const paidArticles = [
     { title: "noteの「初速スキ」とバズはほんまに関係あるんか？", price: "¥4980", url: "https://note.com/ktcrs1107/n/n5f594f849c4b" },
     { title: "「群衆で構成された巨大な○○」をもっと自由に作る", price: "¥980", url: "https://note.com/ktcrs1107/n/n07197895a3e9" },
-    { title: "Noteの閲覧数・スキ数を自動で収集する方法", price: "¥980", url: "https://note.com/ktcrs1107/n/ne2bb6d38c4e3" }
+    { title: "Noteの閲覧数・スキ数を自動で収集する方法", price: "¥980", url: "https://note.com/ktcrs1107/n/ne2bb6d38c4e3" },
+    { title: "【ロジック解説】データ構造から逆算したnoteタグ戦略の深淵", price: "¥980", url: "https://note.com/ktcrs1107/n/n1d32162cd219" },
   ];
   // ▲ ここまで ▲
 
