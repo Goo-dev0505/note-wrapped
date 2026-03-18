@@ -313,6 +313,7 @@ function useNoteData() {
           pv:   parseInt(r["期間増加PV"]||0),
           avg:  parseFloat(r["1日平均PV"]||0).toFixed(1),
           emoji:EMOJIS[i],
+          url:  qualityUrlMap[(r["title"]||"").trim()] || null, // ← 追加
         }));
 
       const PV_EMOJIS = ["👑","🥈","🥉","🎖️","🏅"];
@@ -324,6 +325,7 @@ function useNoteData() {
           title:(r["title"]||"").replace(/ #\d+$/,"").slice(0,32),
           val:  parseInt(r["read_count"]||0),
           emoji:PV_EMOJIS[i],
+          url:  qualityUrlMap[(r["title"]||"").trim()] || null, // ← 追加
         }));
 
       const SK_EMOJIS = ["💖","💗","💓","💞","💝"];
@@ -336,6 +338,7 @@ function useNoteData() {
               title:(r["title"]||"").replace(/ #\d+$/,"").slice(0,32),
               val:  parseInt(r[skKey]||0),
               emoji:SK_EMOJIS[i],
+              url:  qualityUrlMap[(r["title"]||"").trim()] || null, // ← 追加
             }))
         : [];
 
@@ -1130,8 +1133,9 @@ function Dashboard({ data, isMobile, onTabChange }) {
   const [activeWorst, setActiveWorst] = useState(null);
   const loading = !data;
 
-  const Top5Row = ({ a, i, valKey, valSuffix, color }) => (
-    <div style={{ display:"flex", alignItems:"center", gap:isMobile?10:20, padding:isMobile?"12px 0":"18px 0", borderBottom:"1px solid rgba(255,255,255,0.06)" }}>
+  const Top5Row = ({ a, i, valKey, valSuffix, color }) => {
+  const inner = (
+    <div style={{ display:"flex", alignItems:"center", gap:isMobile?10:20, padding:isMobile?"12px 0":"18px 0", borderBottom:"1px solid rgba(255,255,255,0.06)", cursor:a.url?"pointer":"default" }}>
       <div className="top5-rank" style={{ fontFamily:"var(--fd)", color:i===0?color:"rgba(255,255,255,0.15)", lineHeight:1 }}>{a.rank}</div>
       <div style={{ fontSize:isMobile?14:18, flexShrink:0 }}>{a.emoji}</div>
       <div style={{ flex:1, minWidth:0 }}>
@@ -1149,6 +1153,11 @@ function Dashboard({ data, isMobile, onTabChange }) {
       </div>
     </div>
   );
+
+  return a.url
+    ? <a href={a.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none", display:"block" }}>{inner}</a>
+    : inner;
+};
 
   return (
     <div className="page-fade">
