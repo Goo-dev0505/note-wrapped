@@ -1323,7 +1323,7 @@ function Dashboard({ data, isMobile, onTabChange }) {
                   <LineChart data={data.followerChart} margin={{ top:8, right:8, left:isMobile?0:0, bottom:4 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
                     <XAxis dataKey="d" tick={{ fill:"rgba(255,255,255,0.2)", fontSize:isMobile?9:10, fontFamily:"var(--fs)" }} axisLine={false} tickLine={false} interval={isMobile?4:2} />
-                    <YAxis tick={{ fill:"rgba(255,255,255,0.2)", fontSize:isMobile?7:9, fontFamily:"var(--fd)" }} axisLine={false} tickLine={false} width={isMobile?48:38} tickFormatter={v=>v.toLocaleString()} domain={[dataMin => Math.floor(dataMin * 0.98), 'auto']} />
+                    <YAxis tick={{ fill:"rgba(255,255,255,0.2)", fontSize:isMobile?9:11, fontFamily:"var(--fd)" }} axisLine={false} tickLine={false} width={isMobile?48:38} tickFormatter={v=>v.toLocaleString()} domain={[dataMin => Math.floor(dataMin * 0.98), 'auto']} />
                     <Tooltip contentStyle={{ background:"#111", border:"1px solid rgba(34,197,94,0.3)", borderRadius:8, fontSize:12, color:TEXT }} formatter={v=>[v.toLocaleString(),"フォロワー"]} labelStyle={{ color:"var(--muted2)", fontFamily:"var(--fm)", fontSize:10 }} />
                     <Line type="monotone" dataKey="f" stroke="#22c55e" strokeWidth={2.5} dot={false} name="フォロワー" />
                   </LineChart>
