@@ -1484,7 +1484,7 @@ function Dashboard({ data, isMobile, onTabChange }) {
             ¥780
           </div>
           <p style={{ fontSize:13, color:"var(--muted2)", lineHeight:1.8, marginBottom:32 }}>
-            月額780円で、にーやんのプロンプトが丸見えになる。<br />AIアートの呪文、プロンプト設計の裏側、全部置いとくで。
+            10名まで、月額780円で、ワイのプロンプトが丸見えになる。<br />AIアートの呪文、プロンプト設計の裏側、全部置いとくで。
           </p>
           <div style={{ background:"#111", border:"1px solid rgba(255,255,255,0.07)", borderRadius:14, padding:"28px 32px", marginBottom:32, textAlign:"left" }}>
             {[
