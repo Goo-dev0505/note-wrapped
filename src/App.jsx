@@ -1228,7 +1228,7 @@ function Dashboard({ data, isMobile, onTabChange }) {
           <SectionEyebrow color={OR}>LIKES RANKING — 今月</SectionEyebrow>
           <SectionTitle>スキをくれた人、<br /><span style={{ color:OR }}>ここに刻んどくで。</span></SectionTitle>
           <p style={{ fontSize:14, color:"var(--muted2)", marginBottom:40, lineHeight:1.8, maxWidth:480 }}>
-            あなたのスキがワイを動かしてる。<br />名前を残したいなら、スキを押しに来て。<br />毎月リセットされるから今月中に。
+            あなたのスキがワイを動かしてる。<br />名前が残てるか、確認しに来て。<br />毎月リセットされるから今月中に。
           </p>
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1.3fr 1fr", gap:14, alignItems:"end", marginBottom:28 }}>
             {loading ? [1,2,3].map(i=><Skeleton key={i} w="100%" h={160} style={{ borderRadius:14 }} />) : null}
