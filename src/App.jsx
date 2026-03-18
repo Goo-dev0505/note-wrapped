@@ -1166,7 +1166,12 @@ function Dashboard({ data, isMobile, onTabChange }) {
             <span style={{ WebkitTextStroke:`2px ${BL}`, color:"transparent" }}>まわっとる。</span>
           </h1>
           <p className="fu d2" style={{ fontFamily:"var(--fs)", fontSize:isMobile?13:16, color:"var(--muted2)", marginTop:20, maxWidth:480, lineHeight:1.8 }}>
-            {loading ? "データ読み込み中…" : `${data.totalArt}本の記事・${data.updatedAt}集計。データと生成AIを片手に、毎日なんか作って壊して直すログプレイヤー。`}
+            {loading ? "データ読み込み中…" : (
+              <>
+                {data.totalArt}本の記事・{data.updatedAt}集計。<br />
+                データと生成AIを片手に、毎日なんか作って壊して直すログプレイヤー。
+              </>
+             )}
           </p>
           <div className="fu d3" style={{ display:"flex", gap:12, flexWrap:"wrap", marginTop:36 }}>
             {loading
@@ -1213,14 +1218,14 @@ function Dashboard({ data, isMobile, onTabChange }) {
           <SectionEyebrow color={OR}>LIKES RANKING — 今月</SectionEyebrow>
           <SectionTitle>スキをくれた人、<br /><span style={{ color:OR }}>ここに刻んどくで。</span></SectionTitle>
           <p style={{ fontSize:14, color:"var(--muted2)", marginBottom:40, lineHeight:1.8, maxWidth:480 }}>
-            あなたのスキがにーやんを動かしてる。名前を残したいなら、スキを押しに来て。毎月リセットされるから今月中に。
+            あなたのスキがワイを動かしてる。<br />名前を残したいなら、スキを押しに来て。<br />毎月リセットされるから今月中に。
           </p>
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1.3fr 1fr", gap:14, alignItems:"end", marginBottom:28 }}>
             {loading ? [1,2,3].map(i=><Skeleton key={i} w="100%" h={160} style={{ borderRadius:14 }} />) : null}
           </div>
           <div style={{ background:"rgba(249,115,22,0.06)", border:`1px dashed ${OR}44`, borderRadius:12, padding:isMobile?"16px":"20px 28px", display:"flex", alignItems:"center", justifyContent:"space-between", gap:16, flexWrap:"wrap" }}>
             <div style={{ fontSize:13, color:"var(--muted2)", lineHeight:1.7 }}>
-              ランキングの全体は<strong style={{ color:OR }}>「ランキング」タブ</strong>で見られるよ。チャートも成長レースも全部そこにある。
+              ランキングの全体は<strong style={{ color:OR }}>「ランキング」タブ</strong>で見られるよ。<br />チャートも成長レースも全部そこにある。
             </div>
             <button
               onClick={() => { onTabChange("ranking"); window.scrollTo({ top:0, behavior:"smooth" }); }}
@@ -1286,7 +1291,12 @@ function Dashboard({ data, isMobile, onTabChange }) {
           <SectionEyebrow color="#22c55e">FOLLOWERS</SectionEyebrow>
           <SectionTitle>フォロワー推移。</SectionTitle>
           <p style={{ fontSize:13, color:"var(--muted2)", marginBottom:32, lineHeight:1.8 }}>
-            {loading ? "—" : `現在 ${data.lastFollower.toLocaleString()} フォロワー。${data.followerMsg}`}
+            {loading ? "—" : (
+             <>
+               現在 {data.lastFollower.toLocaleString()} フォロワー。<br />
+               {data.followerMsg}
+             </>
+            )}
           </p>
           <div className="follower-panel">
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:16, flexWrap:"wrap", gap:8 }}>
@@ -1352,7 +1362,7 @@ function Dashboard({ data, isMobile, onTabChange }) {
           <SectionEyebrow color={BL}>HIDDEN GEMS</SectionEyebrow>
           <SectionTitle>まだ読んでへんやろ？</SectionTitle>
           <p style={{ fontSize:14, color:"var(--muted2)", marginBottom:40, lineHeight:1.8, maxWidth:480 }}>
-            PVは少ないけど、にーやんが気に入っとる記事たち。死に記事にするには惜しすぎる。
+            PVは少ないけど、読者にこっそり読まれた記事たち。<br /> 死に記事にするには惜しすぎる。
           </p>
           {loading
             ? <div className="gems-grid">{[1,2,3,4,5,6].map(i=><Skeleton key={i} w="100%" h={160} style={{ borderRadius:14 }} />)}</div>
