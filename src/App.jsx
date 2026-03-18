@@ -1172,8 +1172,8 @@ function Dashboard({ data, isMobile, onTabChange }) {
           </div>
           <h1 className="fu d1" style={{ fontFamily:"var(--fd)", fontSize:"clamp(72px,13vw,140px)", lineHeight:.88, letterSpacing:-2 }}>
             今日も<br />
-            <span style={{ color:OR }}>ログ</span>、<br />
-            <span style={{ WebkitTextStroke:`2px ${BL}`, color:"transparent", fontSize:"clamp(28px, 5vw, 56px)" }}>まわっとる。</span>
+            <span style={{ color:OR, paddingLeft:"1em" }}>ログ</span>、<br />
+            <span style={{ WebkitTextStroke:`2px ${BL}`, color:"transparent", fontSize:"clamp(36px,6vw,70px)", paddingLeft:"2em" }}>まわっとる。</span>
           </h1>
           <p className="fu d2" style={{ fontFamily:"var(--fs)", fontSize:isMobile?13:16, color:"var(--muted2)", marginTop:20, maxWidth:480, lineHeight:1.8 }}>
             {loading ? "データ読み込み中…" : (
