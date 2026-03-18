@@ -1525,7 +1525,7 @@ function Dashboard({ data, isMobile, onTabChange }) {
 
       {/* ── FOOTER ── */}
       <section className="sec" style={{ background:"#050505", borderTop:"1px solid rgba(255,255,255,0.05)", textAlign:"center", paddingBottom:60 }}>
-        <div style={{ fontFamily:"var(--fd)", fontSize:"clamp(44px,12vw,100px)", lineHeight:.85, marginBottom:16, color:"transparent", WebkitTextStroke:"1px rgba(255,255,255,0.12)" }}>
+        <div style={{ fontFamily:"var(--fd)", fontSize:"clamp(44px,12vw,100px)", lineHeight:.85, marginBottom:16, color:OR }}>
           ログは続く。
         </div>
         <p style={{ fontSize:13, color:"var(--muted)", maxWidth:420, margin:"0 auto", lineHeight:1.8 }}>
