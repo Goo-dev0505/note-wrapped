@@ -1235,7 +1235,7 @@ function Dashboard({ data, isMobile, onTabChange }) {
           </div>
           <div style={{ background:"rgba(249,115,22,0.06)", border:`1px dashed ${OR}44`, borderRadius:12, padding:isMobile?"16px":"20px 28px", display:"flex", alignItems:"center", justifyContent:"space-between", gap:16, flexWrap:"wrap" }}>
             <div style={{ fontSize:13, color:"var(--muted2)", lineHeight:1.7 }}>
-              ランキングの全体は<strong style={{ color:OR }}>「ランキング」タブ</strong>で見れで。<br />チャートも成長レースも全部そこにある。
+              ランキングの全体は<strong style={{ color:OR }}>「ランキング」タブ</strong>で見れんで。<br />チャートも成長レースも全部そこにある。
             </div>
             <button
               onClick={() => { onTabChange("ranking"); window.scrollTo({ top:0, behavior:"smooth" }); }}
