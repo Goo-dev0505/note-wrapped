@@ -1524,8 +1524,9 @@ function Dashboard({ data, isMobile, onTabChange }) {
       </section>
 
       {/* ── FOOTER ── */}
-      <div style={{ fontFamily:"var(--fd)", fontSize:"clamp(44px,12vw,100px)", lineHeight:.85, marginBottom:16, color:OR }}>
-        <span style={{ fontSize:"clamp(80px,20vw,180px)" }}>ログ</span>は続く。
+      <div style={{ fontFamily:"var(--fd)", lineHeight:.85, marginBottom:16, color:OR }}>
+        <span style={{ fontSize:"clamp(120px,25vw,240px)" }}>ログ</span>
+        <span style={{ fontSize:"clamp(44px,12vw,100px)" }}>は続く。</span>
       </div>
         <p style={{ fontSize:13, color:"var(--muted)", maxWidth:420, margin:"0 auto", lineHeight:1.8 }}>
           データで遊び、失敗をネタにし、また書く。<br />KITAcoreのnoteはまだ途中です。
