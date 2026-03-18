@@ -1170,10 +1170,10 @@ function Dashboard({ data, isMobile, onTabChange }) {
             <span style={{ width:20, height:1, background:OR }}></span>
             LOG IS RUNNING
           </div>
-          <h1 className="fu d1" style={{ fontFamily:"var(--fd)", fontSize:"clamp(72px,13vw,140px)", lineHeight:.88, letterSpacing:-2 }}>
-            今日も<br />
-            <span style={{ color:OR, paddingLeft:"1em" }}>ログ</span>、<br />
-            <span style={{ WebkitTextStroke:`2px ${BL}`, color:"transparent", fontSize:"clamp(36px,6vw,70px)", paddingLeft:"2em" }}>まわっとる。</span>
+          <h1 className="fu d1" style={{ fontFamily:"var(--fd)", lineHeight:.9, letterSpacing:-2 }}>
+            <span style={{ fontSize:"clamp(48px,8vw,96px)", color:TEXT }}>今日も</span><br />
+            <span style={{ fontSize:"clamp(80px,14vw,160px)", color:OR, paddingLeft:"0.3em" }}>ログ、</span><br />
+            <span style={{ fontSize:"clamp(36px,6vw,72px)", WebkitTextStroke:`2px ${BL}`, color:"transparent", paddingLeft:"1.2em" }}>まわっとる。</span>
           </h1>
           <p className="fu d2" style={{ fontFamily:"var(--fs)", fontSize:isMobile?13:16, color:"var(--muted2)", marginTop:20, maxWidth:480, lineHeight:1.8 }}>
             {loading ? "データ読み込み中…" : (
