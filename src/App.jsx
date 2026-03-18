@@ -1125,7 +1125,7 @@ function PickupPage({ isMobile }) {
 /* ─────────────────────────────────────────────
    MAIN DASHBOARD
 ───────────────────────────────────────────── */
-function Dashboard({ data, isMobile }) {
+function Dashboard({ data, isMobile, onTabChange }) {
   const [activeWorst, setActiveWorst] = useState(null);
   const loading = !data;
 
@@ -1222,10 +1222,11 @@ function Dashboard({ data, isMobile }) {
             <div style={{ fontSize:13, color:"var(--muted2)", lineHeight:1.7 }}>
               ランキングの全体は<strong style={{ color:OR }}>「ランキング」タブ</strong>で見られるよ。チャートも成長レースも全部そこにある。
             </div>
-            <a href="https://note.com/ktcrs1107" target="_blank" rel="noopener noreferrer"
-              style={{ display:"inline-block", padding:"10px 22px", borderRadius:4, background:OR, color:"#fff", fontFamily:"var(--fs)", fontSize:12, fontWeight:700, letterSpacing:2, textDecoration:"none", whiteSpace:"nowrap", transition:"all .2s" }}>
-              note を読む →
-            </a>
+            <button
+              onClick={() => { onTabChange("ranking"); window.scrollTo({ top:0, behavior:"smooth" }); }}
+              style={{ display:"inline-block", padding:"10px 22px", borderRadius:4, background:OR, color:"#fff", fontFamily:"var(--fs)", fontSize:12, fontWeight:700, letterSpacing:2, border:"none", cursor:"pointer", whiteSpace:"nowrap", transition:"all .2s" }}>
+              ランキングを見る →
+            </button>
           </div>
         </div>
       </section>
@@ -1556,7 +1557,7 @@ export default function KitaWrapped() {
         </span>
       </div>
 
-      {tab==="dashboard" && <Dashboard data={data} isMobile={isMobile} />}
+      {tab==="dashboard" && <Dashboard data={data} isMobile={isMobile} onTabChange={setTab} />}
       {tab==="pickup"    && <PickupPage isMobile={isMobile} />}
       {tab==="articles"  && <ArticleListPage data={data} isMobile={isMobile} />}
       {tab==="ranking"   && <LikesRankingPage isMobile={isMobile} />}
