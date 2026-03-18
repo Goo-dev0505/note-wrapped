@@ -397,6 +397,7 @@ function useNoteData() {
           title:(r["title"]||"").replace(/ #\d+$/,"").slice(0,28),
           pv:   parseInt(r["read_count"]||0),
           roast:ROASTS[i % ROASTS.length],
+          url:   qualityUrlMap[(r["title"]||"").trim()] || null,
         }));
 
       const rising = trendCounts["🔥 急上昇"]||0, cont = trendCounts["🟢 継続"]||0,
@@ -1453,7 +1454,15 @@ function Dashboard({ data, isMobile, onTabChange }) {
                   <div style={{ fontFamily:"var(--fs)", fontWeight:700, fontSize:isMobile?12:14, lineHeight:1.3, marginBottom:8, color:TEXT }}>「{w.title}」</div>
                   <div style={{ fontFamily:"var(--fd)", fontSize:isMobile?32:40, color:activeWorst===i?"#fff":OR, lineHeight:1 }}>{w.pv} PV</div>
                   {activeWorst===i
-                    ? <div style={{ marginTop:14, fontSize:12, lineHeight:1.7, color:"#fff", fontStyle:"italic", borderTop:"1px solid rgba(255,255,255,0.3)", paddingTop:12 }}>💬 {w.roast}</div>
+                    ? <div style={{ marginTop:14, fontSize:12, lineHeight:1.7, color:"#fff", fontStyle:"italic", borderTop:"1px solid rgba(255,255,255,0.3)", paddingTop:12 }}>
+                      💬 {w.roast}
+                      {w.url && (
+                       <a href={w.url} target="_blank" rel="noopener noreferrer"
+                         style={{ display:"block", marginTop:12, fontStyle:"normal", fontFamily:"var(--fs)", fontSize:11, letterSpacing:2, color:OR, textDecoration:"none" }}>
+                         記事を読む →
+                       </a>
+                    )}
+                    </div>
                     : <div style={{ fontSize:10, color:"rgba(255,255,255,0.2)", marginTop:10 }}>タップで詳細 →</div>}
                 </div>
               ))}
