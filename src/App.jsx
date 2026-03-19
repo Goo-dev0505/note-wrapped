@@ -1582,12 +1582,10 @@ export default function KitaWrapped() {
             {t.label}
           </button>
         ))}
-        {/* 日付：右端固定（デスクトップのみ） */}
-        {!isMobile && (
-          <span style={{ position:"absolute", right:32, fontFamily:"var(--fm)", fontSize:9, letterSpacing:1, color:"rgba(255,255,255,0.2)", flexShrink:0 }}>
-            {!data ? "—" : data.updatedAt}
-          </span>
-        )}
+        {/* 日付：右端固定（常時表示） */}
+        <span style={{ position:"absolute", right:isMobile?16:32, fontFamily:"var(--fm)", fontSize:9, letterSpacing:1, color:"rgba(255,255,255,0.2)", flexShrink:0 }}>
+          {!data ? "—" : data.updatedAt}
+        </span>
       </div>
 
       {tab==="dashboard" && <Dashboard data={data} isMobile={isMobile} onTabChange={setTab} />}
