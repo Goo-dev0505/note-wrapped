@@ -1598,8 +1598,7 @@ export default function KitaWrapped() {
         position:"fixed", bottom:0, left:0, right:0, zIndex:100,
         background:"rgba(8,8,8,0.92)", backdropFilter:"blur(16px)",
         borderTop:"1px solid rgba(255,255,255,0.07)",
-        display:"flex", alignItems:"center",
-        padding: isMobile ? "0 12px" : "0 32px",
+        display:"flex", alignItems:"center", justifyContent:"center",
         height:48,
       }}>
         {TABS.map(t=>(
