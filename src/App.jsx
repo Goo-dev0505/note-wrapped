@@ -1569,23 +1569,25 @@ export default function KitaWrapped() {
     <div style={{ fontFamily:"var(--fj)", background:INK, color:TEXT, minHeight:"100vh", overflowX:"hidden", paddingBottom:80 }}>
 
       {/* ── STICKY NAV ── */}
-      <div style={{ position:"sticky", top:0, zIndex:100, background:"rgba(8,8,8,0.92)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,0.07)", display:"flex", alignItems:"center", justifyContent:"center", padding:"0", height:48, position:"sticky" }}>
-        {/* ロゴ：左端固定 */}
-        <span style={{ position:"absolute", left:isMobile?12:32, fontFamily:"var(--fd)", fontSize:16, letterSpacing:3, color:OR, flexShrink:0 }}>
+      <div style={{ position:"sticky", top:0, zIndex:100, background:"rgba(8,8,8,0.92)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,0.07)", display:"flex", alignItems:"center", justifyContent:"center", height:48 }}>
+        {/* ロゴ：左端固定（常時表示） */}
+        <span style={{ position:"absolute", left:isMobile?16:32, fontFamily:"var(--fd)", fontSize:16, letterSpacing:3, color:OR, flexShrink:0 }}>
           KITA<span style={{ fontFamily:"var(--fj)", fontWeight:700, fontSize:12, letterSpacing:1, color:"rgba(255,255,255,0.5)" }}>core</span>
         </span>
-        {/* タブ：中央寄せ */}
-        {TABS.map(t=>(
+        {/* タブ：中央寄せ（デスクトップのみ） */}
+        {!isMobile && TABS.map(t=>(
           <button key={t.id} className="tab-btn"
             onClick={()=>{ setTab(t.id); window.scrollTo({ top:0, behavior:"smooth" }); }}
-            style={{ padding:isMobile?"0 10px":"0 18px", height:48, fontSize:isMobile?10:11, textTransform:"uppercase", letterSpacing:isMobile?1:2, color:tab===t.id?TEXT:"rgba(255,255,255,0.28)", borderBottom:`2px solid ${tab===t.id?OR:"transparent"}`, marginBottom:-1 }}>
+            style={{ padding:"0 18px", height:48, fontSize:11, textTransform:"uppercase", letterSpacing:2, color:tab===t.id?TEXT:"rgba(255,255,255,0.28)", borderBottom:`2px solid ${tab===t.id?OR:"transparent"}`, marginBottom:-1 }}>
             {t.label}
           </button>
         ))}
-        {/* 日付：右端固定 */}
-        <span style={{ position:"absolute", right:isMobile?12:32, fontFamily:"var(--fm)", fontSize:9, letterSpacing:1, color:"rgba(255,255,255,0.2)", flexShrink:0 }}>
-          {!data ? "—" : data.updatedAt}
-        </span>
+        {/* 日付：右端固定（デスクトップのみ） */}
+        {!isMobile && (
+          <span style={{ position:"absolute", right:32, fontFamily:"var(--fm)", fontSize:9, letterSpacing:1, color:"rgba(255,255,255,0.2)", flexShrink:0 }}>
+            {!data ? "—" : data.updatedAt}
+          </span>
+        )}
       </div>
 
       {tab==="dashboard" && <Dashboard data={data} isMobile={isMobile} onTabChange={setTab} />}
