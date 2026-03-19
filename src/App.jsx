@@ -1566,13 +1566,15 @@ export default function KitaWrapped() {
   ];
 
   return (
-    <div style={{ fontFamily:"var(--fj)", background:INK, color:TEXT, minHeight:"100vh", overflowX:"hidden", paddingBottom:60 }}>
+    <div style={{ fontFamily:"var(--fj)", background:INK, color:TEXT, minHeight:"100vh", overflowX:"hidden", paddingBottom:80 }}>
 
       {/* ── STICKY NAV ── */}
-      <div style={{ position:"sticky", top:0, zIndex:100, background:"rgba(8,8,8,0.92)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,0.07)", display:"flex", alignItems:"center", padding:isMobile?"0 12px":"0 32px", height:48 }}>
-        <span style={{ fontFamily:"var(--fd)", fontSize:16, letterSpacing:3, color:OR, marginRight:24, flexShrink:0 }}>
+      <div style={{ position:"sticky", top:0, zIndex:100, background:"rgba(8,8,8,0.92)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,0.07)", display:"flex", alignItems:"center", justifyContent:"center", padding:"0", height:48, position:"sticky" }}>
+        {/* ロゴ：左端固定 */}
+        <span style={{ position:"absolute", left:isMobile?12:32, fontFamily:"var(--fd)", fontSize:16, letterSpacing:3, color:OR, flexShrink:0 }}>
           KITA<span style={{ fontFamily:"var(--fj)", fontWeight:700, fontSize:12, letterSpacing:1, color:"rgba(255,255,255,0.5)" }}>core</span>
         </span>
+        {/* タブ：中央寄せ */}
         {TABS.map(t=>(
           <button key={t.id} className="tab-btn"
             onClick={()=>{ setTab(t.id); window.scrollTo({ top:0, behavior:"smooth" }); }}
@@ -1580,8 +1582,8 @@ export default function KitaWrapped() {
             {t.label}
           </button>
         ))}
-        <div style={{ flex:1 }} />
-        <span style={{ fontFamily:"var(--fm)", fontSize:9, letterSpacing:1, color:"rgba(255,255,255,0.2)", flexShrink:0 }}>
+        {/* 日付：右端固定 */}
+        <span style={{ position:"absolute", right:isMobile?12:32, fontFamily:"var(--fm)", fontSize:9, letterSpacing:1, color:"rgba(255,255,255,0.2)", flexShrink:0 }}>
           {!data ? "—" : data.updatedAt}
         </span>
       </div>
@@ -1596,7 +1598,8 @@ export default function KitaWrapped() {
         position:"fixed", bottom:0, left:0, right:0, zIndex:100,
         background:"rgba(8,8,8,0.92)", backdropFilter:"blur(16px)",
         borderTop:"1px solid rgba(255,255,255,0.07)",
-        display:"flex", alignItems:"center", justifyContent:"center",
+        display:"flex", alignItems:"center",
+        padding: isMobile ? "0 12px" : "0 32px",
         height:48,
       }}>
         {TABS.map(t=>(
