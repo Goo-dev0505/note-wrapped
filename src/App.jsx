@@ -1566,7 +1566,7 @@ export default function KitaWrapped() {
   ];
 
   return (
-    <div style={{ fontFamily:"var(--fj)", background:INK, color:TEXT, minHeight:"100vh", overflowX:"hidden" }}>
+    <div style={{ fontFamily:"var(--fj)", background:INK, color:TEXT, minHeight:"100vh", overflowX:"hidden", paddingBottom:60 }}>
 
       {/* ── STICKY NAV ── */}
       <div style={{ position:"sticky", top:0, zIndex:100, background:"rgba(8,8,8,0.92)", backdropFilter:"blur(16px)", borderBottom:"1px solid rgba(255,255,255,0.07)", display:"flex", alignItems:"center", padding:isMobile?"0 12px":"0 32px", height:48 }}>
@@ -1587,10 +1587,35 @@ export default function KitaWrapped() {
       </div>
 
       {tab==="dashboard" && <Dashboard data={data} isMobile={isMobile} onTabChange={setTab} />}
-      {tab==="pickup"    && <PickupPage isMobile={isMobile} />}
-      {tab==="articles"  && <ArticleListPage data={data} isMobile={isMobile} />}
-      {tab==="ranking"   && <LikesRankingPage isMobile={isMobile} />}
+  {tab==="pickup"    && <PickupPage isMobile={isMobile} />}
+  {tab==="articles"  && <ArticleListPage data={data} isMobile={isMobile} />}
+  {tab==="ranking"   && <LikesRankingPage isMobile={isMobile} />}
 
-    </div>
-  );
-}
+  {/* ===== 変更②: ↓ここに挿入（L1592の直後、L1594の </div> の直前）===== */}
+  <div style={{
+    position:"fixed", bottom:0, left:0, right:0, zIndex:100,
+    background:"rgba(8,8,8,0.92)", backdropFilter:"blur(16px)",
+    borderTop:"1px solid rgba(255,255,255,0.07)",
+    display:"flex", alignItems:"center", justifyContent:"center",
+    height:48,
+  }}>
+    {TABS.map(t=>(
+      <button key={t.id} className="tab-btn"
+        onClick={()=>{ setTab(t.id); window.scrollTo({ top:0, behavior:"smooth" }); }}
+        style={{
+          padding: isMobile ? "0 10px" : "0 18px",
+          height:48,
+          fontSize: isMobile ? 10 : 11,
+          textTransform:"uppercase",
+          letterSpacing: isMobile ? 1 : 2,
+          color: tab===t.id ? TEXT : "rgba(255,255,255,0.28)",
+          borderTop:`2px solid ${tab===t.id ? OR : "transparent"}`,
+          marginTop:-1,
+        }}>
+        {t.label}
+      </button>
+    ))}
+  </div>
+  {/* ===== ここまで ===== */}
+
+</div>  {/* ← L1594のこれは触らない */}
