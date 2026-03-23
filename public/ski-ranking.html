@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>スキランキング | KITAcore</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #080c10;
+    --surface: #0d1318;
+    --border:  #1a2530;
+    --or:      #ff6b00;
+    --or-dim:  #7a3300;
+    --cy:      #00d4ff;
+    --cy-dim:  #004455;
+    --text:    #e8edf2;
+    --muted:   #4a6070;
+    --gold:    #ffd700;
+    --silver:  #c0c8d0;
+    --bronze:  #cd7f32;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans JP', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── グリッド背景 ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 16px 60px;
+  }
+
+  /* ── ヘッダー ── */
+  header {
+    padding: 32px 0 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 8vw, 64px);
+    letter-spacing: 4px;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--cy) 0%, var(--or) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding-bottom: 6px;
+  }
+
+  .period-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--cy);
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+
+  /* ── タブ ── */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 10px 4px;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    color: var(--muted);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .2s;
+    letter-spacing: .5px;
+  }
+
+  .tab:hover { color: var(--text); background: var(--border); }
+
+  .tab.active {
+    background: var(--or);
+    color: #000;
+  }
+
+  /* ── ランキングリスト ── */
+  .ranking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .rank-card {
+    display: grid;
+    grid-template-columns: 48px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    transition: border-color .2s, transform .15s;
+    animation: fadeUp .3s ease both;
+  }
+
+  .rank-card:hover {
+    border-color: var(--or-dim);
+    transform: translateX(3px);
+  }
+
+  .rank-card.rank-1 { border-left: 3px solid var(--gold); }
+  .rank-card.rank-2 { border-left: 3px solid var(--silver); }
+  .rank-card.rank-3 { border-left: 3px solid var(--bronze); }
+
+  /* 順位 */
+  .rank-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    line-height: 1;
+    text-align: center;
+    color: var(--muted);
+  }
+  .rank-1 .rank-num { color: var(--gold); }
+  .rank-2 .rank-num { color: var(--silver); }
+  .rank-3 .rank-num { color: var(--bronze); }
+
+  /* クリエイター情報 */
+  .creator-info { min-width: 0; }
+
+  .creator-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .creator-name a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .creator-name a:hover { color: var(--cy); }
+
+  .creator-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  /* スコア */
+  .score-block { text-align: right; }
+
+  .score-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    line-height: 1;
+    color: var(--or);
+  }
+
+  .score-unit {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--or-dim);
+    letter-spacing: 1px;
+  }
+
+  /* ── 空・ローディング ── */
+  .loading, .empty {
+    text-align: center;
+    padding: 60px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .loading::after {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--cy);
+    border-radius: 50%;
+    margin-left: 8px;
+    animation: blink 1s infinite;
+  }
+
+  /* ── アニメーション ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  /* ── フッター ── */
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* ── レスポンシブ ── */
+  @media (max-width: 480px) {
+    .rank-card { grid-template-columns: 36px 1fr auto; gap: 8px; padding: 12px; }
+    .rank-num  { font-size: 22px; }
+    .score-val { font-size: 26px; }
+    .creator-name { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="header-top">
+      <div class="brand">SKI RANKING</div>
+      <div class="subtitle">KITAcore / powered by timing points</div>
+    </div>
+    <div class="period-label" id="period-label">──</div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" data-type="this_week">今週</button>
+    <button class="tab"        data-type="last_week">先週</button>
+    <button class="tab"        data-type="monthly">今月</button>
+    <button class="tab"        data-type="last_month">先月</button>
+  </div>
+
+  <div id="list" class="ranking-list">
+    <div class="loading">データ読み込み中</div>
+  </div>
+
+  <footer>
+    <span id="generated-at"></span>
+    <span>スコア = スキ × タイミングポイント加重</span>
+  </footer>
+
+</div>
+
+<script>
+const DATA_URL = './data/ranking_ski.csv';
+let allData = [];
+let currentType = 'this_week';
+
+// ── CSV パーサー ──
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = lines[0].split(',').map(h => h.replace(/^\uFEFF/, '').trim());
+  return lines.slice(1).map(line => {
+    // クォート対応の簡易パーサー
+    const cols = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (c === '"') { inQ = !inQ; continue; }
+      if (c === ',' && !inQ) { cols.push(cur.trim()); cur = ''; continue; }
+      cur += c;
+    }
+    cols.push(cur.trim());
+    const obj = {};
+    headers.forEach((h, i) => obj[h] = cols[i] ?? '');
+    return obj;
+  });
+}
+
+// ── 期間ラベル ──
+function fmtDate(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function getPeriodLabel(rows) {
+  if (!rows.length) return '';
+  const r = rows[0];
+  return `${fmtDate(r.period_start)} — ${fmtDate(r.period_end)}`;
+}
+
+// ── レンダリング ──
+function render(type) {
+  currentType = type;
+  const rows = allData.filter(r => r.ranking_type === type);
+  const list = document.getElementById('list');
+  const periodLabel = document.getElementById('period-label');
+
+  periodLabel.textContent = getPeriodLabel(rows);
+
+  if (!rows.length) {
+    list.innerHTML = '<div class="empty">データがありません</div>';
+    return;
+  }
+
+  list.innerHTML = rows.map((r, i) => {
+    const rank = parseInt(r.rank) || i + 1;
+    const rankClass = rank <= 3 ? `rank-${rank}` : '';
+    const creatorUrl = r.creator_url || '';
+    const nameHtml = creatorUrl
+      ? `<a href="${creatorUrl}" target="_blank" rel="noopener">${r.creator_name || '匿名'}</a>`
+      : (r.creator_name || '匿名');
+
+    return `
+    <div class="rank-card ${rankClass}" style="animation-delay:${i * 30}ms">
+      <div class="rank-num">${rank}</div>
+      <div class="creator-info">
+        <div class="creator-name">${nameHtml}</div>
+        <div class="creator-meta">${r.likes_count}スキ</div>
+      </div>
+      <div class="score-block">
+        <div class="score-val">${r.score}</div>
+        <div class="score-unit">PT</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── タブ切り替え ──
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    render(btn.dataset.type);
+  });
+});
+
+// ── データ読み込み ──
+fetch(DATA_URL)
+  .then(r => {
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return r.text();
+  })
+  .then(text => {
+    allData = parseCSV(text);
+
+    // generated_at
+    const sample = allData.find(r => r.generated_at);
+    if (sample) {
+      const d = new Date(sample.generated_at);
+      document.getElementById('generated-at').textContent =
+        `更新: ${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    }
+
+    render(currentType);
+  })
+  .catch(err => {
+    document.getElementById('list').innerHTML =
+      `<div class="empty">読み込みエラー: ${err.message}</div>`;
+  });
+</script>
+</body>
+</html>
