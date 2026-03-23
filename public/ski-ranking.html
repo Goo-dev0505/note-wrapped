@@ -3,403 +3,526 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>スキランキング | KITAcore</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<title>SKI RANKING | KITAcore</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:      #080c10;
-    --surface: #0d1318;
-    --border:  #1a2530;
-    --or:      #ff6b00;
-    --or-dim:  #7a3300;
-    --cy:      #00d4ff;
-    --cy-dim:  #004455;
-    --text:    #e8edf2;
-    --muted:   #4a6070;
-    --gold:    #ffd700;
-    --silver:  #c0c8d0;
-    --bronze:  #cd7f32;
-  }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg:    #E9E9E9;
+  --ink:   #000000;
+  --mid:   #333333;
+  --muted: #999999;
+  --line:  #CCCCCC;
+  --white: #FFFFFF;
+}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Noto Sans JP', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+html { font-size: 10px; }
 
-  /* ── グリッド背景 ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(0,212,255,.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,212,255,.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Sans JP', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
 
-  .wrap {
-    position: relative;
-    z-index: 1;
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 0 16px 60px;
-  }
+/* 左上ナビ */
+.nav-label {
+  position: fixed;
+  top: 28px; left: 32px;
+  z-index: 100;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
 
-  /* ── ヘッダー ── */
-  header {
-    padding: 32px 0 24px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 28px;
-  }
+.page {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 40px 120px;
+}
 
-  .header-top {
-    display: flex;
-    align-items: flex-end;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
+/* ヘッダー */
+.masthead {
+  padding-top: 100px;
+  padding-bottom: 48px;
+  border-bottom: 2px solid var(--ink);
+}
 
-  .brand {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(36px, 8vw, 64px);
-    letter-spacing: 4px;
-    line-height: 1;
-    background: linear-gradient(135deg, var(--cy) 0%, var(--or) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+.masthead-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: flex-end;
+  gap: 40px;
+}
 
-  .subtitle {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding-bottom: 6px;
-  }
+.title-label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
 
-  .period-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--cy);
-    margin-top: 8px;
-    letter-spacing: 1px;
-  }
+.main-title {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: clamp(6rem, 14vw, 13rem);
+  font-weight: 700;
+  line-height: .88;
+  letter-spacing: -.03em;
+  text-transform: uppercase;
+}
 
-  /* ── タブ ── */
-  .tabs {
-    display: flex;
-    gap: 4px;
-    margin-bottom: 24px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 4px;
-  }
+.main-title .sub {
+  display: block;
+  font-weight: 300;
+  font-size: .48em;
+  letter-spacing: .12em;
+  color: var(--mid);
+  padding-left: .06em;
+}
 
-  .tab {
-    flex: 1;
-    padding: 10px 4px;
-    background: transparent;
-    border: none;
-    border-radius: 4px;
-    color: var(--muted);
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all .2s;
-    letter-spacing: .5px;
-  }
+.header-data { text-align: right; padding-bottom: 8px; }
 
-  .tab:hover { color: var(--text); background: var(--border); }
+.data-num {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 8rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -.04em;
+  color: var(--line);
+}
 
-  .tab.active {
-    background: var(--or);
-    color: #000;
-  }
+.data-label {
+  font-size: .95rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+}
 
-  /* ── ランキングリスト ── */
-  .ranking-list {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
+.period-line {
+  font-size: .9rem;
+  font-weight: 400;
+  letter-spacing: .1em;
+  color: var(--mid);
+  margin-top: 2px;
+}
 
-  .rank-card {
-    display: grid;
-    grid-template-columns: 48px 1fr auto;
-    align-items: center;
-    gap: 12px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 14px 16px;
-    transition: border-color .2s, transform .15s;
-    animation: fadeUp .3s ease both;
-  }
+/* タブ */
+.tab-strip {
+  display: flex;
+  border-bottom: 1px solid var(--line);
+}
 
-  .rank-card:hover {
-    border-color: var(--or-dim);
-    transform: translateX(3px);
-  }
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 20px 28px 18px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  position: relative;
+  transition: color .18s;
+}
 
-  .rank-card.rank-1 { border-left: 3px solid var(--gold); }
-  .rank-card.rank-2 { border-left: 3px solid var(--silver); }
-  .rank-card.rank-3 { border-left: 3px solid var(--bronze); }
+.tab-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 2px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transition: transform .2s cubic-bezier(.16,1,.3,1);
+  transform-origin: left;
+}
 
-  /* 順位 */
-  .rank-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    line-height: 1;
-    text-align: center;
-    color: var(--muted);
-  }
-  .rank-1 .rank-num { color: var(--gold); }
-  .rank-2 .rank-num { color: var(--silver); }
-  .rank-3 .rank-num { color: var(--bronze); }
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active { color: var(--ink); }
+.tab-btn.active::after { transform: scaleX(1); }
 
-  /* クリエイター情報 */
-  .creator-info { min-width: 0; }
+/* TOP3 ポディウム */
+.podium {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr 1px 1fr;
+  border-bottom: 1px solid var(--line);
+}
 
-  .creator-name {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+.podium-div { background: var(--line); }
 
-  .creator-name a {
-    color: inherit;
-    text-decoration: none;
-  }
-  .creator-name a:hover { color: var(--cy); }
+.podium-cell {
+  padding: 40px 32px 36px;
+  position: relative;
+  overflow: hidden;
+  animation: slideIn .4s ease both;
+  transition: background .2s;
+}
+.podium-cell:hover { background: rgba(0,0,0,.03); }
+.podium-cell:nth-child(1) { animation-delay: 0ms; }
+.podium-cell:nth-child(3) { animation-delay: 60ms; }
+.podium-cell:nth-child(5) { animation-delay: 120ms; }
+.podium-cell.r1 { background: var(--ink); }
+.podium-cell.r1:hover { background: #111; }
 
-  .creator-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 3px;
-  }
+.ghost-num {
+  position: absolute;
+  top: -8px; right: 16px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 12rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -.06em;
+  color: rgba(0,0,0,.06);
+  pointer-events: none;
+  user-select: none;
+}
+.r1 .ghost-num { color: rgba(255,255,255,.07); }
 
-  /* スコア */
-  .score-block { text-align: right; }
+.cell-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.4rem; font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.r1 .cell-avatar { background: rgba(255,255,255,.15); color: rgba(255,255,255,.5); }
+.cell-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-  .score-val {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 32px;
-    line-height: 1;
-    color: var(--or);
-  }
+.cell-badge {
+  font-size: .85rem; font-weight: 700;
+  letter-spacing: .3em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 8px;
+}
+.r1 .cell-badge { color: rgba(255,255,255,.4); }
 
-  .score-unit {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--or-dim);
-    letter-spacing: 1px;
-  }
+.cell-name {
+  font-size: 1.3rem; font-weight: 700;
+  line-height: 1.3; word-break: break-all;
+  color: var(--ink); margin-bottom: 20px;
+}
+.r1 .cell-name { color: var(--white); }
+.cell-name a { color: inherit; text-decoration: none; }
 
-  /* ── 空・ローディング ── */
-  .loading, .empty {
-    text-align: center;
-    padding: 60px 20px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    color: var(--muted);
-  }
+.cell-score-row { display: flex; align-items: baseline; gap: 6px; }
 
-  .loading::after {
-    content: '';
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    background: var(--cy);
-    border-radius: 50%;
-    margin-left: 8px;
-    animation: blink 1s infinite;
-  }
+.cell-score {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 4.8rem; font-weight: 700;
+  letter-spacing: -.04em; line-height: 1;
+  color: var(--ink);
+}
+.r1 .cell-score { color: var(--white); }
+.r2 .cell-score { color: var(--mid); }
+.r3 .cell-score { color: #666; }
 
-  /* ── アニメーション ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+.cell-score-unit {
+  font-size: .85rem; font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--muted);
+}
+.r1 .cell-score-unit { color: rgba(255,255,255,.35); }
 
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0; }
-  }
+.cell-likes {
+  font-size: .9rem; font-weight: 400;
+  letter-spacing: .1em; color: var(--muted); margin-top: 6px;
+}
+.r1 .cell-likes { color: rgba(255,255,255,.3); }
 
-  /* ── フッター ── */
-  footer {
-    margin-top: 40px;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
+/* 通常行 */
+.rank-list { border-bottom: 1px solid var(--line); }
 
-  /* ── レスポンシブ ── */
-  @media (max-width: 480px) {
-    .rank-card { grid-template-columns: 36px 1fr auto; gap: 8px; padding: 12px; }
-    .rank-num  { font-size: 22px; }
-    .score-val { font-size: 26px; }
-    .creator-name { font-size: 13px; }
-  }
+.rank-row {
+  display: grid;
+  grid-template-columns: 64px 48px 1fr 140px;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  animation: slideIn .35s ease both;
+  transition: background .15s;
+}
+.rank-row:hover { background: rgba(0,0,0,.03); }
+
+.row-num {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.1rem; font-weight: 700;
+  letter-spacing: .1em; color: var(--muted);
+  text-align: center; padding: 20px 0;
+  border-right: 1px solid var(--line);
+}
+
+.row-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1rem; font-weight: 700; color: var(--muted);
+  margin: 0 auto; overflow: hidden;
+}
+.row-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.row-info {
+  padding: 18px 20px; min-width: 0;
+  border-right: 1px solid var(--line);
+}
+
+.row-name {
+  font-size: 1.2rem; font-weight: 700;
+  color: var(--ink); white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+  letter-spacing: .02em;
+}
+.row-name a { color: inherit; text-decoration: none; }
+.row-name a:hover { color: var(--muted); }
+
+.row-bar-outer { margin-top: 7px; height: 2px; background: var(--line); }
+.row-bar-inner { height: 2px; background: var(--ink); width: 0; transition: width .9s cubic-bezier(.16,1,.3,1); }
+
+.row-likes-lbl {
+  margin-top: 5px; font-size: .85rem;
+  font-weight: 400; letter-spacing: .08em; color: var(--muted);
+}
+
+.row-score-block { text-align: right; padding: 18px 24px 18px 16px; }
+
+.row-score-val {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 3rem; font-weight: 700;
+  letter-spacing: -.03em; line-height: 1;
+  color: var(--ink);
+}
+
+.row-score-unit {
+  font-size: .75rem; font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--muted);
+}
+
+/* 状態 */
+.state-msg {
+  padding: 80px 0; text-align: center;
+  font-size: 1rem; font-weight: 700;
+  letter-spacing: .3em; text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* フッター */
+.colophon {
+  display: flex; justify-content: space-between;
+  align-items: center; flex-wrap: wrap; gap: 8px;
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+}
+.colophon span {
+  font-size: .85rem; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--muted);
+}
+
+/* アニメーション */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* レスポンシブ */
+@media (max-width: 680px) {
+  .page { padding: 0 20px 80px; }
+  .nav-label { left: 20px; top: 20px; }
+  .masthead { padding-top: 72px; }
+  .masthead-inner { grid-template-columns: 1fr; gap: 16px; }
+  .header-data { text-align: left; }
+  .data-num { font-size: 5rem; }
+  .podium { grid-template-columns: 1fr; }
+  .podium-div { display: none; }
+  .podium-cell { border-top: 1px solid var(--line); }
+  .ghost-num { font-size: 8rem; }
+  .rank-row { grid-template-columns: 48px 40px 1fr 90px; }
+  .row-score-val { font-size: 2.4rem; }
+  .tab-btn { padding: 16px 14px 14px; font-size: .85rem; }
+}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <header>
-    <div class="header-top">
-      <div class="brand">SKI RANKING</div>
-      <div class="subtitle">KITAcore / powered by timing points</div>
+<div class="nav-label">01. SKI RANKING</div>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div>
+        <span class="title-label">KITAcore / Supporter Archive</span>
+        <h1 class="main-title">
+          SKI
+          <span class="sub">Ranking</span>
+        </h1>
+      </div>
+      <div class="header-data">
+        <div class="data-num" id="data-num">—</div>
+        <div class="data-label">Supporters</div>
+        <div class="period-line" id="period-line">——</div>
+      </div>
     </div>
-    <div class="period-label" id="period-label">──</div>
   </header>
 
-  <div class="tabs">
-    <button class="tab active" data-type="this_week">今週</button>
-    <button class="tab"        data-type="last_week">先週</button>
-    <button class="tab"        data-type="monthly">今月</button>
-    <button class="tab"        data-type="last_month">先月</button>
-  </div>
+  <nav class="tab-strip">
+    <button class="tab-btn active" data-type="this_week">今週</button>
+    <button class="tab-btn"        data-type="last_week">先週</button>
+    <button class="tab-btn"        data-type="monthly">今月</button>
+    <button class="tab-btn"        data-type="last_month">先月</button>
+  </nav>
 
-  <div id="list" class="ranking-list">
-    <div class="loading">データ読み込み中</div>
-  </div>
+  <main id="content">
+    <div class="state-msg">Loading</div>
+  </main>
 
-  <footer>
-    <span id="generated-at"></span>
-    <span>スコア = スキ × タイミングポイント加重</span>
+  <footer class="colophon">
+    <span id="gen-at">——</span>
+    <span>Score = Σ ( Ski × Timing Point )</span>
   </footer>
 
 </div>
 
 <script>
 const DATA_URL = './data/ranking_ski.csv';
-let allData = [];
-let currentType = 'this_week';
+let allData = [], maxByType = {};
 
-// ── CSV パーサー ──
 function parseCSV(text) {
   const lines = text.trim().split('\n');
-  const headers = lines[0].split(',').map(h => h.replace(/^\uFEFF/, '').trim());
+  const headers = lines[0].split(',').map(h => h.replace(/^\uFEFF/,'').trim());
   return lines.slice(1).map(line => {
-    // クォート対応の簡易パーサー
-    const cols = [];
-    let cur = '', inQ = false;
-    for (let i = 0; i < line.length; i++) {
-      const c = line[i];
+    const cols = []; let cur = '', inQ = false;
+    for (const c of line) {
       if (c === '"') { inQ = !inQ; continue; }
       if (c === ',' && !inQ) { cols.push(cur.trim()); cur = ''; continue; }
       cur += c;
     }
     cols.push(cur.trim());
-    const obj = {};
-    headers.forEach((h, i) => obj[h] = cols[i] ?? '');
-    return obj;
+    const o = {}; headers.forEach((h,i) => o[h]=cols[i]??''); return o;
   });
 }
 
-// ── 期間ラベル ──
-function fmtDate(iso) {
+function fmtD(iso) {
   if (!iso) return '';
   const d = new Date(iso);
   return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
 }
 
-function getPeriodLabel(rows) {
-  if (!rows.length) return '';
-  const r = rows[0];
-  return `${fmtDate(r.period_start)} — ${fmtDate(r.period_end)}`;
+function initial(name) { return ([...(name||'?')].find(c=>c.trim()))||'?'; }
+
+function avatarEl(row, cls) {
+  const init = initial(row.creator_name);
+  const urlname = row.creator_urlname||'';
+  const imgUrl = urlname ? `https://assets.note.mu/img/notes/users/${urlname}.png` : '';
+  if (imgUrl) return `<div class="${cls}"><img src="${imgUrl}" alt="${row.creator_name||''}" onerror="this.parentElement.textContent='${init}'"></div>`;
+  return `<div class="${cls}">${init}</div>`;
 }
 
-// ── レンダリング ──
-function render(type) {
-  currentType = type;
-  const rows = allData.filter(r => r.ranking_type === type);
-  const list = document.getElementById('list');
-  const periodLabel = document.getElementById('period-label');
-
-  periodLabel.textContent = getPeriodLabel(rows);
-
-  if (!rows.length) {
-    list.innerHTML = '<div class="empty">データがありません</div>';
-    return;
-  }
-
-  list.innerHTML = rows.map((r, i) => {
-    const rank = parseInt(r.rank) || i + 1;
-    const rankClass = rank <= 3 ? `rank-${rank}` : '';
-    const creatorUrl = r.creator_url || '';
-    const nameHtml = creatorUrl
-      ? `<a href="${creatorUrl}" target="_blank" rel="noopener">${r.creator_name || '匿名'}</a>`
-      : (r.creator_name || '匿名');
-
+function renderPodium(rows) {
+  const badges = ['01','02','03'], rCls = ['r1','r2','r3'];
+  return `<div class="podium">` + rows.slice(0,3).map((r,i) => {
+    const nameHtml = r.creator_url
+      ? `<a href="${r.creator_url}" target="_blank" rel="noopener">${r.creator_name||'匿名'}</a>`
+      : (r.creator_name||'匿名');
     return `
-    <div class="rank-card ${rankClass}" style="animation-delay:${i * 30}ms">
-      <div class="rank-num">${rank}</div>
-      <div class="creator-info">
-        <div class="creator-name">${nameHtml}</div>
-        <div class="creator-meta">${r.likes_count}スキ</div>
+    <div class="podium-cell ${rCls[i]}" style="animation-delay:${i*60}ms">
+      <div class="ghost-num">${r.rank}</div>
+      ${avatarEl(r,'cell-avatar')}
+      <div class="cell-badge">${badges[i]}</div>
+      <div class="cell-name">${nameHtml}</div>
+      <div class="cell-score-row">
+        <div class="cell-score">${r.score}</div>
+        <div class="cell-score-unit">pt</div>
       </div>
-      <div class="score-block">
-        <div class="score-val">${r.score}</div>
-        <div class="score-unit">PT</div>
+      <div class="cell-likes">${r.likes_count} スキ</div>
+    </div>${i<2?'<div class="podium-div"></div>':''}`;
+  }).join('') + `</div>`;
+}
+
+function renderList(rows, maxScore) {
+  if (rows.length <= 3) return '';
+  return `<div class="rank-list">` + rows.slice(3).map((r,i) => {
+    const pct = maxScore>0 ? Math.round((parseInt(r.score)||0)/maxScore*100) : 0;
+    const nameHtml = r.creator_url
+      ? `<a href="${r.creator_url}" target="_blank" rel="noopener">${r.creator_name||'匿名'}</a>`
+      : (r.creator_name||'匿名');
+    return `
+    <div class="rank-row" style="animation-delay:${i*20}ms" data-pct="${pct}">
+      <div class="row-num">${r.rank}</div>
+      ${avatarEl(r,'row-avatar')}
+      <div class="row-info">
+        <div class="row-name">${nameHtml}</div>
+        <div class="row-bar-outer"><div class="row-bar-inner"></div></div>
+        <div class="row-likes-lbl">${r.likes_count} スキ</div>
+      </div>
+      <div class="row-score-block">
+        <div class="row-score-val">${r.score}</div>
+        <div class="row-score-unit">pt</div>
       </div>
     </div>`;
-  }).join('');
+  }).join('') + `</div>`;
 }
 
-// ── タブ切り替え ──
-document.querySelectorAll('.tab').forEach(btn => {
+function animateBars() {
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.rank-row').forEach(row => {
+      const bar = row.querySelector('.row-bar-inner');
+      if (bar) setTimeout(() => { bar.style.width=(row.dataset.pct||0)+'%'; }, 120);
+    });
+  });
+}
+
+function render(type) {
+  const rows = allData.filter(r => r.ranking_type === type);
+  document.getElementById('data-num').textContent = rows.length||'—';
+  const r0 = rows[0];
+  document.getElementById('period-line').textContent = r0
+    ? `${fmtD(r0.period_start)} — ${fmtD(r0.period_end)}` : '——';
+  const content = document.getElementById('content');
+  if (!rows.length) { content.innerHTML='<div class="state-msg">No Data</div>'; return; }
+  content.innerHTML = renderPodium(rows) + renderList(rows, maxByType[type]||1);
+  animateBars();
+}
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     render(btn.dataset.type);
   });
 });
 
-// ── データ読み込み ──
 fetch(DATA_URL)
-  .then(r => {
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    return r.text();
-  })
+  .then(r => { if(!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); })
   .then(text => {
     allData = parseCSV(text);
-
-    // generated_at
-    const sample = allData.find(r => r.generated_at);
-    if (sample) {
-      const d = new Date(sample.generated_at);
-      document.getElementById('generated-at').textContent =
-        `更新: ${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    ['this_week','last_week','monthly','last_month'].forEach(type => {
+      const rows = allData.filter(r=>r.ranking_type===type);
+      maxByType[type] = rows.reduce((m,r)=>Math.max(m,parseInt(r.score)||0),1);
+    });
+    const s = allData.find(r=>r.generated_at);
+    if (s) {
+      const d = new Date(s.generated_at);
+      document.getElementById('gen-at').textContent =
+        `Updated ${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
     }
-
-    render(currentType);
+    render('this_week');
   })
   .catch(err => {
-    document.getElementById('list').innerHTML =
-      `<div class="empty">読み込みエラー: ${err.message}</div>`;
+    document.getElementById('content').innerHTML=`<div class="state-msg">Error: ${err.message}</div>`;
   });
 </script>
 </body>
