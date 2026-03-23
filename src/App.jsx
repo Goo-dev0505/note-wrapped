@@ -416,6 +416,7 @@ function useNoteData() {
         stopPct: totalArt > 0 ? Math.round(stop / (rising+cont+slow+stop||1) * 100) : 0,
         rising, cont, slow, stop,
         updatedAt: latest["日付"]||"",
+        updatedAtTime: latest["更新時刻"]||"",
       });
     }).catch(e => setError(e.message));
   }, []);
@@ -1178,7 +1179,7 @@ function Dashboard({ data, isMobile, onTabChange }) {
           <p className="fu d2" style={{ fontFamily:"var(--fs)", fontSize:isMobile?13:16, color:"var(--muted2)", marginTop:20, maxWidth:480, lineHeight:1.8 }}>
             {loading ? "データ読み込み中…" : (
               <>
-                {data.totalArt}本の記事・{data.updatedAt}集計。<br />
+                {data.totalArt}本の記事・{data.updatedAt}{data.updatedAtTime ? ` ${data.updatedAtTime}` : ""}集計。<br />
                 データと生成AIを片手に、<br />
                 毎日なんか作って壊して直すログプレイヤー。
               </>
