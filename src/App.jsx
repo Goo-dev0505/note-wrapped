@@ -1179,7 +1179,8 @@ function Dashboard({ data, isMobile, onTabChange }) {
             {loading ? "データ読み込み中…" : (
               <>
                 {data.totalArt}本の記事・{data.updatedAt}集計。<br />
-                データと生成AIを片手に、毎日なんか作って壊して直すログプレイヤー。
+                データと生成AIを片手に、<br />
+                毎日なんか作って壊して直すログプレイヤー。
               </>
              )}
           </p>
