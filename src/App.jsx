@@ -1501,16 +1501,16 @@ function Dashboard({ data, isMobile, onTabChange }) {
             呪文の裏庭、<br />開いてます。
           </h2>
           <div style={{ fontFamily:"var(--fd)", fontSize:"clamp(60px,12vw,100px)", lineHeight:1, color:"transparent", WebkitTextStroke:`1px ${OR}`, margin:"16px 0" }}>
-            ¥780
+            ¥980
           </div>
           <p style={{ fontSize:13, color:"var(--muted2)", lineHeight:1.8, marginBottom:32 }}>
-            10名まで、月額780円で、ワイのプロンプトが丸見えになる。<br />AIアートの呪文、プロンプト設計の裏側、全部置いとくで。
+            10名まで、月額980円で、ワイのプロンプトが丸見えになる。<br />AIアートの呪文、プロンプト設計の裏側、全部置いとくで。
           </p>
           <div style={{ background:"#111", border:"1px solid rgba(255,255,255,0.07)", borderRadius:14, padding:"28px 32px", marginBottom:32, textAlign:"left" }}>
             {[
               "実際に使ったプロンプトを公開（メタプロンプト由来の呪文も含む）",
               "980円未満の有料記事はメンバーなら無料で読める",
-              "創設メンバーは780円のまま継続できる（値上げなし）",
+              "メンバーは980円のまま継続できる（値上げなし）",
             ].map((perk,i)=>(
               <div key={i} style={{ display:"flex", alignItems:"flex-start", gap:12, fontSize:13, lineHeight:1.7, color:"var(--muted2)", marginBottom:i<2?12:0 }}>
                 <span style={{ width:6, height:6, borderRadius:"50%", background:OR, flexShrink:0, marginTop:8 }} />
