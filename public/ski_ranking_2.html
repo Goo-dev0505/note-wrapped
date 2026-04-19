@@ -337,7 +337,6 @@ function renderPodium(rows) {
         <div class="cell-score">${r.score}</div>
         <div class="cell-score-unit">pt</div>
       </div>
-      ${mult > 1 ? `<div class="cell-score-detail">base ${base}pt × ${mult}</div>` : ''}
       <div class="cell-likes">${r.likes_count} スキ</div>
     </div>${i<2?'<div class="podium-div"></div>':''}`;
   }).join('') + `</div>`;
