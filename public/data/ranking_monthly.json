@@ -1,8 +1,8 @@
 {
   "ranking_type": "monthly",
-  "generated_at": "2026-06-03T22:25:44.848960+09:00",
+  "generated_at": "2026-06-04T07:39:29.409893+09:00",
   "period_start": "2026-06-01T00:00:00+09:00",
-  "period_end": "2026-06-03T22:05:26+09:00",
+  "period_end": "2026-06-04T07:35:14+09:00",
   "items": [
     {
       "like_user_id": "14363101",
@@ -10,14 +10,14 @@
       "creator_urlname": "yuuwa1046",
       "creator_url": "https://note.com/yuuwa1046",
       "has_profile_url": true,
-      "likes_count": 9,
+      "likes_count": 11,
       "first_like_at": "2026-06-01T16:05:57+09:00",
-      "last_like_at": "2026-06-02T21:05:48+09:00",
-      "follower_count": 94,
+      "last_like_at": "2026-06-04T00:45:07+09:00",
+      "follower_count": 93,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
       "rank": 1
     },
     {
@@ -26,14 +26,14 @@
       "creator_urlname": "kei_mifu",
       "creator_url": "https://note.com/kei_mifu",
       "has_profile_url": true,
-      "likes_count": 8,
+      "likes_count": 9,
       "first_like_at": "2026-06-01T20:27:32+09:00",
-      "last_like_at": "2026-06-03T11:25:53+09:00",
-      "follower_count": 165,
+      "last_like_at": "2026-06-04T06:43:33+09:00",
+      "follower_count": 169,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
       "rank": 2
     },
     {
@@ -47,9 +47,9 @@
       "last_like_at": "2026-06-03T20:14:46+09:00",
       "follower_count": 73,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
       "rank": 3
     },
     {
@@ -63,9 +63,9 @@
       "last_like_at": "2026-06-02T07:42:34+09:00",
       "follower_count": 4073,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
       "rank": 4
     },
     {
@@ -79,10 +79,26 @@
       "last_like_at": "2026-06-02T01:28:40+09:00",
       "follower_count": 5,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
       "rank": 5
+    },
+    {
+      "like_user_id": "12775322",
+      "creator_name": "カワムラ｜AI擬人化漫画 | ChatGPTのヨシダ",
+      "creator_urlname": "chatgpt_ysd",
+      "creator_url": "https://note.com/chatgpt_ysd",
+      "has_profile_url": true,
+      "likes_count": 5,
+      "first_like_at": "2026-06-01T00:43:08+09:00",
+      "last_like_at": "2026-06-04T07:27:08+09:00",
+      "follower_count": 1854,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 6
     },
     {
       "like_user_id": "10460304",
@@ -95,10 +111,58 @@
       "last_like_at": "2026-06-03T21:49:08+09:00",
       "follower_count": 796,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 6
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 7
+    },
+    {
+      "like_user_id": "2490558",
+      "creator_name": "だんだんありがと@めじゅ",
+      "creator_urlname": "dandan_arigato19",
+      "creator_url": "https://note.com/dandan_arigato19",
+      "has_profile_url": true,
+      "likes_count": 4,
+      "first_like_at": "2026-06-01T19:22:56+09:00",
+      "last_like_at": "2026-06-04T07:11:50+09:00",
+      "follower_count": 351,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 8
+    },
+    {
+      "like_user_id": "6312735",
+      "creator_name": "ピナクル",
+      "creator_urlname": "modern_holly38",
+      "creator_url": "https://note.com/modern_holly38",
+      "has_profile_url": true,
+      "likes_count": 4,
+      "first_like_at": "2026-06-01T19:16:17+09:00",
+      "last_like_at": "2026-06-04T06:57:43+09:00",
+      "follower_count": 395,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 9
+    },
+    {
+      "like_user_id": "10332488",
+      "creator_name": "ななな｜もやもや減らし屋",
+      "creator_urlname": "alive_prawn4206",
+      "creator_url": "https://note.com/alive_prawn4206",
+      "has_profile_url": true,
+      "likes_count": 4,
+      "first_like_at": "2026-06-01T19:20:05+09:00",
+      "last_like_at": "2026-06-04T06:39:16+09:00",
+      "follower_count": 318,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 10
     },
     {
       "like_user_id": "14124940",
@@ -111,10 +175,10 @@
       "last_like_at": "2026-06-03T19:06:30+09:00",
       "follower_count": 102,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 7
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 11
     },
     {
       "like_user_id": "13989277",
@@ -127,10 +191,10 @@
       "last_like_at": "2026-06-03T14:38:16+09:00",
       "follower_count": 20,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 8
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 12
     },
     {
       "like_user_id": "12404502",
@@ -143,10 +207,10 @@
       "last_like_at": "2026-06-03T12:59:32+09:00",
       "follower_count": 1314,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 9
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 13
     },
     {
       "like_user_id": "6171312",
@@ -159,10 +223,10 @@
       "last_like_at": "2026-06-03T12:08:03+09:00",
       "follower_count": 8,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 10
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 14
     },
     {
       "like_user_id": "7580255",
@@ -175,10 +239,10 @@
       "last_like_at": "2026-06-03T10:25:47+09:00",
       "follower_count": 1963,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 11
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 15
     },
     {
       "like_user_id": "9571956",
@@ -191,10 +255,10 @@
       "last_like_at": "2026-06-03T10:25:40+09:00",
       "follower_count": 944,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 12
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 16
     },
     {
       "like_user_id": "10097507",
@@ -207,26 +271,10 @@
       "last_like_at": "2026-06-03T08:24:27+09:00",
       "follower_count": 1074,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 13
-    },
-    {
-      "like_user_id": "12775322",
-      "creator_name": "カワムラ｜AI擬人化漫画 | ChatGPTのヨシダ",
-      "creator_urlname": "chatgpt_ysd",
-      "creator_url": "https://note.com/chatgpt_ysd",
-      "has_profile_url": true,
-      "likes_count": 4,
-      "first_like_at": "2026-06-01T00:43:08+09:00",
-      "last_like_at": "2026-06-03T07:40:32+09:00",
-      "follower_count": 1854,
-      "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
-      "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 14
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 17
     },
     {
       "like_user_id": "11807623",
@@ -239,10 +287,10 @@
       "last_like_at": "2026-06-03T06:40:47+09:00",
       "follower_count": 522,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 15
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 18
     },
     {
       "like_user_id": "10517876",
@@ -255,10 +303,106 @@
       "last_like_at": "2026-06-01T23:00:05+09:00",
       "follower_count": 1878,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 16
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 19
+    },
+    {
+      "like_user_id": "10827166",
+      "creator_name": "コンパス みき",
+      "creator_urlname": "compass_m360",
+      "creator_url": "https://note.com/compass_m360",
+      "has_profile_url": true,
+      "likes_count": 3,
+      "first_like_at": "2026-06-01T21:15:29+09:00",
+      "last_like_at": "2026-06-04T07:28:12+09:00",
+      "follower_count": 1228,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 20
+    },
+    {
+      "like_user_id": "10071829",
+      "creator_name": "動きのラフテル@理学療法",
+      "creator_urlname": "proper_swan3597",
+      "creator_url": "https://note.com/proper_swan3597",
+      "has_profile_url": true,
+      "likes_count": 3,
+      "first_like_at": "2026-06-01T20:29:13+09:00",
+      "last_like_at": "2026-06-04T07:22:41+09:00",
+      "follower_count": 1477,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 21
+    },
+    {
+      "like_user_id": "3598618",
+      "creator_name": "はしゃも｜感情構造エンジニア",
+      "creator_urlname": "hasyamo",
+      "creator_url": "https://note.com/hasyamo",
+      "has_profile_url": true,
+      "likes_count": 3,
+      "first_like_at": "2026-06-01T20:31:35+09:00",
+      "last_like_at": "2026-06-04T07:13:31+09:00",
+      "follower_count": 478,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 22
+    },
+    {
+      "like_user_id": "13259374",
+      "creator_name": "Joe Tsukasa",
+      "creator_urlname": "joe2x100",
+      "creator_url": "https://note.com/joe2x100",
+      "has_profile_url": true,
+      "likes_count": 3,
+      "first_like_at": "2026-06-01T20:18:34+09:00",
+      "last_like_at": "2026-06-04T07:07:14+09:00",
+      "follower_count": 465,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 23
+    },
+    {
+      "like_user_id": "13985908",
+      "creator_name": "学び直し研究所",
+      "creator_urlname": "schrcat",
+      "creator_url": "https://note.com/schrcat",
+      "has_profile_url": true,
+      "likes_count": 3,
+      "first_like_at": "2026-06-02T06:42:44+09:00",
+      "last_like_at": "2026-06-04T06:51:31+09:00",
+      "follower_count": 130,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 24
+    },
+    {
+      "like_user_id": "11024686",
+      "creator_name": "匿名",
+      "creator_urlname": "modern_human9636",
+      "creator_url": "https://note.com/modern_human9636",
+      "has_profile_url": true,
+      "likes_count": 3,
+      "first_like_at": "2026-06-04T00:40:54+09:00",
+      "last_like_at": "2026-06-04T00:48:24+09:00",
+      "follower_count": 1,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 25
     },
     {
       "like_user_id": "11583083",
@@ -271,10 +415,10 @@
       "last_like_at": "2026-06-03T18:22:37+09:00",
       "follower_count": 1343,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 17
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 26
     },
     {
       "like_user_id": "14569379",
@@ -287,10 +431,10 @@
       "last_like_at": "2026-06-03T17:31:20+09:00",
       "follower_count": 61,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 18
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 27
     },
     {
       "like_user_id": "13140757",
@@ -303,10 +447,10 @@
       "last_like_at": "2026-06-03T16:08:56+09:00",
       "follower_count": 809,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 19
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 28
     },
     {
       "like_user_id": "13094187",
@@ -319,10 +463,10 @@
       "last_like_at": "2026-06-03T16:06:26+09:00",
       "follower_count": 563,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 20
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 29
     },
     {
       "like_user_id": "13293277",
@@ -335,10 +479,10 @@
       "last_like_at": "2026-06-03T11:49:09+09:00",
       "follower_count": 872,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 21
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 30
     },
     {
       "like_user_id": "12235137",
@@ -351,10 +495,10 @@
       "last_like_at": "2026-06-03T10:53:04+09:00",
       "follower_count": 1461,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 22
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 31
     },
     {
       "like_user_id": "12848229",
@@ -367,26 +511,10 @@
       "last_like_at": "2026-06-03T10:47:49+09:00",
       "follower_count": 126,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 23
-    },
-    {
-      "like_user_id": "2490558",
-      "creator_name": "だんだんありがと@めじゅ",
-      "creator_urlname": "dandan_arigato19",
-      "creator_url": "https://note.com/dandan_arigato19",
-      "has_profile_url": true,
-      "likes_count": 3,
-      "first_like_at": "2026-06-01T19:22:56+09:00",
-      "last_like_at": "2026-06-03T09:06:48+09:00",
-      "follower_count": 347,
-      "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
-      "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 24
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 32
     },
     {
       "like_user_id": "11870206",
@@ -399,10 +527,10 @@
       "last_like_at": "2026-06-03T08:55:38+09:00",
       "follower_count": 766,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 25
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 33
     },
     {
       "like_user_id": "4877017",
@@ -415,10 +543,10 @@
       "last_like_at": "2026-06-03T08:11:23+09:00",
       "follower_count": 2318,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 26
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 34
     },
     {
       "like_user_id": "11634537",
@@ -431,26 +559,10 @@
       "last_like_at": "2026-06-03T07:40:53+09:00",
       "follower_count": 2974,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 27
-    },
-    {
-      "like_user_id": "6312735",
-      "creator_name": "ピナクル",
-      "creator_urlname": "modern_holly38",
-      "creator_url": "https://note.com/modern_holly38",
-      "has_profile_url": true,
-      "likes_count": 3,
-      "first_like_at": "2026-06-01T19:16:17+09:00",
-      "last_like_at": "2026-06-03T07:21:00+09:00",
-      "follower_count": 394,
-      "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
-      "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 28
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 35
     },
     {
       "like_user_id": "8202195",
@@ -463,26 +575,10 @@
       "last_like_at": "2026-06-03T06:48:54+09:00",
       "follower_count": 383,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 29
-    },
-    {
-      "like_user_id": "10332488",
-      "creator_name": "ななな｜もやもや減らし屋",
-      "creator_urlname": "alive_prawn4206",
-      "creator_url": "https://note.com/alive_prawn4206",
-      "has_profile_url": true,
-      "likes_count": 3,
-      "first_like_at": "2026-06-01T19:20:05+09:00",
-      "last_like_at": "2026-06-03T06:36:42+09:00",
-      "follower_count": 315,
-      "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
-      "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 30
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 36
     },
     {
       "like_user_id": "12197172",
@@ -495,10 +591,10 @@
       "last_like_at": "2026-06-03T06:34:17+09:00",
       "follower_count": 1473,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 31
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 37
     },
     {
       "like_user_id": "12232616",
@@ -511,10 +607,10 @@
       "last_like_at": "2026-06-02T21:46:28+09:00",
       "follower_count": 565,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 32
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 38
     },
     {
       "like_user_id": "14364133",
@@ -527,10 +623,10 @@
       "last_like_at": "2026-06-02T21:21:06+09:00",
       "follower_count": 152,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 33
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 39
     },
     {
       "like_user_id": "14154824",
@@ -543,10 +639,138 @@
       "last_like_at": "2026-06-02T06:36:03+09:00",
       "follower_count": 87,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 34
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 40
+    },
+    {
+      "like_user_id": "12358153",
+      "creator_name": "Tokyo Visual Moments",
+      "creator_urlname": "dreamy_quail9288",
+      "creator_url": "https://note.com/dreamy_quail9288",
+      "has_profile_url": true,
+      "likes_count": 2,
+      "first_like_at": "2026-06-01T19:19:41+09:00",
+      "last_like_at": "2026-06-04T07:27:48+09:00",
+      "follower_count": 298,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 41
+    },
+    {
+      "like_user_id": "11717795",
+      "creator_name": "ゆいまる‐IT界隈以外でAIを使いまくる2005年生まれ",
+      "creator_urlname": "humble_bobcat51",
+      "creator_url": "https://note.com/humble_bobcat51",
+      "has_profile_url": true,
+      "likes_count": 2,
+      "first_like_at": "2026-06-02T18:27:32+09:00",
+      "last_like_at": "2026-06-04T07:18:20+09:00",
+      "follower_count": 855,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 42
+    },
+    {
+      "like_user_id": "11058763",
+      "creator_name": "濱口貴光@AIとデータサイエンスが好きな薬剤師",
+      "creator_urlname": "pharma_i_cist",
+      "creator_url": "https://note.com/pharma_i_cist",
+      "has_profile_url": true,
+      "likes_count": 2,
+      "first_like_at": "2026-06-02T07:04:44+09:00",
+      "last_like_at": "2026-06-04T07:08:52+09:00",
+      "follower_count": 955,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 43
+    },
+    {
+      "like_user_id": "13644901",
+      "creator_name": "ズボラ主婦ゆず 🍀 子供3人のママ",
+      "creator_urlname": "yuzunokosodate",
+      "creator_url": "https://note.com/yuzunokosodate",
+      "has_profile_url": true,
+      "likes_count": 2,
+      "first_like_at": "2026-06-03T14:03:13+09:00",
+      "last_like_at": "2026-06-04T06:43:09+09:00",
+      "follower_count": 786,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 44
+    },
+    {
+      "like_user_id": "13325672",
+      "creator_name": "六恵×チャッピー",
+      "creator_urlname": "apt_swift1696",
+      "creator_url": "https://note.com/apt_swift1696",
+      "has_profile_url": true,
+      "likes_count": 2,
+      "first_like_at": "2026-06-04T05:51:51+09:00",
+      "last_like_at": "2026-06-04T05:52:54+09:00",
+      "follower_count": 910,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 45
+    },
+    {
+      "like_user_id": "6326357",
+      "creator_name": "棚島 香帆汰（たなしま かほた）",
+      "creator_urlname": "brave_bee548",
+      "creator_url": "https://note.com/brave_bee548",
+      "has_profile_url": true,
+      "likes_count": 2,
+      "first_like_at": "2026-06-02T08:59:18+09:00",
+      "last_like_at": "2026-06-04T00:16:48+09:00",
+      "follower_count": 505,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 46
+    },
+    {
+      "like_user_id": "539402",
+      "creator_name": "やまざき悠＠AIコラムニスト｜note界の挫折王",
+      "creator_urlname": "yuura142",
+      "creator_url": "https://note.com/yuura142",
+      "has_profile_url": true,
+      "likes_count": 2,
+      "first_like_at": "2026-06-01T20:27:47+09:00",
+      "last_like_at": "2026-06-03T22:55:07+09:00",
+      "follower_count": 3869,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 47
+    },
+    {
+      "like_user_id": "12300232",
+      "creator_name": "株式会社DAICHU_大中智史",
+      "creator_urlname": "daichu_drum",
+      "creator_url": "https://note.com/daichu_drum",
+      "has_profile_url": true,
+      "likes_count": 2,
+      "first_like_at": "2026-06-03T00:05:01+09:00",
+      "last_like_at": "2026-06-03T22:05:26+09:00",
+      "follower_count": 497,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 48
     },
     {
       "like_user_id": "13502105",
@@ -559,10 +783,10 @@
       "last_like_at": "2026-06-03T20:48:23+09:00",
       "follower_count": 258,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 35
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 49
     },
     {
       "like_user_id": "12229510",
@@ -575,10 +799,10 @@
       "last_like_at": "2026-06-03T18:31:26+09:00",
       "follower_count": 892,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 36
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 50
     },
     {
       "like_user_id": "13342222",
@@ -591,10 +815,10 @@
       "last_like_at": "2026-06-03T17:52:28+09:00",
       "follower_count": 776,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 37
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 51
     },
     {
       "like_user_id": "13995342",
@@ -607,26 +831,10 @@
       "last_like_at": "2026-06-03T16:59:38+09:00",
       "follower_count": 357,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 38
-    },
-    {
-      "like_user_id": "13259374",
-      "creator_name": "Joe Tsukasa",
-      "creator_urlname": "joe2x100",
-      "creator_url": "https://note.com/joe2x100",
-      "has_profile_url": true,
-      "likes_count": 2,
-      "first_like_at": "2026-06-01T20:18:34+09:00",
-      "last_like_at": "2026-06-03T16:58:48+09:00",
-      "follower_count": 465,
-      "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
-      "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 39
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 52
     },
     {
       "like_user_id": "13970424",
@@ -639,10 +847,10 @@
       "last_like_at": "2026-06-03T15:28:08+09:00",
       "follower_count": 171,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 40
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 53
     },
     {
       "like_user_id": "8934792",
@@ -655,10 +863,10 @@
       "last_like_at": "2026-06-03T14:22:00+09:00",
       "follower_count": 468,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 41
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 54
     },
     {
       "like_user_id": "7944370",
@@ -671,10 +879,10 @@
       "last_like_at": "2026-06-03T13:38:38+09:00",
       "follower_count": 533,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 42
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 55
     },
     {
       "like_user_id": "8701555",
@@ -687,10 +895,10 @@
       "last_like_at": "2026-06-03T11:07:32+09:00",
       "follower_count": 266,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 43
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 56
     },
     {
       "like_user_id": "13163455",
@@ -703,10 +911,10 @@
       "last_like_at": "2026-06-03T09:49:01+09:00",
       "follower_count": 2805,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 44
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 57
     },
     {
       "like_user_id": "8107746",
@@ -719,10 +927,10 @@
       "last_like_at": "2026-06-03T09:29:34+09:00",
       "follower_count": 96,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 45
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 58
     },
     {
       "like_user_id": "11618650",
@@ -735,10 +943,10 @@
       "last_like_at": "2026-06-03T08:49:44+09:00",
       "follower_count": 1352,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 46
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 59
     },
     {
       "like_user_id": "5738970",
@@ -751,26 +959,10 @@
       "last_like_at": "2026-06-03T07:43:02+09:00",
       "follower_count": 1395,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 47
-    },
-    {
-      "like_user_id": "3598618",
-      "creator_name": "はしゃも｜感情構造エンジニア",
-      "creator_urlname": "hasyamo",
-      "creator_url": "https://note.com/hasyamo",
-      "has_profile_url": true,
-      "likes_count": 2,
-      "first_like_at": "2026-06-01T20:31:35+09:00",
-      "last_like_at": "2026-06-03T07:09:52+09:00",
-      "follower_count": 477,
-      "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
-      "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 48
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 60
     },
     {
       "like_user_id": "11782803",
@@ -783,26 +975,10 @@
       "last_like_at": "2026-06-03T06:58:06+09:00",
       "follower_count": 1444,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 49
-    },
-    {
-      "like_user_id": "13985908",
-      "creator_name": "学び直し研究所",
-      "creator_urlname": "schrcat",
-      "creator_url": "https://note.com/schrcat",
-      "has_profile_url": true,
-      "likes_count": 2,
-      "first_like_at": "2026-06-02T06:42:44+09:00",
-      "last_like_at": "2026-06-03T06:48:29+09:00",
-      "follower_count": 129,
-      "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
-      "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 50
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 61
     },
     {
       "like_user_id": "13613385",
@@ -815,10 +991,10 @@
       "last_like_at": "2026-06-03T06:46:10+09:00",
       "follower_count": 420,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 51
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 62
     },
     {
       "like_user_id": "13900618",
@@ -831,10 +1007,10 @@
       "last_like_at": "2026-06-03T06:34:37+09:00",
       "follower_count": 792,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 52
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 63
     },
     {
       "like_user_id": "14423901",
@@ -847,10 +1023,10 @@
       "last_like_at": "2026-06-03T05:12:13+09:00",
       "follower_count": 38,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 53
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 64
     },
     {
       "like_user_id": "10541028",
@@ -863,10 +1039,10 @@
       "last_like_at": "2026-06-03T04:06:50+09:00",
       "follower_count": 242,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 54
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 65
     },
     {
       "like_user_id": "11957653",
@@ -879,10 +1055,10 @@
       "last_like_at": "2026-06-03T01:26:07+09:00",
       "follower_count": 19,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 55
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 66
     },
     {
       "like_user_id": "13993194",
@@ -895,10 +1071,10 @@
       "last_like_at": "2026-06-03T00:29:55+09:00",
       "follower_count": 152,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 56
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 67
     },
     {
       "like_user_id": "7555594",
@@ -911,10 +1087,10 @@
       "last_like_at": "2026-06-02T23:50:05+09:00",
       "follower_count": 72,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 57
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 68
     },
     {
       "like_user_id": "14239507",
@@ -927,10 +1103,10 @@
       "last_like_at": "2026-06-02T23:48:03+09:00",
       "follower_count": 454,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 58
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 69
     },
     {
       "like_user_id": "968197",
@@ -943,10 +1119,10 @@
       "last_like_at": "2026-06-02T23:27:06+09:00",
       "follower_count": 81,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 59
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 70
     },
     {
       "like_user_id": "14217538",
@@ -959,10 +1135,10 @@
       "last_like_at": "2026-06-02T22:05:22+09:00",
       "follower_count": 161,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 60
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 71
     },
     {
       "like_user_id": "14347635",
@@ -975,10 +1151,10 @@
       "last_like_at": "2026-06-02T21:54:55+09:00",
       "follower_count": 11,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 61
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 72
     },
     {
       "like_user_id": "13231653",
@@ -991,10 +1167,10 @@
       "last_like_at": "2026-06-02T21:48:18+09:00",
       "follower_count": 256,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 62
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 73
     },
     {
       "like_user_id": "13599643",
@@ -1007,10 +1183,10 @@
       "last_like_at": "2026-06-02T21:31:25+09:00",
       "follower_count": 301,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 63
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 74
     },
     {
       "like_user_id": "10886282",
@@ -1023,10 +1199,10 @@
       "last_like_at": "2026-06-02T21:27:44+09:00",
       "follower_count": 1,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 64
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 75
     },
     {
       "like_user_id": "11828830",
@@ -1039,10 +1215,10 @@
       "last_like_at": "2026-06-02T20:22:44+09:00",
       "follower_count": 430,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 65
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 76
     },
     {
       "like_user_id": "14500521",
@@ -1055,10 +1231,10 @@
       "last_like_at": "2026-06-02T16:50:23+09:00",
       "follower_count": 11,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 66
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 77
     },
     {
       "like_user_id": "12668465",
@@ -1071,10 +1247,10 @@
       "last_like_at": "2026-06-02T16:29:45+09:00",
       "follower_count": 168,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 67
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 78
     },
     {
       "like_user_id": "10662526",
@@ -1087,10 +1263,10 @@
       "last_like_at": "2026-06-02T13:03:22+09:00",
       "follower_count": 546,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 68
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 79
     },
     {
       "like_user_id": "9311436",
@@ -1103,10 +1279,10 @@
       "last_like_at": "2026-06-02T12:17:36+09:00",
       "follower_count": 250,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 69
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 80
     },
     {
       "like_user_id": "12521570",
@@ -1119,10 +1295,10 @@
       "last_like_at": "2026-06-02T12:06:14+09:00",
       "follower_count": 3726,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 70
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 81
     },
     {
       "like_user_id": "12862447",
@@ -1135,10 +1311,10 @@
       "last_like_at": "2026-06-02T10:42:46+09:00",
       "follower_count": 188,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 71
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 82
     },
     {
       "like_user_id": "5947863",
@@ -1151,10 +1327,10 @@
       "last_like_at": "2026-06-02T10:11:30+09:00",
       "follower_count": 7878,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 72
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 83
     },
     {
       "like_user_id": "13911087",
@@ -1167,10 +1343,10 @@
       "last_like_at": "2026-06-02T08:51:48+09:00",
       "follower_count": 401,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 73
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 84
     },
     {
       "like_user_id": "13628385",
@@ -1183,10 +1359,10 @@
       "last_like_at": "2026-06-02T08:41:25+09:00",
       "follower_count": 417,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 74
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 85
     },
     {
       "like_user_id": "11178899",
@@ -1199,10 +1375,10 @@
       "last_like_at": "2026-06-02T08:34:11+09:00",
       "follower_count": 480,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 75
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 86
     },
     {
       "like_user_id": "11914162",
@@ -1215,10 +1391,10 @@
       "last_like_at": "2026-06-02T08:29:35+09:00",
       "follower_count": 2563,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 76
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 87
     },
     {
       "like_user_id": "11957013",
@@ -1231,10 +1407,10 @@
       "last_like_at": "2026-06-02T08:26:45+09:00",
       "follower_count": 723,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 77
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 88
     },
     {
       "like_user_id": "13430194",
@@ -1247,42 +1423,10 @@
       "last_like_at": "2026-06-02T08:15:24+09:00",
       "follower_count": 213,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 78
-    },
-    {
-      "like_user_id": "10827166",
-      "creator_name": "コンパス みき",
-      "creator_urlname": "compass_m360",
-      "creator_url": "https://note.com/compass_m360",
-      "has_profile_url": true,
-      "likes_count": 2,
-      "first_like_at": "2026-06-01T21:15:29+09:00",
-      "last_like_at": "2026-06-02T07:37:12+09:00",
-      "follower_count": 1202,
-      "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
-      "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 79
-    },
-    {
-      "like_user_id": "10071829",
-      "creator_name": "動きのラフテル@理学療法",
-      "creator_urlname": "proper_swan3597",
-      "creator_url": "https://note.com/proper_swan3597",
-      "has_profile_url": true,
-      "likes_count": 2,
-      "first_like_at": "2026-06-01T20:29:13+09:00",
-      "last_like_at": "2026-06-02T07:32:56+09:00",
-      "follower_count": 1472,
-      "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
-      "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 80
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 89
     },
     {
       "like_user_id": "12157269",
@@ -1295,10 +1439,10 @@
       "last_like_at": "2026-06-02T07:28:42+09:00",
       "follower_count": 3220,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 81
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 90
     },
     {
       "like_user_id": "9474730",
@@ -1309,12 +1453,12 @@
       "likes_count": 2,
       "first_like_at": "2026-06-01T20:53:27+09:00",
       "last_like_at": "2026-06-02T07:09:07+09:00",
-      "follower_count": 68,
+      "follower_count": 70,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 82
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 91
     },
     {
       "like_user_id": "1083562",
@@ -1327,10 +1471,10 @@
       "last_like_at": "2026-06-02T03:25:32+09:00",
       "follower_count": 438,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 83
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 92
     },
     {
       "like_user_id": "12141715",
@@ -1343,10 +1487,10 @@
       "last_like_at": "2026-06-02T00:43:35+09:00",
       "follower_count": 539,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 84
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 93
     },
     {
       "like_user_id": "4472775",
@@ -1359,10 +1503,10 @@
       "last_like_at": "2026-06-01T23:45:12+09:00",
       "follower_count": 845,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 85
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 94
     },
     {
       "like_user_id": "4229873",
@@ -1375,10 +1519,10 @@
       "last_like_at": "2026-06-01T22:21:57+09:00",
       "follower_count": 3893,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 86
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 95
     },
     {
       "like_user_id": "1688813",
@@ -1391,10 +1535,10 @@
       "last_like_at": "2026-06-01T19:30:05+09:00",
       "follower_count": 129,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 87
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 96
     },
     {
       "like_user_id": "12800869",
@@ -1407,10 +1551,314 @@
       "last_like_at": "2026-06-01T15:02:57+09:00",
       "follower_count": 445,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 88
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 97
+    },
+    {
+      "like_user_id": "3712022",
+      "creator_name": "いのふみ｜遅咲きのコピーライター",
+      "creator_urlname": "togaly0317",
+      "creator_url": "https://note.com/togaly0317",
+      "has_profile_url": true,
+      "likes_count": 1,
+      "first_like_at": "2026-06-04T07:32:37+09:00",
+      "last_like_at": "2026-06-04T07:32:37+09:00",
+      "follower_count": 185,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 98
+    },
+    {
+      "like_user_id": "11859415",
+      "creator_name": "NENE｜noteフリーランス",
+      "creator_urlname": "nene_note_room",
+      "creator_url": "https://note.com/nene_note_room",
+      "has_profile_url": true,
+      "likes_count": 1,
+      "first_like_at": "2026-06-04T07:25:23+09:00",
+      "last_like_at": "2026-06-04T07:25:23+09:00",
+      "follower_count": 649,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 99
+    },
+    {
+      "like_user_id": "14210254",
+      "creator_name": "Morning AI Digest",
+      "creator_urlname": "famous_lupine744",
+      "creator_url": "https://note.com/famous_lupine744",
+      "has_profile_url": true,
+      "likes_count": 1,
+      "first_like_at": "2026-06-04T07:23:13+09:00",
+      "last_like_at": "2026-06-04T07:23:13+09:00",
+      "follower_count": 28,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 100
+    },
+    {
+      "like_user_id": "13312882",
+      "creator_name": "女神まさき｜朝の5分で人生が変わる｜大谷翔平選手も実践したマンダラ式習慣術・Amazon1位獲得",
+      "creator_urlname": "lofty_honest2845",
+      "creator_url": "https://note.com/lofty_honest2845",
+      "has_profile_url": true,
+      "likes_count": 1,
+      "first_like_at": "2026-06-04T07:20:07+09:00",
+      "last_like_at": "2026-06-04T07:20:07+09:00",
+      "follower_count": 27,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 101
+    },
+    {
+      "like_user_id": "14521584",
+      "creator_name": "じゅん｜30代からの「整える」教室",
+      "creator_urlname": "own_your_life",
+      "creator_url": "https://note.com/own_your_life",
+      "has_profile_url": true,
+      "likes_count": 1,
+      "first_like_at": "2026-06-04T07:15:22+09:00",
+      "last_like_at": "2026-06-04T07:15:22+09:00",
+      "follower_count": 188,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 102
+    },
+    {
+      "like_user_id": "14085440",
+      "creator_name": "TAKUMI.T",
+      "creator_urlname": "shiny_spirea2461",
+      "creator_url": "https://note.com/shiny_spirea2461",
+      "has_profile_url": true,
+      "likes_count": 1,
+      "first_like_at": "2026-06-04T06:57:13+09:00",
+      "last_like_at": "2026-06-04T06:57:13+09:00",
+      "follower_count": 60,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 103
+    },
+    {
+      "like_user_id": "13162655",
+      "creator_name": "無料枠AI探求者",
+      "creator_urlname": "merry_moraea681",
+      "creator_url": "https://note.com/merry_moraea681",
+      "has_profile_url": true,
+      "likes_count": 1,
+      "first_like_at": "2026-06-04T06:50:27+09:00",
+      "last_like_at": "2026-06-04T06:50:27+09:00",
+      "follower_count": 249,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 104
+    },
+    {
+      "like_user_id": "14275629",
+      "creator_name": "べあ〜水平思考ゲームの貯蔵庫〜",
+      "creator_urlname": "bear_l_t_puzzle",
+      "creator_url": "https://note.com/bear_l_t_puzzle",
+      "has_profile_url": true,
+      "likes_count": 1,
+      "first_like_at": "2026-06-04T06:47:35+09:00",
+      "last_like_at": "2026-06-04T06:47:35+09:00",
+      "follower_count": 271,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 105
+    },
+    {
+      "like_user_id": "13642246",
+      "creator_name": "やっさん（yasuda）",
+      "creator_urlname": "large_iguana6415",
+      "creator_url": "https://note.com/large_iguana6415",
+      "has_profile_url": true,
+      "likes_count": 1,
+      "first_like_at": "2026-06-04T06:46:26+09:00",
+      "last_like_at": "2026-06-04T06:46:26+09:00",
+      "follower_count": 655,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 106
+    },
+    {
+      "like_user_id": "13963243",
+      "creator_name": "ちゃんまー｜パパエンジニア",
+      "creator_urlname": "nguu",
+      "creator_url": "https://note.com/nguu",
+      "has_profile_url": true,
+      "likes_count": 1,
+      "first_like_at": "2026-06-04T06:43:39+09:00",
+      "last_like_at": "2026-06-04T06:43:39+09:00",
+      "follower_count": 302,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 107
+    },
+    {
+      "like_user_id": "11436595",
+      "creator_name": "ひろ",
+      "creator_urlname": "fair_guppy4626",
+      "creator_url": "https://note.com/fair_guppy4626",
+      "has_profile_url": true,
+      "likes_count": 1,
+      "first_like_at": "2026-06-04T06:43:07+09:00",
+      "last_like_at": "2026-06-04T06:43:07+09:00",
+      "follower_count": 960,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 108
+    },
+    {
+      "like_user_id": "11910247",
+      "creator_name": "ITジグソーパズル",
+      "creator_urlname": "itjigsaw_puzzle",
+      "creator_url": "https://note.com/itjigsaw_puzzle",
+      "has_profile_url": true,
+      "likes_count": 1,
+      "first_like_at": "2026-06-04T06:34:16+09:00",
+      "last_like_at": "2026-06-04T06:34:16+09:00",
+      "follower_count": 483,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 109
+    },
+    {
+      "like_user_id": "14617639",
+      "creator_name": "あい🐻AIを活用した副業",
+      "creator_urlname": "nameai",
+      "creator_url": "https://note.com/nameai",
+      "has_profile_url": true,
+      "likes_count": 1,
+      "first_like_at": "2026-06-04T06:00:35+09:00",
+      "last_like_at": "2026-06-04T06:00:35+09:00",
+      "follower_count": 2,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 110
+    },
+    {
+      "like_user_id": "11455763",
+      "creator_name": "ホンゴウタケシ",
+      "creator_urlname": "mute_aster7178",
+      "creator_url": "https://note.com/mute_aster7178",
+      "has_profile_url": true,
+      "likes_count": 1,
+      "first_like_at": "2026-06-04T05:59:39+09:00",
+      "last_like_at": "2026-06-04T05:59:39+09:00",
+      "follower_count": 628,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 111
+    },
+    {
+      "like_user_id": "9728016",
+      "creator_name": "雷神マガジン－ひとりでできるamazon物販ビジネス－",
+      "creator_urlname": "sedoritool_pu",
+      "creator_url": "https://note.com/sedoritool_pu",
+      "has_profile_url": true,
+      "likes_count": 1,
+      "first_like_at": "2026-06-04T04:09:31+09:00",
+      "last_like_at": "2026-06-04T04:09:31+09:00",
+      "follower_count": 1230,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 112
+    },
+    {
+      "like_user_id": "9640809",
+      "creator_name": "平日毎日更新！現役物販プレイヤーの「㊙交換ノート」",
+      "creator_urlname": "koukan__note",
+      "creator_url": "https://note.com/koukan__note",
+      "has_profile_url": true,
+      "likes_count": 1,
+      "first_like_at": "2026-06-04T04:02:55+09:00",
+      "last_like_at": "2026-06-04T04:02:55+09:00",
+      "follower_count": 1499,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 113
+    },
+    {
+      "like_user_id": "5402643",
+      "creator_name": "木村まもる＠逆転営業",
+      "creator_urlname": "gyakuten_eigyou",
+      "creator_url": "https://note.com/gyakuten_eigyou",
+      "has_profile_url": true,
+      "likes_count": 1,
+      "first_like_at": "2026-06-04T01:30:42+09:00",
+      "last_like_at": "2026-06-04T01:30:42+09:00",
+      "follower_count": 277,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 114
+    },
+    {
+      "like_user_id": "13649511",
+      "creator_name": "安井大樹｜中年司法書士×AI",
+      "creator_urlname": "ydaiju",
+      "creator_url": "https://note.com/ydaiju",
+      "has_profile_url": true,
+      "likes_count": 1,
+      "first_like_at": "2026-06-04T00:34:11+09:00",
+      "last_like_at": "2026-06-04T00:34:11+09:00",
+      "follower_count": 37,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 115
+    },
+    {
+      "like_user_id": "13591791",
+      "creator_name": "Logical Money",
+      "creator_urlname": "logical_money",
+      "creator_url": "https://note.com/logical_money",
+      "has_profile_url": true,
+      "likes_count": 1,
+      "first_like_at": "2026-06-03T23:25:46+09:00",
+      "last_like_at": "2026-06-03T23:25:46+09:00",
+      "follower_count": 305,
+      "ranking_type": "monthly",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
+      "period_start": "2026-06-01T00:00:00+09:00",
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 116
     },
     {
       "like_user_id": "930308",
@@ -1423,10 +1871,10 @@
       "last_like_at": "2026-06-03T21:56:14+09:00",
       "follower_count": 380,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 89
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 117
     },
     {
       "like_user_id": "13071716",
@@ -1439,10 +1887,10 @@
       "last_like_at": "2026-06-03T21:53:45+09:00",
       "follower_count": 610,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 90
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 118
     },
     {
       "like_user_id": "651972",
@@ -1455,10 +1903,10 @@
       "last_like_at": "2026-06-03T21:22:37+09:00",
       "follower_count": 13,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 91
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 119
     },
     {
       "like_user_id": "5106379",
@@ -1471,10 +1919,10 @@
       "last_like_at": "2026-06-03T20:50:00+09:00",
       "follower_count": 73,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 92
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 120
     },
     {
       "like_user_id": "12154492",
@@ -1487,10 +1935,10 @@
       "last_like_at": "2026-06-03T20:34:23+09:00",
       "follower_count": 82,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 93
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 121
     },
     {
       "like_user_id": "393078",
@@ -1503,10 +1951,10 @@
       "last_like_at": "2026-06-03T20:25:31+09:00",
       "follower_count": 1868,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 94
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 122
     },
     {
       "like_user_id": "13861535",
@@ -1519,10 +1967,10 @@
       "last_like_at": "2026-06-03T20:22:22+09:00",
       "follower_count": 209,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 95
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 123
     },
     {
       "like_user_id": "1663902",
@@ -1535,10 +1983,10 @@
       "last_like_at": "2026-06-03T20:21:07+09:00",
       "follower_count": 1568,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 96
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 124
     },
     {
       "like_user_id": "5788636",
@@ -1551,10 +1999,10 @@
       "last_like_at": "2026-06-03T19:56:51+09:00",
       "follower_count": 320,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 97
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 125
     },
     {
       "like_user_id": "10905092",
@@ -1567,10 +2015,10 @@
       "last_like_at": "2026-06-03T19:48:16+09:00",
       "follower_count": 1201,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 98
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 126
     },
     {
       "like_user_id": "14023508",
@@ -1583,10 +2031,10 @@
       "last_like_at": "2026-06-03T19:35:44+09:00",
       "follower_count": 245,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 99
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 127
     },
     {
       "like_user_id": "14123171",
@@ -1599,10 +2047,10 @@
       "last_like_at": "2026-06-03T19:05:22+09:00",
       "follower_count": 11,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 100
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 128
     },
     {
       "like_user_id": "14303096",
@@ -1615,10 +2063,10 @@
       "last_like_at": "2026-06-03T18:27:46+09:00",
       "follower_count": 342,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 101
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 129
     },
     {
       "like_user_id": "2185581",
@@ -1631,10 +2079,10 @@
       "last_like_at": "2026-06-03T18:15:37+09:00",
       "follower_count": 585,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 102
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 130
     },
     {
       "like_user_id": "14525439",
@@ -1647,10 +2095,10 @@
       "last_like_at": "2026-06-03T17:07:21+09:00",
       "follower_count": 9,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 103
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 131
     },
     {
       "like_user_id": "10569223",
@@ -1663,10 +2111,10 @@
       "last_like_at": "2026-06-03T16:35:42+09:00",
       "follower_count": 2652,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 104
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 132
     },
     {
       "like_user_id": "6742540",
@@ -1679,10 +2127,10 @@
       "last_like_at": "2026-06-03T15:39:02+09:00",
       "follower_count": 1653,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 105
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 133
     },
     {
       "like_user_id": "9873229",
@@ -1695,26 +2143,10 @@
       "last_like_at": "2026-06-03T14:04:44+09:00",
       "follower_count": 681,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 106
-    },
-    {
-      "like_user_id": "13644901",
-      "creator_name": "ズボラ主婦ゆず 🍀 子供3人のママ",
-      "creator_urlname": "yuzunokosodate",
-      "creator_url": "https://note.com/yuzunokosodate",
-      "has_profile_url": true,
-      "likes_count": 1,
-      "first_like_at": "2026-06-03T14:03:13+09:00",
-      "last_like_at": "2026-06-03T14:03:13+09:00",
-      "follower_count": 785,
-      "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
-      "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 107
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 134
     },
     {
       "like_user_id": "12158291",
@@ -1727,10 +2159,10 @@
       "last_like_at": "2026-06-03T14:00:26+09:00",
       "follower_count": 301,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 108
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 135
     },
     {
       "like_user_id": "7896891",
@@ -1743,10 +2175,10 @@
       "last_like_at": "2026-06-03T13:39:43+09:00",
       "follower_count": 1163,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 109
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 136
     },
     {
       "like_user_id": "14445159",
@@ -1759,10 +2191,10 @@
       "last_like_at": "2026-06-03T13:15:33+09:00",
       "follower_count": 113,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 110
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 137
     },
     {
       "like_user_id": "14614160",
@@ -1775,10 +2207,10 @@
       "last_like_at": "2026-06-03T13:12:24+09:00",
       "follower_count": 68,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 111
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 138
     },
     {
       "like_user_id": "14433020",
@@ -1791,10 +2223,10 @@
       "last_like_at": "2026-06-03T12:58:17+09:00",
       "follower_count": 125,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 112
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 139
     },
     {
       "like_user_id": "14638867",
@@ -1807,10 +2239,10 @@
       "last_like_at": "2026-06-03T12:48:05+09:00",
       "follower_count": 12,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 113
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 140
     },
     {
       "like_user_id": "4132327",
@@ -1823,10 +2255,10 @@
       "last_like_at": "2026-06-03T12:38:52+09:00",
       "follower_count": 664,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 114
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 141
     },
     {
       "like_user_id": "12810507",
@@ -1839,10 +2271,10 @@
       "last_like_at": "2026-06-03T12:26:37+09:00",
       "follower_count": 70,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 115
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 142
     },
     {
       "like_user_id": "12539487",
@@ -1855,10 +2287,10 @@
       "last_like_at": "2026-06-03T12:03:46+09:00",
       "follower_count": 524,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 116
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 143
     },
     {
       "like_user_id": "11268971",
@@ -1871,10 +2303,10 @@
       "last_like_at": "2026-06-03T11:35:37+09:00",
       "follower_count": 578,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 117
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 144
     },
     {
       "like_user_id": "12331748",
@@ -1887,10 +2319,10 @@
       "last_like_at": "2026-06-03T11:32:54+09:00",
       "follower_count": 1300,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 118
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 145
     },
     {
       "like_user_id": "13097069",
@@ -1903,10 +2335,10 @@
       "last_like_at": "2026-06-03T11:01:43+09:00",
       "follower_count": 29,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 119
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 146
     },
     {
       "like_user_id": "14007550",
@@ -1919,10 +2351,10 @@
       "last_like_at": "2026-06-03T10:56:53+09:00",
       "follower_count": 936,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 120
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 147
     },
     {
       "like_user_id": "13758520",
@@ -1935,10 +2367,10 @@
       "last_like_at": "2026-06-03T10:12:54+09:00",
       "follower_count": 41,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 121
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 148
     },
     {
       "like_user_id": "14243034",
@@ -1951,10 +2383,10 @@
       "last_like_at": "2026-06-03T10:02:42+09:00",
       "follower_count": 19,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 122
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 149
     },
     {
       "like_user_id": "14304459",
@@ -1967,10 +2399,10 @@
       "last_like_at": "2026-06-03T09:59:51+09:00",
       "follower_count": 39,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 123
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 150
     },
     {
       "like_user_id": "11812184",
@@ -1983,10 +2415,10 @@
       "last_like_at": "2026-06-03T09:36:34+09:00",
       "follower_count": 39,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 124
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 151
     },
     {
       "like_user_id": "14336588",
@@ -1999,10 +2431,10 @@
       "last_like_at": "2026-06-03T08:55:36+09:00",
       "follower_count": 129,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 125
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 152
     },
     {
       "like_user_id": "10803734",
@@ -2015,10 +2447,10 @@
       "last_like_at": "2026-06-03T08:44:36+09:00",
       "follower_count": 91,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 126
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 153
     },
     {
       "like_user_id": "14275664",
@@ -2031,10 +2463,10 @@
       "last_like_at": "2026-06-03T08:39:58+09:00",
       "follower_count": 297,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 127
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 154
     },
     {
       "like_user_id": "12088396",
@@ -2047,10 +2479,10 @@
       "last_like_at": "2026-06-03T08:07:48+09:00",
       "follower_count": 827,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 128
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 155
     },
     {
       "like_user_id": "13336667",
@@ -2063,10 +2495,10 @@
       "last_like_at": "2026-06-03T07:56:53+09:00",
       "follower_count": 103,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 129
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 156
     },
     {
       "like_user_id": "9168052",
@@ -2079,10 +2511,10 @@
       "last_like_at": "2026-06-03T05:46:06+09:00",
       "follower_count": 17,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 130
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 157
     },
     {
       "like_user_id": "14417613",
@@ -2095,10 +2527,10 @@
       "last_like_at": "2026-06-03T05:05:05+09:00",
       "follower_count": 0,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 131
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 158
     },
     {
       "like_user_id": "11395794",
@@ -2111,10 +2543,10 @@
       "last_like_at": "2026-06-03T05:04:25+09:00",
       "follower_count": 4086,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 132
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 159
     },
     {
       "like_user_id": "10285844",
@@ -2127,10 +2559,10 @@
       "last_like_at": "2026-06-03T04:53:26+09:00",
       "follower_count": 189,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 133
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 160
     },
     {
       "like_user_id": "13190617",
@@ -2143,10 +2575,10 @@
       "last_like_at": "2026-06-03T03:46:31+09:00",
       "follower_count": 669,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 134
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 161
     },
     {
       "like_user_id": "12902621",
@@ -2159,10 +2591,10 @@
       "last_like_at": "2026-06-03T02:01:05+09:00",
       "follower_count": 372,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 135
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 162
     },
     {
       "like_user_id": "8790064",
@@ -2175,10 +2607,10 @@
       "last_like_at": "2026-06-03T01:02:16+09:00",
       "follower_count": 544,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 136
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 163
     },
     {
       "like_user_id": "13727810",
@@ -2191,26 +2623,10 @@
       "last_like_at": "2026-06-03T00:06:38+09:00",
       "follower_count": 188,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 137
-    },
-    {
-      "like_user_id": "12300232",
-      "creator_name": "株式会社DAICHU_大中智史",
-      "creator_urlname": "daichu_drum",
-      "creator_url": "https://note.com/daichu_drum",
-      "has_profile_url": true,
-      "likes_count": 1,
-      "first_like_at": "2026-06-03T00:05:01+09:00",
-      "last_like_at": "2026-06-03T00:05:01+09:00",
-      "follower_count": 497,
-      "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
-      "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 138
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 164
     },
     {
       "like_user_id": "14290377",
@@ -2223,10 +2639,10 @@
       "last_like_at": "2026-06-03T00:01:14+09:00",
       "follower_count": 206,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 139
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 165
     },
     {
       "like_user_id": "7836265",
@@ -2239,10 +2655,10 @@
       "last_like_at": "2026-06-02T23:46:12+09:00",
       "follower_count": 490,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 140
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 166
     },
     {
       "like_user_id": "4482644",
@@ -2255,10 +2671,10 @@
       "last_like_at": "2026-06-02T23:16:51+09:00",
       "follower_count": 136,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 141
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 167
     },
     {
       "like_user_id": "10114148",
@@ -2271,10 +2687,10 @@
       "last_like_at": "2026-06-02T22:59:26+09:00",
       "follower_count": 142,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 142
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 168
     },
     {
       "like_user_id": "12301144",
@@ -2287,10 +2703,10 @@
       "last_like_at": "2026-06-02T22:49:38+09:00",
       "follower_count": 683,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 143
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 169
     },
     {
       "like_user_id": "13175971",
@@ -2303,10 +2719,10 @@
       "last_like_at": "2026-06-02T22:46:04+09:00",
       "follower_count": 485,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 144
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 170
     },
     {
       "like_user_id": "14257282",
@@ -2319,10 +2735,10 @@
       "last_like_at": "2026-06-02T22:44:09+09:00",
       "follower_count": 411,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 145
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 171
     },
     {
       "like_user_id": "14472295",
@@ -2335,10 +2751,10 @@
       "last_like_at": "2026-06-02T22:38:18+09:00",
       "follower_count": 35,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 146
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 172
     },
     {
       "like_user_id": "13153097",
@@ -2351,10 +2767,10 @@
       "last_like_at": "2026-06-02T22:37:36+09:00",
       "follower_count": 138,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 147
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 173
     },
     {
       "like_user_id": "7965886",
@@ -2367,10 +2783,10 @@
       "last_like_at": "2026-06-02T22:34:11+09:00",
       "follower_count": 157,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 148
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 174
     },
     {
       "like_user_id": "14054573",
@@ -2383,10 +2799,10 @@
       "last_like_at": "2026-06-02T22:30:53+09:00",
       "follower_count": 16,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 149
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 175
     },
     {
       "like_user_id": "9874414",
@@ -2399,10 +2815,10 @@
       "last_like_at": "2026-06-02T22:28:08+09:00",
       "follower_count": 192,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 150
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 176
     },
     {
       "like_user_id": "14486472",
@@ -2415,10 +2831,10 @@
       "last_like_at": "2026-06-02T22:22:09+09:00",
       "follower_count": 85,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 151
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 177
     },
     {
       "like_user_id": "11444397",
@@ -2431,10 +2847,10 @@
       "last_like_at": "2026-06-02T22:09:20+09:00",
       "follower_count": 78,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 152
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 178
     },
     {
       "like_user_id": "11092056",
@@ -2447,10 +2863,10 @@
       "last_like_at": "2026-06-02T21:51:59+09:00",
       "follower_count": 1945,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 153
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 179
     },
     {
       "like_user_id": "14321687",
@@ -2463,10 +2879,10 @@
       "last_like_at": "2026-06-02T21:46:25+09:00",
       "follower_count": 31,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 154
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 180
     },
     {
       "like_user_id": "13763530",
@@ -2479,10 +2895,10 @@
       "last_like_at": "2026-06-02T21:42:55+09:00",
       "follower_count": 113,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 155
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 181
     },
     {
       "like_user_id": "14663911",
@@ -2495,10 +2911,10 @@
       "last_like_at": "2026-06-02T21:41:46+09:00",
       "follower_count": 2,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 156
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 182
     },
     {
       "like_user_id": "7428961",
@@ -2511,10 +2927,10 @@
       "last_like_at": "2026-06-02T21:36:07+09:00",
       "follower_count": 790,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 157
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 183
     },
     {
       "like_user_id": "10636310",
@@ -2527,10 +2943,10 @@
       "last_like_at": "2026-06-02T21:27:24+09:00",
       "follower_count": 22,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 158
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 184
     },
     {
       "like_user_id": "3843763",
@@ -2543,10 +2959,10 @@
       "last_like_at": "2026-06-02T21:20:25+09:00",
       "follower_count": 438,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 159
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 185
     },
     {
       "like_user_id": "14192728",
@@ -2559,10 +2975,10 @@
       "last_like_at": "2026-06-02T21:13:42+09:00",
       "follower_count": 593,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 160
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 186
     },
     {
       "like_user_id": "14264269",
@@ -2575,10 +2991,10 @@
       "last_like_at": "2026-06-02T21:03:29+09:00",
       "follower_count": 367,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 161
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 187
     },
     {
       "like_user_id": "14187958",
@@ -2591,10 +3007,10 @@
       "last_like_at": "2026-06-02T20:55:00+09:00",
       "follower_count": 551,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 162
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 188
     },
     {
       "like_user_id": "14124745",
@@ -2607,10 +3023,10 @@
       "last_like_at": "2026-06-02T20:51:35+09:00",
       "follower_count": 175,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 163
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 189
     },
     {
       "like_user_id": "11678743",
@@ -2623,10 +3039,10 @@
       "last_like_at": "2026-06-02T20:31:55+09:00",
       "follower_count": 190,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 164
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 190
     },
     {
       "like_user_id": "14282231",
@@ -2639,10 +3055,10 @@
       "last_like_at": "2026-06-02T20:28:11+09:00",
       "follower_count": 193,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 165
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 191
     },
     {
       "like_user_id": "7284145",
@@ -2655,10 +3071,10 @@
       "last_like_at": "2026-06-02T20:21:46+09:00",
       "follower_count": 1965,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 166
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 192
     },
     {
       "like_user_id": "12473968",
@@ -2671,10 +3087,10 @@
       "last_like_at": "2026-06-02T19:59:01+09:00",
       "follower_count": 192,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 167
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 193
     },
     {
       "like_user_id": "13923454",
@@ -2687,10 +3103,10 @@
       "last_like_at": "2026-06-02T19:55:37+09:00",
       "follower_count": 475,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 168
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 194
     },
     {
       "like_user_id": "12197605",
@@ -2703,10 +3119,10 @@
       "last_like_at": "2026-06-02T19:54:38+09:00",
       "follower_count": 210,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 169
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 195
     },
     {
       "like_user_id": "4916560",
@@ -2719,10 +3135,10 @@
       "last_like_at": "2026-06-02T19:49:46+09:00",
       "follower_count": 72,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 170
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 196
     },
     {
       "like_user_id": "7435348",
@@ -2735,10 +3151,10 @@
       "last_like_at": "2026-06-02T19:11:38+09:00",
       "follower_count": 36,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 171
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 197
     },
     {
       "like_user_id": "1226845",
@@ -2751,26 +3167,10 @@
       "last_like_at": "2026-06-02T18:39:34+09:00",
       "follower_count": 24,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 172
-    },
-    {
-      "like_user_id": "11717795",
-      "creator_name": "ゆいまる‐IT界隈以外でAIを使いまくる2005年生まれ",
-      "creator_urlname": "humble_bobcat51",
-      "creator_url": "https://note.com/humble_bobcat51",
-      "has_profile_url": true,
-      "likes_count": 1,
-      "first_like_at": "2026-06-02T18:27:32+09:00",
-      "last_like_at": "2026-06-02T18:27:32+09:00",
-      "follower_count": 832,
-      "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
-      "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 173
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 198
     },
     {
       "like_user_id": "10069756",
@@ -2783,10 +3183,10 @@
       "last_like_at": "2026-06-02T17:53:03+09:00",
       "follower_count": 461,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 174
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 199
     },
     {
       "like_user_id": "11355960",
@@ -2799,10 +3199,10 @@
       "last_like_at": "2026-06-02T17:18:40+09:00",
       "follower_count": 730,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 175
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 200
     },
     {
       "like_user_id": "12447284",
@@ -2815,10 +3215,10 @@
       "last_like_at": "2026-06-02T17:12:30+09:00",
       "follower_count": 391,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 176
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 201
     },
     {
       "like_user_id": "8386686",
@@ -2831,10 +3231,10 @@
       "last_like_at": "2026-06-02T17:11:45+09:00",
       "follower_count": 3164,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 177
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 202
     },
     {
       "like_user_id": "14424613",
@@ -2847,10 +3247,10 @@
       "last_like_at": "2026-06-02T16:47:35+09:00",
       "follower_count": 4,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 178
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 203
     },
     {
       "like_user_id": "1623699",
@@ -2863,10 +3263,10 @@
       "last_like_at": "2026-06-02T16:37:43+09:00",
       "follower_count": 56,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 179
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 204
     },
     {
       "like_user_id": "12142452",
@@ -2879,10 +3279,10 @@
       "last_like_at": "2026-06-02T16:37:36+09:00",
       "follower_count": 497,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 180
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 205
     },
     {
       "like_user_id": "12295231",
@@ -2895,10 +3295,10 @@
       "last_like_at": "2026-06-02T16:19:17+09:00",
       "follower_count": 454,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 181
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 206
     },
     {
       "like_user_id": "11877070",
@@ -2911,10 +3311,10 @@
       "last_like_at": "2026-06-02T16:02:46+09:00",
       "follower_count": 2647,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 182
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 207
     },
     {
       "like_user_id": "8958343",
@@ -2927,10 +3327,10 @@
       "last_like_at": "2026-06-02T15:43:33+09:00",
       "follower_count": 641,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 183
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 208
     },
     {
       "like_user_id": "11034188",
@@ -2943,10 +3343,10 @@
       "last_like_at": "2026-06-02T15:06:31+09:00",
       "follower_count": 1710,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 184
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 209
     },
     {
       "like_user_id": "13325978",
@@ -2959,10 +3359,10 @@
       "last_like_at": "2026-06-02T14:31:14+09:00",
       "follower_count": 491,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 185
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 210
     },
     {
       "like_user_id": "14193253",
@@ -2975,10 +3375,10 @@
       "last_like_at": "2026-06-02T12:48:20+09:00",
       "follower_count": 146,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 186
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 211
     },
     {
       "like_user_id": "10826435",
@@ -2991,10 +3391,10 @@
       "last_like_at": "2026-06-02T12:06:35+09:00",
       "follower_count": 175,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 187
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 212
     },
     {
       "like_user_id": "13763628",
@@ -3007,10 +3407,10 @@
       "last_like_at": "2026-06-02T11:58:57+09:00",
       "follower_count": 158,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 188
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 213
     },
     {
       "like_user_id": "14423599",
@@ -3023,10 +3423,10 @@
       "last_like_at": "2026-06-02T10:55:52+09:00",
       "follower_count": 60,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 189
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 214
     },
     {
       "like_user_id": "11125255",
@@ -3039,10 +3439,10 @@
       "last_like_at": "2026-06-02T10:33:51+09:00",
       "follower_count": 136,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 190
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 215
     },
     {
       "like_user_id": "10731770",
@@ -3055,10 +3455,10 @@
       "last_like_at": "2026-06-02T09:48:33+09:00",
       "follower_count": 502,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 191
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 216
     },
     {
       "like_user_id": "5790064",
@@ -3071,10 +3471,10 @@
       "last_like_at": "2026-06-02T09:33:34+09:00",
       "follower_count": 29,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 192
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 217
     },
     {
       "like_user_id": "13366653",
@@ -3087,10 +3487,10 @@
       "last_like_at": "2026-06-02T09:29:18+09:00",
       "follower_count": 292,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 193
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 218
     },
     {
       "like_user_id": "13945309",
@@ -3103,10 +3503,10 @@
       "last_like_at": "2026-06-02T09:27:59+09:00",
       "follower_count": 214,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 194
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 219
     },
     {
       "like_user_id": "8888396",
@@ -3119,10 +3519,10 @@
       "last_like_at": "2026-06-02T09:08:47+09:00",
       "follower_count": 618,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 195
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 220
     },
     {
       "like_user_id": "11379284",
@@ -3135,26 +3535,10 @@
       "last_like_at": "2026-06-02T09:08:29+09:00",
       "follower_count": 323,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 196
-    },
-    {
-      "like_user_id": "6326357",
-      "creator_name": "棚島 香帆汰（たなしま かほた）",
-      "creator_urlname": "brave_bee548",
-      "creator_url": "https://note.com/brave_bee548",
-      "has_profile_url": true,
-      "likes_count": 1,
-      "first_like_at": "2026-06-02T08:59:18+09:00",
-      "last_like_at": "2026-06-02T08:59:18+09:00",
-      "follower_count": 506,
-      "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
-      "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 197
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 221
     },
     {
       "like_user_id": "12445456",
@@ -3167,10 +3551,10 @@
       "last_like_at": "2026-06-02T08:50:44+09:00",
       "follower_count": 93,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 198
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 222
     },
     {
       "like_user_id": "268583",
@@ -3183,10 +3567,10 @@
       "last_like_at": "2026-06-02T08:48:17+09:00",
       "follower_count": 48,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 199
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 223
     },
     {
       "like_user_id": "13065530",
@@ -3199,10 +3583,10 @@
       "last_like_at": "2026-06-02T08:45:49+09:00",
       "follower_count": 88,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 200
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 224
     },
     {
       "like_user_id": "11790139",
@@ -3215,10 +3599,10 @@
       "last_like_at": "2026-06-02T08:44:00+09:00",
       "follower_count": 467,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 201
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 225
     },
     {
       "like_user_id": "13950234",
@@ -3231,10 +3615,10 @@
       "last_like_at": "2026-06-02T08:28:35+09:00",
       "follower_count": 36,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 202
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 226
     },
     {
       "like_user_id": "3477422",
@@ -3247,10 +3631,10 @@
       "last_like_at": "2026-06-02T08:21:46+09:00",
       "follower_count": 461,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 203
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 227
     },
     {
       "like_user_id": "12983172",
@@ -3263,10 +3647,10 @@
       "last_like_at": "2026-06-02T08:19:19+09:00",
       "follower_count": 1410,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 204
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 228
     },
     {
       "like_user_id": "12055224",
@@ -3279,10 +3663,10 @@
       "last_like_at": "2026-06-02T08:14:13+09:00",
       "follower_count": 1631,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 205
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 229
     },
     {
       "like_user_id": "1284065",
@@ -3295,10 +3679,10 @@
       "last_like_at": "2026-06-02T07:54:47+09:00",
       "follower_count": 1533,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 206
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 230
     },
     {
       "like_user_id": "3829748",
@@ -3311,10 +3695,10 @@
       "last_like_at": "2026-06-02T07:44:54+09:00",
       "follower_count": 532,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 207
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 231
     },
     {
       "like_user_id": "5782515",
@@ -3327,10 +3711,10 @@
       "last_like_at": "2026-06-02T07:40:37+09:00",
       "follower_count": 611,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 208
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 232
     },
     {
       "like_user_id": "10500820",
@@ -3343,10 +3727,10 @@
       "last_like_at": "2026-06-02T07:35:11+09:00",
       "follower_count": 203,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 209
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 233
     },
     {
       "like_user_id": "12853411",
@@ -3359,10 +3743,10 @@
       "last_like_at": "2026-06-02T07:18:19+09:00",
       "follower_count": 370,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 210
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 234
     },
     {
       "like_user_id": "11427912",
@@ -3375,26 +3759,10 @@
       "last_like_at": "2026-06-02T07:17:23+09:00",
       "follower_count": 774,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 211
-    },
-    {
-      "like_user_id": "11058763",
-      "creator_name": "濱口貴光@AIとデータサイエンスが好きな薬剤師",
-      "creator_urlname": "pharma_i_cist",
-      "creator_url": "https://note.com/pharma_i_cist",
-      "has_profile_url": true,
-      "likes_count": 1,
-      "first_like_at": "2026-06-02T07:04:44+09:00",
-      "last_like_at": "2026-06-02T07:04:44+09:00",
-      "follower_count": 949,
-      "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
-      "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 212
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 235
     },
     {
       "like_user_id": "14625016",
@@ -3407,10 +3775,10 @@
       "last_like_at": "2026-06-02T06:54:11+09:00",
       "follower_count": 29,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 213
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 236
     },
     {
       "like_user_id": "14637209",
@@ -3423,10 +3791,10 @@
       "last_like_at": "2026-06-02T06:51:18+09:00",
       "follower_count": 11,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 214
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 237
     },
     {
       "like_user_id": "12262178",
@@ -3439,10 +3807,10 @@
       "last_like_at": "2026-06-02T06:44:44+09:00",
       "follower_count": 354,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 215
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 238
     },
     {
       "like_user_id": "13726815",
@@ -3455,10 +3823,10 @@
       "last_like_at": "2026-06-02T06:44:43+09:00",
       "follower_count": 263,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 216
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 239
     },
     {
       "like_user_id": "14418695",
@@ -3471,10 +3839,10 @@
       "last_like_at": "2026-06-02T06:40:55+09:00",
       "follower_count": 14,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 217
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 240
     },
     {
       "like_user_id": "11281870",
@@ -3487,10 +3855,10 @@
       "last_like_at": "2026-06-02T06:39:45+09:00",
       "follower_count": 552,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 218
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 241
     },
     {
       "like_user_id": "12038119",
@@ -3503,10 +3871,10 @@
       "last_like_at": "2026-06-02T05:50:07+09:00",
       "follower_count": 1424,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 219
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 242
     },
     {
       "like_user_id": "11118567",
@@ -3519,10 +3887,10 @@
       "last_like_at": "2026-06-02T04:24:20+09:00",
       "follower_count": 124,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 220
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 243
     },
     {
       "like_user_id": "2608093",
@@ -3535,10 +3903,10 @@
       "last_like_at": "2026-06-02T03:07:27+09:00",
       "follower_count": 1429,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 221
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 244
     },
     {
       "like_user_id": "11503095",
@@ -3551,10 +3919,10 @@
       "last_like_at": "2026-06-02T01:55:09+09:00",
       "follower_count": 253,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 222
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 245
     },
     {
       "like_user_id": "12589788",
@@ -3567,10 +3935,10 @@
       "last_like_at": "2026-06-02T01:41:02+09:00",
       "follower_count": 536,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 223
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 246
     },
     {
       "like_user_id": "4269475",
@@ -3583,10 +3951,10 @@
       "last_like_at": "2026-06-02T01:29:57+09:00",
       "follower_count": 33,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 224
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 247
     },
     {
       "like_user_id": "11121667",
@@ -3599,10 +3967,10 @@
       "last_like_at": "2026-06-02T01:15:19+09:00",
       "follower_count": 5605,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 225
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 248
     },
     {
       "like_user_id": "11264990",
@@ -3615,10 +3983,10 @@
       "last_like_at": "2026-06-02T00:46:55+09:00",
       "follower_count": 965,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 226
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 249
     },
     {
       "like_user_id": "11197179",
@@ -3631,10 +3999,10 @@
       "last_like_at": "2026-06-02T00:28:07+09:00",
       "follower_count": 158,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 227
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 250
     },
     {
       "like_user_id": "13219393",
@@ -3647,10 +4015,10 @@
       "last_like_at": "2026-06-02T00:25:28+09:00",
       "follower_count": 601,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 228
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 251
     },
     {
       "like_user_id": "13505095",
@@ -3663,10 +4031,10 @@
       "last_like_at": "2026-06-02T00:12:42+09:00",
       "follower_count": 599,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 229
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 252
     },
     {
       "like_user_id": "14522712",
@@ -3679,10 +4047,10 @@
       "last_like_at": "2026-06-02T00:05:37+09:00",
       "follower_count": 403,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 230
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 253
     },
     {
       "like_user_id": "13523117",
@@ -3695,10 +4063,10 @@
       "last_like_at": "2026-06-01T23:19:28+09:00",
       "follower_count": 255,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 231
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 254
     },
     {
       "like_user_id": "514721",
@@ -3711,10 +4079,10 @@
       "last_like_at": "2026-06-01T23:17:30+09:00",
       "follower_count": 543,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 232
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 255
     },
     {
       "like_user_id": "4956068",
@@ -3727,10 +4095,10 @@
       "last_like_at": "2026-06-01T23:14:16+09:00",
       "follower_count": 104,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 233
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 256
     },
     {
       "like_user_id": "5526957",
@@ -3743,10 +4111,10 @@
       "last_like_at": "2026-06-01T23:02:58+09:00",
       "follower_count": 0,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 234
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 257
     },
     {
       "like_user_id": "10808161",
@@ -3759,10 +4127,10 @@
       "last_like_at": "2026-06-01T23:00:22+09:00",
       "follower_count": 83,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 235
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 258
     },
     {
       "like_user_id": "5323176",
@@ -3775,10 +4143,10 @@
       "last_like_at": "2026-06-01T22:42:23+09:00",
       "follower_count": 57,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 236
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 259
     },
     {
       "like_user_id": "5620054",
@@ -3791,10 +4159,10 @@
       "last_like_at": "2026-06-01T22:41:13+09:00",
       "follower_count": 1745,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 237
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 260
     },
     {
       "like_user_id": "13137374",
@@ -3807,10 +4175,10 @@
       "last_like_at": "2026-06-01T22:27:45+09:00",
       "follower_count": 1593,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 238
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 261
     },
     {
       "like_user_id": "9498555",
@@ -3823,10 +4191,10 @@
       "last_like_at": "2026-06-01T22:18:36+09:00",
       "follower_count": 462,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 239
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 262
     },
     {
       "like_user_id": "14297080",
@@ -3839,10 +4207,10 @@
       "last_like_at": "2026-06-01T22:06:36+09:00",
       "follower_count": 331,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 240
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 263
     },
     {
       "like_user_id": "12178736",
@@ -3855,10 +4223,10 @@
       "last_like_at": "2026-06-01T22:06:35+09:00",
       "follower_count": 48,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 241
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 264
     },
     {
       "like_user_id": "10175064",
@@ -3871,10 +4239,10 @@
       "last_like_at": "2026-06-01T22:01:00+09:00",
       "follower_count": 6357,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 242
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 265
     },
     {
       "like_user_id": "4717784",
@@ -3887,10 +4255,10 @@
       "last_like_at": "2026-06-01T21:27:58+09:00",
       "follower_count": 254,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 243
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 266
     },
     {
       "like_user_id": "11848158",
@@ -3903,10 +4271,10 @@
       "last_like_at": "2026-06-01T21:19:23+09:00",
       "follower_count": 1050,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 244
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 267
     },
     {
       "like_user_id": "13405417",
@@ -3919,10 +4287,10 @@
       "last_like_at": "2026-06-01T21:06:19+09:00",
       "follower_count": 141,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 245
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 268
     },
     {
       "like_user_id": "9043359",
@@ -3935,10 +4303,10 @@
       "last_like_at": "2026-06-01T20:53:08+09:00",
       "follower_count": 253,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 246
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 269
     },
     {
       "like_user_id": "13356135",
@@ -3951,10 +4319,10 @@
       "last_like_at": "2026-06-01T20:52:09+09:00",
       "follower_count": 1242,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 247
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 270
     },
     {
       "like_user_id": "4859491",
@@ -3967,10 +4335,10 @@
       "last_like_at": "2026-06-01T20:45:17+09:00",
       "follower_count": 677,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 248
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 271
     },
     {
       "like_user_id": "12498736",
@@ -3983,10 +4351,10 @@
       "last_like_at": "2026-06-01T20:41:52+09:00",
       "follower_count": 680,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 249
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 272
     },
     {
       "like_user_id": "14184793",
@@ -3999,10 +4367,10 @@
       "last_like_at": "2026-06-01T20:41:22+09:00",
       "follower_count": 47,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 250
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 273
     },
     {
       "like_user_id": "14283118",
@@ -4015,10 +4383,10 @@
       "last_like_at": "2026-06-01T20:39:29+09:00",
       "follower_count": 455,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 251
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 274
     },
     {
       "like_user_id": "11289043",
@@ -4031,10 +4399,10 @@
       "last_like_at": "2026-06-01T20:32:26+09:00",
       "follower_count": 1115,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 252
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 275
     },
     {
       "like_user_id": "12690866",
@@ -4047,26 +4415,10 @@
       "last_like_at": "2026-06-01T20:29:45+09:00",
       "follower_count": 149,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 253
-    },
-    {
-      "like_user_id": "539402",
-      "creator_name": "やまざき悠＠AIコラムニスト｜note界の挫折王",
-      "creator_urlname": "yuura142",
-      "creator_url": "https://note.com/yuura142",
-      "has_profile_url": true,
-      "likes_count": 1,
-      "first_like_at": "2026-06-01T20:27:47+09:00",
-      "last_like_at": "2026-06-01T20:27:47+09:00",
-      "follower_count": 3841,
-      "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
-      "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 254
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 276
     },
     {
       "like_user_id": "13938856",
@@ -4079,10 +4431,10 @@
       "last_like_at": "2026-06-01T20:27:26+09:00",
       "follower_count": 81,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 255
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 277
     },
     {
       "like_user_id": "9505289",
@@ -4095,10 +4447,10 @@
       "last_like_at": "2026-06-01T20:25:14+09:00",
       "follower_count": 432,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 256
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 278
     },
     {
       "like_user_id": "7841599",
@@ -4111,10 +4463,10 @@
       "last_like_at": "2026-06-01T20:21:50+09:00",
       "follower_count": 4488,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 257
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 279
     },
     {
       "like_user_id": "13777980",
@@ -4127,10 +4479,10 @@
       "last_like_at": "2026-06-01T20:21:16+09:00",
       "follower_count": 431,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 258
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 280
     },
     {
       "like_user_id": "13902670",
@@ -4143,10 +4495,10 @@
       "last_like_at": "2026-06-01T20:17:03+09:00",
       "follower_count": 305,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 259
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 281
     },
     {
       "like_user_id": "13660856",
@@ -4159,10 +4511,10 @@
       "last_like_at": "2026-06-01T19:47:29+09:00",
       "follower_count": 165,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 260
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 282
     },
     {
       "like_user_id": "11426505",
@@ -4175,10 +4527,10 @@
       "last_like_at": "2026-06-01T19:44:29+09:00",
       "follower_count": 701,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 261
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 283
     },
     {
       "like_user_id": "13863469",
@@ -4191,10 +4543,10 @@
       "last_like_at": "2026-06-01T19:44:10+09:00",
       "follower_count": 741,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 262
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 284
     },
     {
       "like_user_id": "14267408",
@@ -4207,10 +4559,10 @@
       "last_like_at": "2026-06-01T19:43:22+09:00",
       "follower_count": 125,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 263
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 285
     },
     {
       "like_user_id": "11592562",
@@ -4223,10 +4575,10 @@
       "last_like_at": "2026-06-01T19:37:57+09:00",
       "follower_count": 7,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 264
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 286
     },
     {
       "like_user_id": "11388306",
@@ -4239,26 +4591,10 @@
       "last_like_at": "2026-06-01T19:32:51+09:00",
       "follower_count": 279,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 265
-    },
-    {
-      "like_user_id": "12358153",
-      "creator_name": "Tokyo Visual Moments",
-      "creator_urlname": "dreamy_quail9288",
-      "creator_url": "https://note.com/dreamy_quail9288",
-      "has_profile_url": true,
-      "likes_count": 1,
-      "first_like_at": "2026-06-01T19:19:41+09:00",
-      "last_like_at": "2026-06-01T19:19:41+09:00",
-      "follower_count": 293,
-      "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
-      "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 266
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 287
     },
     {
       "like_user_id": "3169776",
@@ -4271,10 +4607,10 @@
       "last_like_at": "2026-06-01T19:18:40+09:00",
       "follower_count": 6,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 267
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 288
     },
     {
       "like_user_id": "6599346",
@@ -4287,10 +4623,10 @@
       "last_like_at": "2026-06-01T19:16:16+09:00",
       "follower_count": 188,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 268
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 289
     },
     {
       "like_user_id": "12471616",
@@ -4303,10 +4639,10 @@
       "last_like_at": "2026-06-01T19:07:57+09:00",
       "follower_count": 1362,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 269
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 290
     },
     {
       "like_user_id": "13188674",
@@ -4319,10 +4655,10 @@
       "last_like_at": "2026-06-01T18:48:33+09:00",
       "follower_count": 1413,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 270
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 291
     },
     {
       "like_user_id": "7008741",
@@ -4335,10 +4671,10 @@
       "last_like_at": "2026-06-01T18:47:29+09:00",
       "follower_count": 16,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 271
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 292
     },
     {
       "like_user_id": "444631",
@@ -4351,10 +4687,10 @@
       "last_like_at": "2026-06-01T18:43:02+09:00",
       "follower_count": 147,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 272
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 293
     },
     {
       "like_user_id": "13111057",
@@ -4367,10 +4703,10 @@
       "last_like_at": "2026-06-01T18:26:42+09:00",
       "follower_count": 17,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 273
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 294
     },
     {
       "like_user_id": "14127190",
@@ -4383,10 +4719,10 @@
       "last_like_at": "2026-06-01T18:06:12+09:00",
       "follower_count": 416,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 274
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 295
     },
     {
       "like_user_id": "11829673",
@@ -4399,10 +4735,10 @@
       "last_like_at": "2026-06-01T18:04:55+09:00",
       "follower_count": 118,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 275
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 296
     },
     {
       "like_user_id": "4887086",
@@ -4415,10 +4751,10 @@
       "last_like_at": "2026-06-01T18:01:50+09:00",
       "follower_count": 617,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 276
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 297
     },
     {
       "like_user_id": "13262144",
@@ -4431,10 +4767,10 @@
       "last_like_at": "2026-06-01T17:57:27+09:00",
       "follower_count": 63,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 277
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 298
     },
     {
       "like_user_id": "13187388",
@@ -4447,10 +4783,10 @@
       "last_like_at": "2026-06-01T17:44:35+09:00",
       "follower_count": 183,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 278
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 299
     },
     {
       "like_user_id": "11105897",
@@ -4463,10 +4799,10 @@
       "last_like_at": "2026-06-01T17:40:49+09:00",
       "follower_count": 693,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 279
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 300
     },
     {
       "like_user_id": "7335280",
@@ -4479,10 +4815,10 @@
       "last_like_at": "2026-06-01T17:35:48+09:00",
       "follower_count": 826,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 280
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 301
     },
     {
       "like_user_id": "11575561",
@@ -4495,10 +4831,10 @@
       "last_like_at": "2026-06-01T17:33:56+09:00",
       "follower_count": 1226,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 281
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 302
     },
     {
       "like_user_id": "12285767",
@@ -4511,10 +4847,10 @@
       "last_like_at": "2026-06-01T16:42:41+09:00",
       "follower_count": 84,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 282
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 303
     },
     {
       "like_user_id": "11804001",
@@ -4527,10 +4863,10 @@
       "last_like_at": "2026-06-01T16:28:04+09:00",
       "follower_count": 374,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 283
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 304
     },
     {
       "like_user_id": "14597035",
@@ -4543,10 +4879,10 @@
       "last_like_at": "2026-06-01T15:20:48+09:00",
       "follower_count": 1,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 284
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 305
     },
     {
       "like_user_id": "518157",
@@ -4559,10 +4895,10 @@
       "last_like_at": "2026-06-01T14:00:13+09:00",
       "follower_count": 39,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 285
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 306
     },
     {
       "like_user_id": "11973177",
@@ -4575,10 +4911,10 @@
       "last_like_at": "2026-06-01T12:18:05+09:00",
       "follower_count": 2012,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 286
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 307
     },
     {
       "like_user_id": "731487",
@@ -4591,10 +4927,10 @@
       "last_like_at": "2026-06-01T12:09:59+09:00",
       "follower_count": 15,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 287
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 308
     },
     {
       "like_user_id": "7817959",
@@ -4607,10 +4943,10 @@
       "last_like_at": "2026-06-01T11:32:57+09:00",
       "follower_count": 0,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 288
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 309
     },
     {
       "like_user_id": "769903",
@@ -4623,10 +4959,10 @@
       "last_like_at": "2026-06-01T10:36:16+09:00",
       "follower_count": 1826,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 289
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 310
     },
     {
       "like_user_id": "14624178",
@@ -4639,10 +4975,10 @@
       "last_like_at": "2026-06-01T09:38:59+09:00",
       "follower_count": 2,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 290
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 311
     },
     {
       "like_user_id": "12830841",
@@ -4655,10 +4991,10 @@
       "last_like_at": "2026-06-01T09:34:50+09:00",
       "follower_count": 427,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 291
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 312
     },
     {
       "like_user_id": "11462527",
@@ -4671,10 +5007,10 @@
       "last_like_at": "2026-06-01T09:08:02+09:00",
       "follower_count": 189,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 292
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 313
     },
     {
       "like_user_id": "982191",
@@ -4687,10 +5023,10 @@
       "last_like_at": "2026-06-01T09:01:47+09:00",
       "follower_count": 4,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 293
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 314
     },
     {
       "like_user_id": "13591005",
@@ -4703,10 +5039,10 @@
       "last_like_at": "2026-06-01T08:32:40+09:00",
       "follower_count": 0,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 294
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 315
     },
     {
       "like_user_id": "14573806",
@@ -4719,10 +5055,10 @@
       "last_like_at": "2026-06-01T08:17:13+09:00",
       "follower_count": 7,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 295
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 316
     },
     {
       "like_user_id": "12558234",
@@ -4735,10 +5071,10 @@
       "last_like_at": "2026-06-01T07:54:40+09:00",
       "follower_count": 272,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 296
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 317
     },
     {
       "like_user_id": "3938972",
@@ -4751,10 +5087,10 @@
       "last_like_at": "2026-06-01T07:41:15+09:00",
       "follower_count": 4470,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 297
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 318
     },
     {
       "like_user_id": "4995736",
@@ -4767,10 +5103,10 @@
       "last_like_at": "2026-06-01T07:39:11+09:00",
       "follower_count": 269,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 298
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 319
     },
     {
       "like_user_id": "1768916",
@@ -4783,10 +5119,10 @@
       "last_like_at": "2026-06-01T07:31:57+09:00",
       "follower_count": 1163,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 299
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 320
     },
     {
       "like_user_id": "11995700",
@@ -4799,10 +5135,10 @@
       "last_like_at": "2026-06-01T07:06:47+09:00",
       "follower_count": 5309,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 300
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 321
     },
     {
       "like_user_id": "13929293",
@@ -4815,10 +5151,10 @@
       "last_like_at": "2026-06-01T05:58:08+09:00",
       "follower_count": 296,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 301
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 322
     },
     {
       "like_user_id": "12622231",
@@ -4831,10 +5167,10 @@
       "last_like_at": "2026-06-01T05:51:10+09:00",
       "follower_count": 61,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 302
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 323
     },
     {
       "like_user_id": "14650224",
@@ -4847,10 +5183,10 @@
       "last_like_at": "2026-06-01T05:48:17+09:00",
       "follower_count": 0,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 303
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 324
     },
     {
       "like_user_id": "7984059",
@@ -4863,10 +5199,10 @@
       "last_like_at": "2026-06-01T05:26:26+09:00",
       "follower_count": 485,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 304
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 325
     },
     {
       "like_user_id": "14595870",
@@ -4879,10 +5215,10 @@
       "last_like_at": "2026-06-01T02:42:56+09:00",
       "follower_count": 3,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 305
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 326
     },
     {
       "like_user_id": "14353024",
@@ -4895,10 +5231,10 @@
       "last_like_at": "2026-06-01T00:27:57+09:00",
       "follower_count": 200,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 306
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 327
     },
     {
       "like_user_id": "13490468",
@@ -4911,10 +5247,10 @@
       "last_like_at": "2026-06-01T00:19:25+09:00",
       "follower_count": 87,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 307
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 328
     },
     {
       "like_user_id": "14057628",
@@ -4927,10 +5263,10 @@
       "last_like_at": "2026-06-01T00:05:06+09:00",
       "follower_count": 42,
       "ranking_type": "monthly",
-      "generated_at": "2026-06-03T22:25:44.848960+09:00",
+      "generated_at": "2026-06-04T07:39:29.409893+09:00",
       "period_start": "2026-06-01T00:00:00+09:00",
-      "period_end": "2026-06-03T22:05:26+09:00",
-      "rank": 308
+      "period_end": "2026-06-04T07:35:14+09:00",
+      "rank": 329
     }
   ]
 }
