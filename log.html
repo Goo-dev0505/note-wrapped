@@ -10,6 +10,7 @@
 <meta property="og:description" content="noteの実データで遊ぶダッシュボード。今日もログ、まわっとる。" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://goo-dev0505.github.io/note-wrapped/log.html" />
+<meta property="og:image" content="https://goo-dev0505.github.io/note-wrapped/img/ogp.jpg" />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,14 +23,25 @@
      画像設定ブロック：URLを貼るだけで全画面に反映（空でもOK）
      ════════════════════════════════════════════════════════════ -->
 <script>
+/* ═══════════════════════════════════════════════════════════════
+   画像の使い方: リポジトリの public/img/ フォルダに、下記の名前で
+   画像をアップロードするだけで自動的に表示されます（HTML編集不要）。
+   ファイルが無い間は何も表示されず、レイアウトも崩れません。
+
+     public/img/logo.png   … ロゴ（ナビ・起動画面・favicon）
+     public/img/hero.jpg   … ヒーロー背景（薄く敷かれる）
+     public/img/ogp.jpg    … SNSシェア用画像（これだけ .jpg 固定）
+     public/img/work1.jpg, work2.jpg, work3.jpg … 作品ギャラリー
+                              （連番で置くだけで何枚でも自動で増える。欠番があるとそこで打ち切り）
+
+   ※拡張子は png / jpg / jpeg / webp / svg どれでもOK（自動で探します）。
+     例: logo.webp をアップしても勝手に見つけて表示されます。
+   ═══════════════════════════════════════════════════════════════ */
 window.SITE_IMAGES = {
-  logo:    "",   // ロゴ（ナビ・ブート画面・favicon）例 "https://assets.st-note.com/....png"
-  hero:    "",   // ヒーロー背景（薄く敷かれる）
-  ogImage: "",   // OGP/シェア画像
-  works: [
-    // 作品ビジュアル（ダッシュボード下部ギャラリー）。URLを追加すると表示される
-    // "https://assets.st-note.com/....jpg",
-  ],
+  logo:    "./img/logo.png",
+  hero:    "./img/hero.jpg",
+  ogImage: "https://goo-dev0505.github.io/note-wrapped/img/ogp.jpg",
+  works: "auto",  // public/img/ に work1.jpg, work2.jpg… と連番で置くだけで何枚でも自動表示（最大24枚・欠番で打ち切り）
 };
 // データ取得先を変える場合だけコメントを外す（既定: ./data/ → 失敗時は live URL に自動フォールバック）
 // window.NOTE_LOG_CONFIG = { dataBase: "https://goo-dev0505.github.io/note-wrapped/data/" };
@@ -161,6 +173,11 @@ window.SITE_IMAGES = {
   .kpi-num{font-family:var(--fd);font-weight:600;font-size:clamp(26px,3.6vw,38px);line-height:1;margin-top:14px;letter-spacing:-0.02em;}
   .kpi-spark{margin-top:14px;border-top:1px solid var(--line);padding-top:10px;}
   .kpi-note{margin-top:10px;font-size:11px;color:var(--mut);line-height:1.6;}
+  .kpi-mile{margin-top:12px;border-top:1px solid var(--line);padding-top:10px;}
+  .kpi-mile-bar{height:3px;background:var(--line);border-radius:2px;overflow:hidden;}
+  .kpi-mile-bar span{display:block;height:100%;background:var(--orange);border-radius:2px;transition:width .9s cubic-bezier(.22,1,.36,1);}
+  .kpi-mile-label{font-family:var(--fm);font-size:9px;letter-spacing:1px;color:var(--mut);margin-top:7px;display:flex;justify-content:space-between;gap:8px;}
+  .kpi-mile-label span{color:var(--orange);white-space:nowrap;}
 
   /* ══════════ ティッカー ══════════ */
   .ticker-wrap{overflow:hidden;white-space:nowrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0;background:var(--ink2);}
@@ -331,8 +348,16 @@ window.SITE_IMAGES = {
   .fx-toggle{bottom:64px;}
   .theme-toggle{bottom:98px;}
   @media(max-width:860px){.fx-toggle{bottom:118px;}.theme-toggle{bottom:152px;}}
-  .works-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;}
-  .works-grid img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r);border:1px solid var(--line);display:block;}
+  /* 作品ギャラリー: 原寸比率のままのメイソンリー（アートを切らない） */
+  .works-grid{column-count:3;column-gap:16px;margin-top:32px;}
+  .works-grid img{width:100%;height:auto;border-radius:var(--r);border:1px solid var(--line);display:block;margin-bottom:16px;break-inside:avoid;}
+
+  /* ヒーロー画像: 右寄せでしっかり見せ、左から文字用のベール */
+  .hero-visual{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+  .hero-img{width:100%;height:100%;object-fit:cover;object-position:right center;opacity:.55;}
+  .hero-veil{position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 22%,transparent 64%),linear-gradient(180deg,transparent 72%,var(--bg));}
+  :root[data-theme="dark"] .hero-img{opacity:.12;filter:grayscale(35%);}
+  @media(max-width:860px){.hero-img{opacity:.28;}}
 
   /* ══════════ レスポンシブ ══════════ */
   @media(max-width:860px){
@@ -346,7 +371,8 @@ window.SITE_IMAGES = {
     .member{grid-template-columns:1fr;gap:24px;}
     .pk-hero-grid{grid-template-columns:1fr;}
     .pk-mag-grid{grid-template-columns:1fr 1fr;gap:12px;}
-    .works-grid{grid-template-columns:1fr 1fr;gap:12px;}
+    .works-grid{column-count:2;column-gap:10px;}
+    .works-grid img{margin-bottom:10px;}
     .kpi-grid{grid-template-columns:1fr 1fr;gap:12px;}
     .t5-row{grid-template-columns:40px 24px 1fr auto;gap:10px;padding:14px 4px;}
     .t5-rank{font-size:21px;}
@@ -761,6 +787,7 @@ function useNoteData() {
       const fsLast = fsLen ? followerSeries[fsLen - 1].f : 0;
       const fAgo = n => fsLen > n ? followerSeries[fsLen - 1 - n].f : fsLen ? followerSeries[0].f : 0;
       const followerWeekGain = fsLast - fAgo(7);
+      const followerTwoWeekGain = fsLast - fAgo(14);
       const followerMonthGain = fsLast - fAgo(30);
       let followerBest = null;
       followerSeries.forEach(p => {
@@ -793,6 +820,18 @@ function useNoteData() {
         v: parseInt(r["ビュー合計"] || r["pv"] || 0),
         s: parseInt(r["スキ合計"] || r["sk"] || 0)
       })).filter(r => r.d);
+
+      // ── 節目（フォロワー同様の自動節目。PV=10,000単位 / スキ=1,000単位） ──
+      const calcMile = (val, unit) => {
+        const target = Math.max(Math.ceil((val + 1) / unit) * unit, unit);
+        return {
+          target,
+          rest: target - val,
+          progress: Math.min(Math.max((val - (target - unit)) / unit * 100, 0), 100)
+        };
+      };
+      const pvMile = calcMile(totalPV, 10000);
+      const skMile = calcMile(totalSK, 1000);
       const EMOJIS = ["💀", "🔧", "🔬", "🎨", "⚗️"];
       const top5 = ranking.sort((a, b) => parseInt(b["期間増加PV"] || 0) - parseInt(a["期間増加PV"] || 0)).slice(0, 5).map((r, i) => ({
         rank: String(i + 1).padStart(2, "0"),
@@ -832,6 +871,7 @@ function useNoteData() {
         followerChart,
         followerSeries,
         followerWeekGain,
+        followerTwoWeekGain,
         followerMonthGain,
         followerBest,
         fMilestone,
@@ -840,6 +880,8 @@ function useNoteData() {
         fEta,
         growthChart,
         growthSeries,
+        pvMile,
+        skMile,
         top5,
         top5PV: null,
         top5SK: null,
@@ -2345,7 +2387,8 @@ function KpiCard({
   diff,
   color,
   series,
-  note
+  note,
+  mile
 }) {
   return /*#__PURE__*/React.createElement("div", {
     className: "kpi card"
@@ -2355,7 +2398,7 @@ function KpiCard({
     className: "kpi-label"
   }, label), diff !== undefined && diff !== 0 && /*#__PURE__*/React.createElement("span", {
     className: `kpi-diff ${diff > 0 ? "up" : "down"}`
-  }, diff > 0 ? "▲" : "▼", Math.abs(diff).toLocaleString())), /*#__PURE__*/React.createElement("div", {
+  }, "\u524D\u65E5\u6BD4 ", diff > 0 ? "▲" : "▼", Math.abs(diff).toLocaleString())), /*#__PURE__*/React.createElement("div", {
     className: "kpi-num",
     style: {
       color
@@ -2367,7 +2410,17 @@ function KpiCard({
   }, /*#__PURE__*/React.createElement(Sparkline, {
     points: series,
     color: "#f97316"
-  })), note && /*#__PURE__*/React.createElement("div", {
+  })), mile && /*#__PURE__*/React.createElement("div", {
+    className: "kpi-mile"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "kpi-mile-bar"
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      width: `${mile.progress}%`
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "kpi-mile-label"
+  }, "\u6B21\u306E\u7BC0\u76EE ", mile.target.toLocaleString(), /*#__PURE__*/React.createElement("span", null, "\u3042\u3068 ", mile.rest.toLocaleString()))), note && /*#__PURE__*/React.createElement("div", {
     className: "kpi-note"
   }, note));
 }
@@ -2763,7 +2816,7 @@ function FollowerSection({
     className: "fol-unit"
   }, "\u4EBA"), data.followerDiff !== 0 && /*#__PURE__*/React.createElement("span", {
     className: `kpi-diff ${data.followerDiff > 0 ? "up" : "down"}`
-  }, data.followerDiff > 0 ? "▲" : "▼", Math.abs(data.followerDiff))), /*#__PURE__*/React.createElement("p", {
+  }, "\u524D\u65E5\u6BD4 ", data.followerDiff > 0 ? "▲" : "▼", Math.abs(data.followerDiff))), /*#__PURE__*/React.createElement("p", {
     className: "fol-msg"
   }, data.followerMsg), /*#__PURE__*/React.createElement("div", {
     className: "fol-stats"
@@ -2774,6 +2827,12 @@ function FollowerSection({
   }, "\u76F4\u8FD17\u65E5"), /*#__PURE__*/React.createElement("span", {
     className: `v ${data.followerWeekGain >= 0 ? "p" : "n"}`
   }, data.followerWeekGain >= 0 ? "+" : "", data.followerWeekGain)), /*#__PURE__*/React.createElement("div", {
+    className: "fol-stat"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "k"
+  }, "\u76F4\u8FD114\u65E5"), /*#__PURE__*/React.createElement("span", {
+    className: `v ${data.followerTwoWeekGain >= 0 ? "p" : "n"}`
+  }, data.followerTwoWeekGain >= 0 ? "+" : "", data.followerTwoWeekGain)), /*#__PURE__*/React.createElement("div", {
     className: "fol-stat"
   }, /*#__PURE__*/React.createElement("span", {
     className: "k"
@@ -2989,13 +3048,15 @@ function Dashboard({
     value: data.totalPV,
     diff: data.pvDiff,
     color: OR,
-    series: pvSeries
+    series: pvSeries,
+    mile: data.pvMile
   }), /*#__PURE__*/React.createElement(KpiCard, {
     label: "\u7D2F\u8A08\u30B9\u30AD",
     value: data.totalSK,
     diff: data.skDiff,
     color: "var(--text)",
-    series: skSeries
+    series: skSeries,
+    mile: data.skMile
   }), /*#__PURE__*/React.createElement(KpiCard, {
     label: "\u30D5\u30A9\u30ED\u30EF\u30FC",
     value: data.lastFollower,
@@ -3580,14 +3641,26 @@ function PickupPage({
 
 /* ─────────────────────────────────────────────
    画像スロット
+   相対パス（./img/…）は拡張子を自動で探す:
+   png → jpg → jpeg → webp → svg の順に試行。
+   フルURL（http…）はそのまま使う。
 ───────────────────────────────────────────── */
+const IMG_EXTS = ["png", "jpg", "jpeg", "webp", "svg"];
+function imgCandidates(src) {
+  if (!src) return [];
+  const m = String(src).match(/^(.*)\.(png|jpe?g|webp|svg)$/i);
+  if (!m || /^https?:/i.test(src)) return [src];
+  const cur = m[2].toLowerCase();
+  return [src, ...IMG_EXTS.filter(e => e !== cur).map(e => `${m[1]}.${e}`)];
+}
 function BrandLogo() {
-  const [err, setErr] = useState(false);
-  if (SITE_IMAGES.logo && !err) {
+  const cands = imgCandidates(SITE_IMAGES.logo);
+  const [i, setI] = useState(0);
+  if (cands.length > 0 && i < cands.length) {
     return /*#__PURE__*/React.createElement("img", {
-      src: SITE_IMAGES.logo,
+      src: cands[i],
       alt: "KITAcore",
-      onError: () => setErr(true),
+      onError: () => setI(i + 1),
       style: {
         height: 26,
         objectFit: "contain",
@@ -3600,41 +3673,83 @@ function BrandLogo() {
   }, "core"));
 }
 function HeroVisual() {
-  if (!SITE_IMAGES.hero) return null;
+  const cands = imgCandidates(SITE_IMAGES.hero);
+  const [i, setI] = useState(0);
+  if (cands.length === 0 || i >= cands.length) return null;
   return /*#__PURE__*/React.createElement("div", {
     "aria-hidden": "true",
-    style: {
-      position: "absolute",
-      inset: 0,
-      pointerEvents: "none"
-    }
+    className: "hero-visual"
   }, /*#__PURE__*/React.createElement("img", {
-    src: SITE_IMAGES.hero,
+    className: "hero-img",
+    src: cands[i],
     alt: "",
     loading: "lazy",
-    onError: e => {
-      e.currentTarget.parentElement.style.display = "none";
-    },
-    style: {
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",
-      opacity: .13,
-      filter: "grayscale(30%)"
-    }
+    onError: () => setI(i + 1)
   }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: "absolute",
-      inset: 0,
-      background: "linear-gradient(180deg,transparent,var(--bg) 92%)"
-    }
+    className: "hero-veil"
   }));
+}
+
+/* works:"auto" のとき public/img/work1.jpg, work2.jpg… を連番で自動検出
+   （欠番が出たら打ち切り・最大24枚・拡張子も自動） */
+function useWorksList() {
+  const cfg = SITE_IMAGES.works;
+  const [list, setList] = useState([]);
+  useEffect(() => {
+    if (cfg !== "auto" || typeof window.Image !== "function") return;
+    let alive = true;
+    const found = [];
+    const probe = (cands, cb) => {
+      if (!cands.length) {
+        cb(null);
+        return;
+      }
+      const im = new window.Image();
+      im.onload = () => cb(cands[0]);
+      im.onerror = () => probe(cands.slice(1), cb);
+      im.src = cands[0];
+    };
+    (function next(n) {
+      if (!alive || n > 24) return;
+      probe(imgCandidates(`./img/work${n}.jpg`), url => {
+        if (!alive || !url) return;
+        found.push(url);
+        setList(found.slice());
+        next(n + 1);
+      });
+    })(1);
+    return () => {
+      alive = false;
+    };
+  }, []);
+  return list;
+}
+function WorkImg({
+  src,
+  alt,
+  onFail
+}) {
+  const cands = imgCandidates(src);
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    if (i >= cands.length) onFail();
+  }, [i]);
+  if (i >= cands.length) return null;
+  return /*#__PURE__*/React.createElement("img", {
+    src: cands[i],
+    alt: alt,
+    loading: "lazy",
+    onError: () => setI(i + 1)
+  });
 }
 function WorksGallery({
   isMobile
 }) {
-  const works = (SITE_IMAGES.works || []).filter(Boolean);
-  if (works.length === 0) return null;
+  const auto = SITE_IMAGES.works === "auto";
+  const autoList = useWorksList();
+  const works = auto ? autoList : (SITE_IMAGES.works || []).filter(Boolean);
+  const [failed, setFailed] = useState(() => new Set());
+  if (works.length === 0 || !auto && failed.size >= works.length) return null;
   return /*#__PURE__*/React.createElement("section", {
     className: "sec"
   }, /*#__PURE__*/React.createElement("div", {
@@ -3643,14 +3758,20 @@ function WorksGallery({
     color: BL
   }, "VISUAL WORKS"), /*#__PURE__*/React.createElement(SectionTitle, null, "\u4F5C\u3063\u305F\u3082\u3093\u3001\u7F6E\u3044\u3068\u304F\u3067\u3002"), /*#__PURE__*/React.createElement("div", {
     className: "works-grid"
-  }, works.map((src, i) => /*#__PURE__*/React.createElement("img", {
+  }, auto ? works.map((src, i) => /*#__PURE__*/React.createElement("img", {
+    key: src,
+    src: src,
+    alt: `KITAcore 作品ビジュアル ${i + 1}`,
+    loading: "lazy"
+  })) : works.map((src, i) => failed.has(i) ? null : /*#__PURE__*/React.createElement(WorkImg, {
     key: i,
     src: src,
     alt: `KITAcore 作品ビジュアル ${i + 1}`,
-    loading: "lazy",
-    onError: e => {
-      e.currentTarget.style.display = "none";
-    }
+    onFail: () => setFailed(prev => {
+      const n = new Set(prev);
+      n.add(i);
+      return n;
+    })
   })))));
 }
 
@@ -3716,6 +3837,8 @@ function BootScreen({
 }) {
   const [, setTick] = useState(0);
   const [closing, setClosing] = useState(false);
+  const logoCands = imgCandidates(SITE_IMAGES.logo);
+  const [logoI, setLogoI] = useState(0);
   const close = () => {
     setClosing(c => {
       if (!c) setTimeout(onDone, 450);
@@ -3742,12 +3865,10 @@ function BootScreen({
     "aria-label": "\u8D77\u52D5\u4E2D"
   }, /*#__PURE__*/React.createElement("div", {
     className: "boot-inner"
-  }, SITE_IMAGES.logo ? /*#__PURE__*/React.createElement("img", {
-    src: SITE_IMAGES.logo,
+  }, logoCands.length > 0 && logoI < logoCands.length ? /*#__PURE__*/React.createElement("img", {
+    src: logoCands[logoI],
     alt: "KITAcore",
-    onError: e => {
-      e.currentTarget.style.display = "none";
-    },
+    onError: () => setLogoI(logoI + 1),
     style: {
       height: 42,
       marginBottom: 22,
@@ -3997,15 +4118,25 @@ function AppRoot() {
     setBoot(false);
   };
   useEffect(() => {
-    if (SITE_IMAGES.logo) {
-      let l = document.querySelector("link[rel='icon']");
-      if (!l) {
-        l = document.createElement("link");
-        l.rel = "icon";
-        document.head.appendChild(l);
-      }
-      l.href = SITE_IMAGES.logo;
-    }
+    // favicon: ロゴ候補のうち実際に読み込めたものを採用
+    const cands = imgCandidates(SITE_IMAGES.logo);
+    let cancelled = false;
+    (function tryNext(i) {
+      if (cancelled || i >= cands.length || typeof window.Image !== "function") return;
+      const im = new window.Image();
+      im.onload = () => {
+        if (cancelled) return;
+        let l = document.querySelector("link[rel='icon']");
+        if (!l) {
+          l = document.createElement("link");
+          l.rel = "icon";
+          document.head.appendChild(l);
+        }
+        l.href = cands[i];
+      };
+      im.onerror = () => tryNext(i + 1);
+      im.src = cands[i];
+    })(0);
     if (SITE_IMAGES.ogImage) {
       let m = document.querySelector("meta[property='og:image']");
       if (!m) {
@@ -4015,6 +4146,9 @@ function AppRoot() {
       }
       m.setAttribute("content", SITE_IMAGES.ogImage);
     }
+    return () => {
+      cancelled = true;
+    };
   }, []);
   return /*#__PURE__*/React.createElement(React.Fragment, null, boot && /*#__PURE__*/React.createElement(BootScreen, {
     onDone: bootDone
