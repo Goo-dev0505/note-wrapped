@@ -2386,7 +2386,6 @@ function KpiCard({
   value,
   diff,
   color,
-  series,
   note,
   mile
 }) {
@@ -2405,11 +2404,6 @@ function KpiCard({
     }
   }, /*#__PURE__*/React.createElement(CountUp, {
     value: value
-  })), series && series.length > 1 && /*#__PURE__*/React.createElement("div", {
-    className: "kpi-spark"
-  }, /*#__PURE__*/React.createElement(Sparkline, {
-    points: series,
-    color: "#f97316"
   })), mile && /*#__PURE__*/React.createElement("div", {
     className: "kpi-mile"
   }, /*#__PURE__*/React.createElement("div", {
@@ -2987,9 +2981,6 @@ function Dashboard({
   const loading = !data;
   const artLoading = !data || !data.articlesLoaded;
   const [activeWorst, setActiveWorst] = useState(null);
-  const pvSeries = data?.growthChart?.map(r => r.v);
-  const skSeries = data?.growthChart?.map(r => r.s);
-  const flSeries = data?.followerChart?.map(r => r.f);
   const TRENDS = [{
     key: "rising",
     s: "🔥 急上昇",
@@ -3048,21 +3039,18 @@ function Dashboard({
     value: data.totalPV,
     diff: data.pvDiff,
     color: OR,
-    series: pvSeries,
     mile: data.pvMile
   }), /*#__PURE__*/React.createElement(KpiCard, {
     label: "\u7D2F\u8A08\u30B9\u30AD",
     value: data.totalSK,
     diff: data.skDiff,
     color: "var(--text)",
-    series: skSeries,
     mile: data.skMile
   }), /*#__PURE__*/React.createElement(KpiCard, {
     label: "\u30D5\u30A9\u30ED\u30EF\u30FC",
     value: data.lastFollower,
     diff: data.followerDiff,
     color: "var(--text)",
-    series: flSeries,
     note: data.followerMsg
   }), /*#__PURE__*/React.createElement(KpiCard, {
     label: "\u7DCF\u8A18\u4E8B\u6570",
