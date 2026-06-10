@@ -10,6 +10,7 @@
 <meta property="og:description" content="noteの実データで遊ぶダッシュボード。今日もログ、まわっとる。" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://goo-dev0505.github.io/note-wrapped/log.html" />
+<meta property="og:image" content="https://goo-dev0505.github.io/note-wrapped/img/ogp.jpg" />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -29,8 +30,11 @@
 
      public/img/logo.png   … ロゴ（ナビ・起動画面・favicon）
      public/img/hero.jpg   … ヒーロー背景（薄く敷かれる）
-     public/img/ogp.jpg    … SNSシェア用画像
+     public/img/ogp.jpg    … SNSシェア用画像（これだけ .jpg 固定）
      public/img/work1.jpg〜work6.jpg … 作品ギャラリー（あるものだけ表示）
+
+   ※拡張子は png / jpg / jpeg / webp / svg どれでもOK（自動で探します）。
+     例: logo.webp をアップしても勝手に見つけて表示されます。
    ═══════════════════════════════════════════════════════════════ */
 window.SITE_IMAGES = {
   logo:    "./img/logo.png",
@@ -345,8 +349,16 @@ window.SITE_IMAGES = {
   .fx-toggle{bottom:64px;}
   .theme-toggle{bottom:98px;}
   @media(max-width:860px){.fx-toggle{bottom:118px;}.theme-toggle{bottom:152px;}}
-  .works-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;}
-  .works-grid img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r);border:1px solid var(--line);display:block;}
+  /* 作品ギャラリー: 原寸比率のままのメイソンリー（アートを切らない） */
+  .works-grid{column-count:3;column-gap:16px;margin-top:32px;}
+  .works-grid img{width:100%;height:auto;border-radius:var(--r);border:1px solid var(--line);display:block;margin-bottom:16px;break-inside:avoid;}
+
+  /* ヒーロー画像: 右寄せでしっかり見せ、左から文字用のベール */
+  .hero-visual{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+  .hero-img{width:100%;height:100%;object-fit:cover;object-position:right center;opacity:.55;}
+  .hero-veil{position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 22%,transparent 64%),linear-gradient(180deg,transparent 72%,var(--bg));}
+  :root[data-theme="dark"] .hero-img{opacity:.12;filter:grayscale(35%);}
+  @media(max-width:860px){.hero-img{opacity:.28;}}
 
   /* ══════════ レスポンシブ ══════════ */
   @media(max-width:860px){
@@ -360,7 +372,8 @@ window.SITE_IMAGES = {
     .member{grid-template-columns:1fr;gap:24px;}
     .pk-hero-grid{grid-template-columns:1fr;}
     .pk-mag-grid{grid-template-columns:1fr 1fr;gap:12px;}
-    .works-grid{grid-template-columns:1fr 1fr;gap:12px;}
+    .works-grid{column-count:2;column-gap:10px;}
+    .works-grid img{margin-bottom:10px;}
     .kpi-grid{grid-template-columns:1fr 1fr;gap:12px;}
     .t5-row{grid-template-columns:40px 24px 1fr auto;gap:10px;padding:14px 4px;}
     .t5-rank{font-size:21px;}
@@ -3594,14 +3607,26 @@ function PickupPage({
 
 /* ─────────────────────────────────────────────
    画像スロット
+   相対パス（./img/…）は拡張子を自動で探す:
+   png → jpg → jpeg → webp → svg の順に試行。
+   フルURL（http…）はそのまま使う。
 ───────────────────────────────────────────── */
+const IMG_EXTS = ["png", "jpg", "jpeg", "webp", "svg"];
+function imgCandidates(src) {
+  if (!src) return [];
+  const m = String(src).match(/^(.*)\.(png|jpe?g|webp|svg)$/i);
+  if (!m || /^https?:/i.test(src)) return [src];
+  const cur = m[2].toLowerCase();
+  return [src, ...IMG_EXTS.filter(e => e !== cur).map(e => `${m[1]}.${e}`)];
+}
 function BrandLogo() {
-  const [err, setErr] = useState(false);
-  if (SITE_IMAGES.logo && !err) {
+  const cands = imgCandidates(SITE_IMAGES.logo);
+  const [i, setI] = useState(0);
+  if (cands.length > 0 && i < cands.length) {
     return /*#__PURE__*/React.createElement("img", {
-      src: SITE_IMAGES.logo,
+      src: cands[i],
       alt: "KITAcore",
-      onError: () => setErr(true),
+      onError: () => setI(i + 1),
       style: {
         height: 26,
         objectFit: "contain",
@@ -3614,35 +3639,39 @@ function BrandLogo() {
   }, "core"));
 }
 function HeroVisual() {
-  if (!SITE_IMAGES.hero) return null;
+  const cands = imgCandidates(SITE_IMAGES.hero);
+  const [i, setI] = useState(0);
+  if (cands.length === 0 || i >= cands.length) return null;
   return /*#__PURE__*/React.createElement("div", {
     "aria-hidden": "true",
-    style: {
-      position: "absolute",
-      inset: 0,
-      pointerEvents: "none"
-    }
+    className: "hero-visual"
   }, /*#__PURE__*/React.createElement("img", {
-    src: SITE_IMAGES.hero,
+    className: "hero-img",
+    src: cands[i],
     alt: "",
     loading: "lazy",
-    onError: e => {
-      e.currentTarget.parentElement.style.display = "none";
-    },
-    style: {
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",
-      opacity: .13,
-      filter: "grayscale(30%)"
-    }
+    onError: () => setI(i + 1)
   }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: "absolute",
-      inset: 0,
-      background: "linear-gradient(180deg,transparent,var(--bg) 92%)"
-    }
+    className: "hero-veil"
   }));
+}
+function WorkImg({
+  src,
+  alt,
+  onFail
+}) {
+  const cands = imgCandidates(src);
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    if (i >= cands.length) onFail();
+  }, [i]);
+  if (i >= cands.length) return null;
+  return /*#__PURE__*/React.createElement("img", {
+    src: cands[i],
+    alt: alt,
+    loading: "lazy",
+    onError: () => setI(i + 1)
+  });
 }
 function WorksGallery({
   isMobile
@@ -3658,12 +3687,11 @@ function WorksGallery({
     color: BL
   }, "VISUAL WORKS"), /*#__PURE__*/React.createElement(SectionTitle, null, "\u4F5C\u3063\u305F\u3082\u3093\u3001\u7F6E\u3044\u3068\u304F\u3067\u3002"), /*#__PURE__*/React.createElement("div", {
     className: "works-grid"
-  }, works.map((src, i) => failed.has(i) ? null : /*#__PURE__*/React.createElement("img", {
+  }, works.map((src, i) => failed.has(i) ? null : /*#__PURE__*/React.createElement(WorkImg, {
     key: i,
     src: src,
     alt: `KITAcore 作品ビジュアル ${i + 1}`,
-    loading: "lazy",
-    onError: () => setFailed(prev => {
+    onFail: () => setFailed(prev => {
       const n = new Set(prev);
       n.add(i);
       return n;
@@ -3733,7 +3761,8 @@ function BootScreen({
 }) {
   const [, setTick] = useState(0);
   const [closing, setClosing] = useState(false);
-  const [logoErr, setLogoErr] = useState(false);
+  const logoCands = imgCandidates(SITE_IMAGES.logo);
+  const [logoI, setLogoI] = useState(0);
   const close = () => {
     setClosing(c => {
       if (!c) setTimeout(onDone, 450);
@@ -3760,10 +3789,10 @@ function BootScreen({
     "aria-label": "\u8D77\u52D5\u4E2D"
   }, /*#__PURE__*/React.createElement("div", {
     className: "boot-inner"
-  }, SITE_IMAGES.logo && !logoErr ? /*#__PURE__*/React.createElement("img", {
-    src: SITE_IMAGES.logo,
+  }, logoCands.length > 0 && logoI < logoCands.length ? /*#__PURE__*/React.createElement("img", {
+    src: logoCands[logoI],
     alt: "KITAcore",
-    onError: () => setLogoErr(true),
+    onError: () => setLogoI(logoI + 1),
     style: {
       height: 42,
       marginBottom: 22,
@@ -4013,15 +4042,25 @@ function AppRoot() {
     setBoot(false);
   };
   useEffect(() => {
-    if (SITE_IMAGES.logo) {
-      let l = document.querySelector("link[rel='icon']");
-      if (!l) {
-        l = document.createElement("link");
-        l.rel = "icon";
-        document.head.appendChild(l);
-      }
-      l.href = SITE_IMAGES.logo;
-    }
+    // favicon: ロゴ候補のうち実際に読み込めたものを採用
+    const cands = imgCandidates(SITE_IMAGES.logo);
+    let cancelled = false;
+    (function tryNext(i) {
+      if (cancelled || i >= cands.length || typeof window.Image !== "function") return;
+      const im = new window.Image();
+      im.onload = () => {
+        if (cancelled) return;
+        let l = document.querySelector("link[rel='icon']");
+        if (!l) {
+          l = document.createElement("link");
+          l.rel = "icon";
+          document.head.appendChild(l);
+        }
+        l.href = cands[i];
+      };
+      im.onerror = () => tryNext(i + 1);
+      im.src = cands[i];
+    })(0);
     if (SITE_IMAGES.ogImage) {
       let m = document.querySelector("meta[property='og:image']");
       if (!m) {
@@ -4031,6 +4070,9 @@ function AppRoot() {
       }
       m.setAttribute("content", SITE_IMAGES.ogImage);
     }
+    return () => {
+      cancelled = true;
+    };
   }, []);
   return /*#__PURE__*/React.createElement(React.Fragment, null, boot && /*#__PURE__*/React.createElement(BootScreen, {
     onDone: bootDone
