@@ -31,7 +31,8 @@
      public/img/logo.png   … ロゴ（ナビ・起動画面・favicon）
      public/img/hero.jpg   … ヒーロー背景（薄く敷かれる）
      public/img/ogp.jpg    … SNSシェア用画像（これだけ .jpg 固定）
-     public/img/work1.jpg〜work6.jpg … 作品ギャラリー（あるものだけ表示）
+     public/img/work1.jpg, work2.jpg, work3.jpg … 作品ギャラリー
+                              （連番で置くだけで何枚でも自動で増える。欠番があるとそこで打ち切り）
 
    ※拡張子は png / jpg / jpeg / webp / svg どれでもOK（自動で探します）。
      例: logo.webp をアップしても勝手に見つけて表示されます。
@@ -40,14 +41,7 @@ window.SITE_IMAGES = {
   logo:    "./img/logo.png",
   hero:    "./img/hero.jpg",
   ogImage: "https://goo-dev0505.github.io/note-wrapped/img/ogp.jpg",
-  works: [
-    "./img/work1.jpg",
-    "./img/work2.jpg",
-    "./img/work3.jpg",
-    "./img/work4.jpg",
-    "./img/work5.jpg",
-    "./img/work6.jpg",
-  ],
+  works: "auto",  // public/img/ に work1.jpg, work2.jpg… と連番で置くだけで何枚でも自動表示（最大24枚・欠番で打ち切り）
 };
 // データ取得先を変える場合だけコメントを外す（既定: ./data/ → 失敗時は live URL に自動フォールバック）
 // window.NOTE_LOG_CONFIG = { dataBase: "https://goo-dev0505.github.io/note-wrapped/data/" };
@@ -179,6 +173,11 @@ window.SITE_IMAGES = {
   .kpi-num{font-family:var(--fd);font-weight:600;font-size:clamp(26px,3.6vw,38px);line-height:1;margin-top:14px;letter-spacing:-0.02em;}
   .kpi-spark{margin-top:14px;border-top:1px solid var(--line);padding-top:10px;}
   .kpi-note{margin-top:10px;font-size:11px;color:var(--mut);line-height:1.6;}
+  .kpi-mile{margin-top:12px;border-top:1px solid var(--line);padding-top:10px;}
+  .kpi-mile-bar{height:3px;background:var(--line);border-radius:2px;overflow:hidden;}
+  .kpi-mile-bar span{display:block;height:100%;background:var(--orange);border-radius:2px;transition:width .9s cubic-bezier(.22,1,.36,1);}
+  .kpi-mile-label{font-family:var(--fm);font-size:9px;letter-spacing:1px;color:var(--mut);margin-top:7px;display:flex;justify-content:space-between;gap:8px;}
+  .kpi-mile-label span{color:var(--orange);white-space:nowrap;}
 
   /* ══════════ ティッカー ══════════ */
   .ticker-wrap{overflow:hidden;white-space:nowrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0;background:var(--ink2);}
@@ -788,6 +787,7 @@ function useNoteData() {
       const fsLast = fsLen ? followerSeries[fsLen - 1].f : 0;
       const fAgo = n => fsLen > n ? followerSeries[fsLen - 1 - n].f : fsLen ? followerSeries[0].f : 0;
       const followerWeekGain = fsLast - fAgo(7);
+      const followerTwoWeekGain = fsLast - fAgo(14);
       const followerMonthGain = fsLast - fAgo(30);
       let followerBest = null;
       followerSeries.forEach(p => {
@@ -820,6 +820,18 @@ function useNoteData() {
         v: parseInt(r["ビュー合計"] || r["pv"] || 0),
         s: parseInt(r["スキ合計"] || r["sk"] || 0)
       })).filter(r => r.d);
+
+      // ── 節目（フォロワー同様の自動節目。PV=10,000単位 / スキ=1,000単位） ──
+      const calcMile = (val, unit) => {
+        const target = Math.max(Math.ceil((val + 1) / unit) * unit, unit);
+        return {
+          target,
+          rest: target - val,
+          progress: Math.min(Math.max((val - (target - unit)) / unit * 100, 0), 100)
+        };
+      };
+      const pvMile = calcMile(totalPV, 10000);
+      const skMile = calcMile(totalSK, 1000);
       const EMOJIS = ["💀", "🔧", "🔬", "🎨", "⚗️"];
       const top5 = ranking.sort((a, b) => parseInt(b["期間増加PV"] || 0) - parseInt(a["期間増加PV"] || 0)).slice(0, 5).map((r, i) => ({
         rank: String(i + 1).padStart(2, "0"),
@@ -859,6 +871,7 @@ function useNoteData() {
         followerChart,
         followerSeries,
         followerWeekGain,
+        followerTwoWeekGain,
         followerMonthGain,
         followerBest,
         fMilestone,
@@ -867,6 +880,8 @@ function useNoteData() {
         fEta,
         growthChart,
         growthSeries,
+        pvMile,
+        skMile,
         top5,
         top5PV: null,
         top5SK: null,
@@ -2371,8 +2386,8 @@ function KpiCard({
   value,
   diff,
   color,
-  series,
-  note
+  note,
+  mile
 }) {
   return /*#__PURE__*/React.createElement("div", {
     className: "kpi card"
@@ -2382,19 +2397,24 @@ function KpiCard({
     className: "kpi-label"
   }, label), diff !== undefined && diff !== 0 && /*#__PURE__*/React.createElement("span", {
     className: `kpi-diff ${diff > 0 ? "up" : "down"}`
-  }, diff > 0 ? "▲" : "▼", Math.abs(diff).toLocaleString())), /*#__PURE__*/React.createElement("div", {
+  }, "\u524D\u65E5\u6BD4 ", diff > 0 ? "▲" : "▼", Math.abs(diff).toLocaleString())), /*#__PURE__*/React.createElement("div", {
     className: "kpi-num",
     style: {
       color
     }
   }, /*#__PURE__*/React.createElement(CountUp, {
     value: value
-  })), series && series.length > 1 && /*#__PURE__*/React.createElement("div", {
-    className: "kpi-spark"
-  }, /*#__PURE__*/React.createElement(Sparkline, {
-    points: series,
-    color: "#f97316"
-  })), note && /*#__PURE__*/React.createElement("div", {
+  })), mile && /*#__PURE__*/React.createElement("div", {
+    className: "kpi-mile"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "kpi-mile-bar"
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      width: `${mile.progress}%`
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "kpi-mile-label"
+  }, "\u6B21\u306E\u7BC0\u76EE ", mile.target.toLocaleString(), /*#__PURE__*/React.createElement("span", null, "\u3042\u3068 ", mile.rest.toLocaleString()))), note && /*#__PURE__*/React.createElement("div", {
     className: "kpi-note"
   }, note));
 }
@@ -2790,7 +2810,7 @@ function FollowerSection({
     className: "fol-unit"
   }, "\u4EBA"), data.followerDiff !== 0 && /*#__PURE__*/React.createElement("span", {
     className: `kpi-diff ${data.followerDiff > 0 ? "up" : "down"}`
-  }, data.followerDiff > 0 ? "▲" : "▼", Math.abs(data.followerDiff))), /*#__PURE__*/React.createElement("p", {
+  }, "\u524D\u65E5\u6BD4 ", data.followerDiff > 0 ? "▲" : "▼", Math.abs(data.followerDiff))), /*#__PURE__*/React.createElement("p", {
     className: "fol-msg"
   }, data.followerMsg), /*#__PURE__*/React.createElement("div", {
     className: "fol-stats"
@@ -2801,6 +2821,12 @@ function FollowerSection({
   }, "\u76F4\u8FD17\u65E5"), /*#__PURE__*/React.createElement("span", {
     className: `v ${data.followerWeekGain >= 0 ? "p" : "n"}`
   }, data.followerWeekGain >= 0 ? "+" : "", data.followerWeekGain)), /*#__PURE__*/React.createElement("div", {
+    className: "fol-stat"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "k"
+  }, "\u76F4\u8FD114\u65E5"), /*#__PURE__*/React.createElement("span", {
+    className: `v ${data.followerTwoWeekGain >= 0 ? "p" : "n"}`
+  }, data.followerTwoWeekGain >= 0 ? "+" : "", data.followerTwoWeekGain)), /*#__PURE__*/React.createElement("div", {
     className: "fol-stat"
   }, /*#__PURE__*/React.createElement("span", {
     className: "k"
@@ -2955,9 +2981,6 @@ function Dashboard({
   const loading = !data;
   const artLoading = !data || !data.articlesLoaded;
   const [activeWorst, setActiveWorst] = useState(null);
-  const pvSeries = data?.growthChart?.map(r => r.v);
-  const skSeries = data?.growthChart?.map(r => r.s);
-  const flSeries = data?.followerChart?.map(r => r.f);
   const TRENDS = [{
     key: "rising",
     s: "🔥 急上昇",
@@ -3016,19 +3039,18 @@ function Dashboard({
     value: data.totalPV,
     diff: data.pvDiff,
     color: OR,
-    series: pvSeries
+    mile: data.pvMile
   }), /*#__PURE__*/React.createElement(KpiCard, {
     label: "\u7D2F\u8A08\u30B9\u30AD",
     value: data.totalSK,
     diff: data.skDiff,
     color: "var(--text)",
-    series: skSeries
+    mile: data.skMile
   }), /*#__PURE__*/React.createElement(KpiCard, {
     label: "\u30D5\u30A9\u30ED\u30EF\u30FC",
     value: data.lastFollower,
     diff: data.followerDiff,
     color: "var(--text)",
-    series: flSeries,
     note: data.followerMsg
   }), /*#__PURE__*/React.createElement(KpiCard, {
     label: "\u7DCF\u8A18\u4E8B\u6570",
@@ -3655,6 +3677,41 @@ function HeroVisual() {
     className: "hero-veil"
   }));
 }
+
+/* works:"auto" のとき public/img/work1.jpg, work2.jpg… を連番で自動検出
+   （欠番が出たら打ち切り・最大24枚・拡張子も自動） */
+function useWorksList() {
+  const cfg = SITE_IMAGES.works;
+  const [list, setList] = useState([]);
+  useEffect(() => {
+    if (cfg !== "auto" || typeof window.Image !== "function") return;
+    let alive = true;
+    const found = [];
+    const probe = (cands, cb) => {
+      if (!cands.length) {
+        cb(null);
+        return;
+      }
+      const im = new window.Image();
+      im.onload = () => cb(cands[0]);
+      im.onerror = () => probe(cands.slice(1), cb);
+      im.src = cands[0];
+    };
+    (function next(n) {
+      if (!alive || n > 24) return;
+      probe(imgCandidates(`./img/work${n}.jpg`), url => {
+        if (!alive || !url) return;
+        found.push(url);
+        setList(found.slice());
+        next(n + 1);
+      });
+    })(1);
+    return () => {
+      alive = false;
+    };
+  }, []);
+  return list;
+}
 function WorkImg({
   src,
   alt,
@@ -3676,9 +3733,11 @@ function WorkImg({
 function WorksGallery({
   isMobile
 }) {
-  const works = (SITE_IMAGES.works || []).filter(Boolean);
+  const auto = SITE_IMAGES.works === "auto";
+  const autoList = useWorksList();
+  const works = auto ? autoList : (SITE_IMAGES.works || []).filter(Boolean);
   const [failed, setFailed] = useState(() => new Set());
-  if (works.length === 0 || failed.size >= works.length) return null;
+  if (works.length === 0 || !auto && failed.size >= works.length) return null;
   return /*#__PURE__*/React.createElement("section", {
     className: "sec"
   }, /*#__PURE__*/React.createElement("div", {
@@ -3687,7 +3746,12 @@ function WorksGallery({
     color: BL
   }, "VISUAL WORKS"), /*#__PURE__*/React.createElement(SectionTitle, null, "\u4F5C\u3063\u305F\u3082\u3093\u3001\u7F6E\u3044\u3068\u304F\u3067\u3002"), /*#__PURE__*/React.createElement("div", {
     className: "works-grid"
-  }, works.map((src, i) => failed.has(i) ? null : /*#__PURE__*/React.createElement(WorkImg, {
+  }, auto ? works.map((src, i) => /*#__PURE__*/React.createElement("img", {
+    key: src,
+    src: src,
+    alt: `KITAcore 作品ビジュアル ${i + 1}`,
+    loading: "lazy"
+  })) : works.map((src, i) => failed.has(i) ? null : /*#__PURE__*/React.createElement(WorkImg, {
     key: i,
     src: src,
     alt: `KITAcore 作品ビジュアル ${i + 1}`,
