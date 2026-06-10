@@ -2418,6 +2418,7 @@ function KpiCard({
     className: "kpi-note"
   }, note));
 }
+const fmtTime = t => (t || "").slice(0, 5);
 const CHART_TICK = "#85817a";
 const CHART_GRID = "rgba(128,128,128,0.14)";
 const CHART_TIP = {
@@ -3017,7 +3018,7 @@ function Dashboard({
     className: "eyebrow fu"
   }, /*#__PURE__*/React.createElement("span", {
     className: "rule"
-  }), "LOG IS RUNNING", data ? ` — ${data.updatedAt} 集計` : ""), /*#__PURE__*/React.createElement("h1", {
+  }), "LOG IS RUNNING", data ? ` — ${data.updatedAt}${data.updatedAtTime ? " " + fmtTime(data.updatedAtTime) : ""} 集計` : ""), /*#__PURE__*/React.createElement("h1", {
     className: "hero-title fu d1"
   }, "\u4ECA\u65E5\u3082", /*#__PURE__*/React.createElement("span", {
     className: "o"
@@ -3353,7 +3354,7 @@ function Dashboard({
     className: "b"
   }, "\u306F\u7D9A\u304F\u3002")), /*#__PURE__*/React.createElement("p", null, "\u30C7\u30FC\u30BF\u3067\u904A\u3073\u3001\u5931\u6557\u3092\u30CD\u30BF\u306B\u3057\u3001\u307E\u305F\u66F8\u304F\u3002", /*#__PURE__*/React.createElement("br", null), "KITAcore\u306Enote\u306F\u307E\u3060\u9014\u4E2D\u3067\u3059\u3002"), /*#__PURE__*/React.createElement("div", {
     className: "footer-meta"
-  }, loading ? "読み込み中…" : `集計日 ${data.updatedAt} — 自動更新中`, " \xB7 build 0610-1424"), /*#__PURE__*/React.createElement("div", {
+  }, loading ? "読み込み中…" : `集計日 ${data.updatedAt}${data.updatedAtTime ? " " + fmtTime(data.updatedAtTime) : ""} — 自動更新中`, " \xB7 build 0610-1431"), /*#__PURE__*/React.createElement("div", {
     className: "footer-links"
   }, /*#__PURE__*/React.createElement("a", {
     href: "./"
@@ -4037,7 +4038,7 @@ function KitaWrapped() {
     href: "https://note.com/ktcrs1107",
     target: "_blank",
     rel: "noopener noreferrer"
-  }, "note \u2197"), /*#__PURE__*/React.createElement("span", null, !data ? "—" : data.updatedAt))), tab === "dashboard" && /*#__PURE__*/React.createElement(Dashboard, {
+  }, "note \u2197"), /*#__PURE__*/React.createElement("span", null, !data ? "—" : `${data.updatedAt}${data.updatedAtTime ? " " + fmtTime(data.updatedAtTime) : ""}`))), tab === "dashboard" && /*#__PURE__*/React.createElement(Dashboard, {
     data: data,
     isMobile: isMobile,
     onTabChange: setTab
