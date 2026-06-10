@@ -22,13 +22,27 @@
      画像設定ブロック：URLを貼るだけで全画面に反映（空でもOK）
      ════════════════════════════════════════════════════════════ -->
 <script>
+/* ═══════════════════════════════════════════════════════════════
+   画像の使い方: リポジトリの public/img/ フォルダに、下記の名前で
+   画像をアップロードするだけで自動的に表示されます（HTML編集不要）。
+   ファイルが無い間は何も表示されず、レイアウトも崩れません。
+
+     public/img/logo.png   … ロゴ（ナビ・起動画面・favicon）
+     public/img/hero.jpg   … ヒーロー背景（薄く敷かれる）
+     public/img/ogp.jpg    … SNSシェア用画像
+     public/img/work1.jpg〜work6.jpg … 作品ギャラリー（あるものだけ表示）
+   ═══════════════════════════════════════════════════════════════ */
 window.SITE_IMAGES = {
-  logo:    "",   // ロゴ（ナビ・ブート画面・favicon）例 "https://assets.st-note.com/....png"
-  hero:    "",   // ヒーロー背景（薄く敷かれる）
-  ogImage: "",   // OGP/シェア画像
+  logo:    "./img/logo.png",
+  hero:    "./img/hero.jpg",
+  ogImage: "https://goo-dev0505.github.io/note-wrapped/img/ogp.jpg",
   works: [
-    // 作品ビジュアル（ダッシュボード下部ギャラリー）。URLを追加すると表示される
-    // "https://assets.st-note.com/....jpg",
+    "./img/work1.jpg",
+    "./img/work2.jpg",
+    "./img/work3.jpg",
+    "./img/work4.jpg",
+    "./img/work5.jpg",
+    "./img/work6.jpg",
   ],
 };
 // データ取得先を変える場合だけコメントを外す（既定: ./data/ → 失敗時は live URL に自動フォールバック）
@@ -3634,7 +3648,8 @@ function WorksGallery({
   isMobile
 }) {
   const works = (SITE_IMAGES.works || []).filter(Boolean);
-  if (works.length === 0) return null;
+  const [failed, setFailed] = useState(() => new Set());
+  if (works.length === 0 || failed.size >= works.length) return null;
   return /*#__PURE__*/React.createElement("section", {
     className: "sec"
   }, /*#__PURE__*/React.createElement("div", {
@@ -3643,14 +3658,16 @@ function WorksGallery({
     color: BL
   }, "VISUAL WORKS"), /*#__PURE__*/React.createElement(SectionTitle, null, "\u4F5C\u3063\u305F\u3082\u3093\u3001\u7F6E\u3044\u3068\u304F\u3067\u3002"), /*#__PURE__*/React.createElement("div", {
     className: "works-grid"
-  }, works.map((src, i) => /*#__PURE__*/React.createElement("img", {
+  }, works.map((src, i) => failed.has(i) ? null : /*#__PURE__*/React.createElement("img", {
     key: i,
     src: src,
     alt: `KITAcore 作品ビジュアル ${i + 1}`,
     loading: "lazy",
-    onError: e => {
-      e.currentTarget.style.display = "none";
-    }
+    onError: () => setFailed(prev => {
+      const n = new Set(prev);
+      n.add(i);
+      return n;
+    })
   })))));
 }
 
@@ -3716,6 +3733,7 @@ function BootScreen({
 }) {
   const [, setTick] = useState(0);
   const [closing, setClosing] = useState(false);
+  const [logoErr, setLogoErr] = useState(false);
   const close = () => {
     setClosing(c => {
       if (!c) setTimeout(onDone, 450);
@@ -3742,12 +3760,10 @@ function BootScreen({
     "aria-label": "\u8D77\u52D5\u4E2D"
   }, /*#__PURE__*/React.createElement("div", {
     className: "boot-inner"
-  }, SITE_IMAGES.logo ? /*#__PURE__*/React.createElement("img", {
+  }, SITE_IMAGES.logo && !logoErr ? /*#__PURE__*/React.createElement("img", {
     src: SITE_IMAGES.logo,
     alt: "KITAcore",
-    onError: e => {
-      e.currentTarget.style.display = "none";
-    },
+    onError: () => setLogoErr(true),
     style: {
       height: 42,
       marginBottom: 22,
