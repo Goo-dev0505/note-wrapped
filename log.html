@@ -306,6 +306,26 @@ window.SITE_IMAGES = {
   .pk-hero h2{font-family:var(--fh);font-weight:700;font-size:18px;color:var(--text);line-height:1.5;margin:18px 0 10px;letter-spacing:-0.01em;}
   .pk-hero p{font-size:12px;color:var(--mut);line-height:1.8;}
 
+  /* 02. SELF INTRODUCTION（タイムライン） */
+  .pk-tl{position:relative;padding-left:26px;margin-top:8px;}
+  .pk-tl::before{content:"";position:absolute;left:3px;top:6px;bottom:6px;width:1px;background:var(--line2);}
+  .pk-tl-item{position:relative;padding-bottom:28px;}
+  .pk-tl-item::before{content:"";position:absolute;left:-26px;top:4px;width:7px;height:7px;border-radius:50%;background:var(--mut);}
+  .pk-tl-item.now{padding-bottom:0;}
+  .pk-tl-item.now::before{background:var(--orange);box-shadow:0 0 0 3px rgba(249,115,22,.18);}
+  .pk-tl-meta{font-family:var(--fm);font-size:10px;letter-spacing:2px;color:var(--mut);display:flex;gap:12px;align-items:baseline;margin-bottom:10px;text-transform:uppercase;}
+  .pk-tl-meta .ver{color:var(--text);font-weight:700;}
+  .pk-tl-meta .now-badge{color:var(--orange);font-weight:700;}
+  .pk-tl-row{display:flex;gap:16px;align-items:center;text-decoration:none;padding:14px 16px;}
+  .pk-tl-row:hover{border-color:var(--line2);background:var(--card2);}
+  .pk-tl-row .mini{width:104px;aspect-ratio:1.91/1;object-fit:cover;flex-shrink:0;border:1px solid var(--line);filter:grayscale(20%);transition:filter .35s;}
+  .pk-tl-row:hover .mini{filter:grayscale(0%);}
+  .pk-tl-row .t{flex:1;min-width:0;}
+  .pk-tl-row h3{font-size:13px;font-weight:700;color:var(--text);line-height:1.6;margin:0 0 4px;}
+  .pk-tl-row p{font-size:11px;color:var(--mut);line-height:1.7;margin:0;}
+  .pk-tl-hero{max-width:640px;}
+  .pk-tl-extra{margin-top:36px;}
+
   /* 02-03. MAGAZINES */
   .pk-mag-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
   .pk-mag{display:block;text-decoration:none;height:100%;overflow:hidden;}
@@ -3410,7 +3430,7 @@ function Dashboard({
     className: "b"
   }, "\u306F\u7D9A\u304F\u3002")), /*#__PURE__*/React.createElement("p", null, "\u30C7\u30FC\u30BF\u3067\u904A\u3073\u3001\u5931\u6557\u3092\u30CD\u30BF\u306B\u3057\u3001\u307E\u305F\u66F8\u304F\u3002", /*#__PURE__*/React.createElement("br", null), "KITAcore\u306Enote\u306F\u307E\u3060\u9014\u4E2D\u3067\u3059\u3002"), /*#__PURE__*/React.createElement("div", {
     className: "footer-meta"
-  }, loading ? "読み込み中…" : `集計日 ${data.updatedAt}${data.updatedAtTime ? " " + fmtTime(data.updatedAtTime) : ""} — 自動更新中`, " \xB7 build 0610-1431"), /*#__PURE__*/React.createElement("div", {
+  }, loading ? "読み込み中…" : `集計日 ${data.updatedAt}${data.updatedAtTime ? " " + fmtTime(data.updatedAtTime) : ""} — 自動更新中`, " \xB7 build 0611-1439"), /*#__PURE__*/React.createElement("div", {
     className: "footer-links"
   }, /*#__PURE__*/React.createElement("a", {
     href: "./"
@@ -3451,11 +3471,58 @@ function PickupPage({
     tag: "DATA ANALYSIS",
     title: "初速スキとバズの相関分析：その因果関係を解明する",
     desc: "note記事の最初の1時間が全てを決めるという仮説を、データで検証した。",
-    img: ""
+    img: "https://assets.st-note.com/production/uploads/images/258557049/rectangle_large_type_2_a684873a9370cdbe42b9d50c12be2a2f.png?fit=bounds&quality=85&width=1280"
   }];
+
+  /* ── 自己紹介の変遷（タイムライン・直書き運用） ──
+     古い順に並べる。latest:true の1本だけ大きく表示。 */
+  const SELF_INTRO = [{
+    key: "n27e2942c02d7",
+    ver: "v1.0",
+    date: "2025.09",
+    no: "#23",
+    title: "自己紹介/はじめてのnote",
+    desc: "すべてはここから。元マテリアルエンジニアの備忘録として始まった1本目。",
+    img: "https://assets.st-note.com/production/uploads/images/219400132/rectangle_large_type_2_46f88466b524f863f632288717c8e561.png?fit=bounds&quality=85&width=800"
+  }, {
+    key: "ncd12f1fca6d2",
+    ver: "v2.0",
+    date: "2025.11",
+    no: "#98",
+    title: "自己紹介 Ver.2 ─ 60日後に見えた、自分という構造",
+    desc: "60日間連続投稿の棚卸し。「理系だけど物語脳」が言語化された回。",
+    img: "https://assets.st-note.com/production/uploads/images/225798565/rectangle_large_type_2_a1153b3c565d301ba016fe56332dadef.jpeg?fit=bounds&quality=85&width=800"
+  }, {
+    key: "n0f919ece03f2",
+    ver: "v3.0",
+    date: "2026.02",
+    no: "#260",
+    title: "【自己紹介】データ×生成AIで遊ぶログプレイヤー",
+    desc: "「前の自己紹介、もう読まれてへん」という残酷なデータを受けて書き直した回。",
+    img: "https://assets.st-note.com/production/uploads/images/251184082/rectangle_large_type_2_a058fead623f761effc653169ac0c190.png?fit=bounds&quality=85&width=800"
+  }, {
+    key: "ndc6853aa00d6",
+    ver: "v4.0",
+    date: "2026.06",
+    no: "#391",
+    title: "材料屋だったワイが、noteとAIで遊び始めた話",
+    desc: "現行の自己紹介。ログは増えた。失敗も増えた。たぶん、ネタも増えた。",
+    img: "https://assets.st-note.com/production/uploads/images/282508722/rectangle_large_type_2_4f99407a8a079db1e1973db5cbd51d04.png?fit=bounds&quality=85&width=1280",
+    latest: true
+  }];
+  /* 人となりが分かる1本（タイムラインの締め） */
+  const KOKUHAKU = {
+    key: "n74b4b334899b",
+    tag: "CONFESSION",
+    date: "2026.01",
+    no: "#214",
+    title: "【告白】褒められすぎて怖いから、手の内（AIとの喧嘩術）を全部さらけ出すｗ",
+    desc: "自己紹介よりも人となりが分かるかもしれん1本。AI絵の手の内と自己肯定感の話。",
+    img: "https://assets.st-note.com/production/uploads/images/244101480/rectangle_large_type_2_996c3f5771ecdc5583afb70409e55c50.png?fit=bounds&quality=85&width=1280"
+  };
   const MAG_GROUPS = [{
     name: "KITAcore ORIGINALS",
-    no: "02",
+    no: "03",
     items: [{
       url: "https://note.com/ktcrs1107/m/m98debce90244",
       title: "KITAcore's AI Art Gallery",
@@ -3480,7 +3547,7 @@ function PickupPage({
     }]
   }, {
     name: "COLLABORATIONS",
-    no: "03",
+    no: "04",
     items: [{
       url: "https://note.com/supertoraneko/m/mc6810aa41870",
       title: "AI-LA（アイラ）",
@@ -3710,7 +3777,82 @@ function PickupPage({
     }
   }, hh.tag), e("h2", null, hh.title), e("p", null, hh.desc)))))),
 
-  /* 02-03. MAGAZINES */
+  /* 02. SELF INTRODUCTION（自己紹介の変遷タイムライン） */
+  e("section", {
+    className: "pk-sec"
+  }, e("div", {
+    className: "pk-head"
+  }, "02. SELF INTRODUCTION"), e("p", {
+    className: "pk-note"
+  }, "自己紹介もログや。書き直すたびに、ワイの現在地が残る。古い順に並べとる。"), e("div", {
+    className: "pk-tl"
+  }, SELF_INTRO.map((s, i) => s.latest ? e("div", {
+    key: i,
+    className: "pk-tl-item now"
+  }, e("div", {
+    className: "pk-tl-meta"
+  }, e("span", {
+    className: "ver"
+  }, s.ver), e("span", null, s.date), e("span", null, s.no), e("span", {
+    className: "now-badge"
+  }, "← NOW")), e("a", {
+    className: "card pk-hero gold pk-tl-hero",
+    href: ART(s.key),
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, e(PkThumb, {
+    src: s.img,
+    label: "SELF INTRO"
+  }), e("div", {
+    className: "pk-hero-body"
+  }, e("span", {
+    className: "badge",
+    style: {
+      background: OR,
+      color: "#fff"
+    }
+  }, "CURRENT"), e("h2", null, s.title), e("p", null, s.desc)))) : e("div", {
+    key: i,
+    className: "pk-tl-item"
+  }, e("div", {
+    className: "pk-tl-meta"
+  }, e("span", {
+    className: "ver"
+  }, s.ver), e("span", null, s.date), e("span", null, s.no)), e("a", {
+    className: "card pk-tl-row",
+    href: ART(s.key),
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, !isMobile && e("img", {
+    className: "mini",
+    src: s.img,
+    alt: "",
+    loading: "lazy"
+  }), e("div", {
+    className: "t"
+  }, e("h3", null, s.title), e("p", null, s.desc)))))), e("div", {
+    className: "pk-tl-extra"
+  }, e("div", {
+    className: "pk-prem-name"
+  }, "EXTRA — 自己紹介より人となりが分かるかもしれん1本"), e("a", {
+    className: "card pk-hero pk-tl-hero",
+    href: ART(KOKUHAKU.key),
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, e(PkThumb, {
+    src: KOKUHAKU.img,
+    label: KOKUHAKU.tag
+  }), e("div", {
+    className: "pk-hero-body"
+  }, e("span", {
+    className: "badge",
+    style: {
+      background: "var(--card2)",
+      color: "var(--text)"
+    }
+  }, KOKUHAKU.tag), e("h2", null, KOKUHAKU.title), e("p", null, KOKUHAKU.desc))))),
+
+  /* 03-04. MAGAZINES */
   MAG_GROUPS.map((g, gi) => e("section", {
     className: "pk-sec",
     key: gi
@@ -3747,7 +3889,7 @@ function PickupPage({
       color: BL,
       borderColor: "rgba(113,113,122,.45)"
     }
-  }, "04. PREMIUM RESOURCE"), e("p", {
+  }, "05. PREMIUM RESOURCE"), e("p", {
     className: "pk-note"
   }, "+PV = 直近30日の増加ビュー（毎日自動更新） / ", e("span", {
     className: "hot-mark"
@@ -3795,7 +3937,7 @@ function PickupPage({
     className: "pk-sec"
   }, e("div", {
     className: "pk-head"
-  }, "05. MEMBERSHIP"), e("a", {
+  }, "06. MEMBERSHIP"), e("a", {
     className: "card pk-cta",
     href: MEMBERSHIP.url,
     target: "_blank",
