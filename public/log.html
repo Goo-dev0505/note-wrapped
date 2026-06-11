@@ -284,26 +284,72 @@ window.SITE_IMAGES = {
 
   /* ══════════ PICKUP ══════════ */
   .pickup{min-height:100vh;padding-bottom:120px;counter-reset:sec;}
+  .pk-lead{font-size:13px;color:var(--mut2);line-height:1.9;margin-top:16px;max-width:560px;}
   .pk-sec{margin-top:64px;}
   .pk-head{font-family:var(--fm);font-size:12px;font-weight:700;letter-spacing:3px;color:var(--text);border-bottom:1px solid var(--line2);padding-bottom:10px;margin-bottom:24px;text-transform:uppercase;}
+  .pk-note{font-family:var(--fm);font-size:10px;letter-spacing:1px;color:var(--mut);margin:-8px 0 24px;line-height:1.8;}
+  .pk-note .hot-mark{color:var(--orange);font-style:normal;}
+
+  /* サムネイル（共通）：影なし・罫線・grayscale→hoverで解除 */
+  .pk-thumb{position:relative;aspect-ratio:1.91/1;background:var(--card2);overflow:hidden;border-bottom:1px solid var(--line);}
+  .pk-thumb.wide{aspect-ratio:21/9;}
+  .pk-thumb img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(12%);transition:filter .35s,transform .4s cubic-bezier(.25,.46,.45,.94);}
+  .pk-thumb .pk-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:10px;letter-spacing:3px;color:var(--faint);text-transform:uppercase;}
+
+  /* 01. START HERE */
   .pk-hero-grid{display:grid;grid-template-columns:1.8fr 1.2fr;gap:16px;}
-  .pk-hero{padding:32px;display:block;text-decoration:none;}
+  .pk-hero{display:block;text-decoration:none;overflow:hidden;}
   .pk-hero:hover{border-color:var(--line2);}
+  .pk-hero:hover .pk-thumb img{filter:grayscale(0%);transform:scale(1.02);}
+  .pk-hero.gold{background:var(--gold-card);border-color:rgba(249,115,22,.35);}
+  .pk-hero-body{padding:24px 32px 32px;}
   .pk-hero h2{font-family:var(--fh);font-weight:700;font-size:18px;color:var(--text);line-height:1.5;margin:18px 0 10px;letter-spacing:-0.01em;}
   .pk-hero p{font-size:12px;color:var(--mut);line-height:1.8;}
+
+  /* 02-03. MAGAZINES */
   .pk-mag-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-  .pk-mag{padding:24px;display:block;text-decoration:none;height:100%;}
+  .pk-mag{display:block;text-decoration:none;height:100%;overflow:hidden;}
   .pk-mag:hover{border-color:var(--line2);background:var(--card2);}
-  .pk-mag .pk-icon{font-size:22px;}
-  .pk-mag h3{font-size:13px;font-weight:700;color:var(--text);margin:14px 0 6px;}
+  .pk-mag:hover .pk-thumb img{filter:grayscale(0%);transform:scale(1.02);}
+  .pk-mag-body{padding:16px 24px 24px;}
+  .pk-mag h3{font-size:13px;font-weight:700;color:var(--text);margin:0 0 6px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;}
+  .pk-mag .pk-count{font-family:var(--fm);font-weight:400;font-size:9px;letter-spacing:1px;color:var(--orange);white-space:nowrap;}
   .pk-mag p{font-size:11px;color:var(--mut);line-height:1.7;}
+
+  /* 04. PREMIUM RESOURCE */
   .pk-prem{margin-bottom:32px;}
   .pk-prem-name{font-family:var(--fm);font-size:10px;letter-spacing:2px;color:var(--mut);margin-bottom:10px;text-transform:uppercase;}
+  .pk-prem-count{color:var(--faint);}
   .pk-prem-row{display:flex;align-items:center;gap:16px;padding:16px 20px;text-decoration:none;transition:background var(--tr);}
   .pk-prem-row:hover{background:var(--card2);}
   .pk-tag{font-family:var(--fm);font-size:9px;color:var(--text);border:1px solid var(--line2);padding:2px 6px;border-radius:var(--r2);min-width:66px;text-align:center;flex-shrink:0;}
   .pk-prem-title{font-size:13px;font-weight:700;color:var(--text);line-height:1.5;flex:1;}
+  .pk-stat{font-family:var(--fd);font-weight:600;font-size:12px;color:var(--mut2);white-space:nowrap;flex-shrink:0;}
+  .pk-stat i{font-family:var(--fm);font-weight:400;font-style:normal;font-size:9px;letter-spacing:1px;color:var(--faint);}
+  .pk-stat.hot{color:var(--text);}
+  .pk-stat.hot b{color:var(--orange);font-weight:600;}
   .pk-arrow{color:var(--faint);}
+
+  /* 05. MEMBERSHIP */
+  .pk-cta{display:grid;grid-template-columns:1fr 1.4fr;text-decoration:none;overflow:hidden;border-left:3px solid var(--orange);}
+  .pk-cta:hover{border-color:var(--line2);border-left-color:var(--orange);}
+  .pk-cta:hover .pk-thumb img{filter:grayscale(0%);transform:scale(1.02);}
+  .pk-cta .pk-thumb{aspect-ratio:auto;height:100%;min-height:200px;border-bottom:none;border-right:1px solid var(--line);}
+  .pk-cta-body{padding:32px;}
+  .pk-cta-title{font-family:var(--fh);font-weight:800;font-size:clamp(18px,3vw,24px);color:var(--text);letter-spacing:-0.01em;}
+  .pk-cta-price{font-family:var(--fd);font-weight:700;font-size:34px;color:var(--text);line-height:1;margin:14px 0 10px;letter-spacing:-0.02em;}
+  .pk-cta-price span{font-family:var(--fm);font-weight:400;font-size:11px;color:var(--mut);}
+  .pk-cta:hover .btn-primary{background:var(--orange);color:#fff;}
+
+  @media(max-width:860px){
+    .pk-hero-body{padding:18px 20px 24px;}
+    .pk-mag-body{padding:14px 16px 18px;}
+    .pk-prem-row{padding:14px 14px;gap:10px;}
+    .pk-stat{font-size:11px;}
+    .pk-cta{grid-template-columns:1fr;}
+    .pk-cta .pk-thumb{aspect-ratio:21/9;height:auto;min-height:0;border-right:none;border-bottom:1px solid var(--line);}
+    .pk-cta-body{padding:24px 20px;}
+  }
 
   /* ══════════ 流用コンポーネント（記事一覧・ランキング） ══════════ */
   .skeleton{background:linear-gradient(90deg,var(--card2) 25%,var(--bg2) 50%,var(--card2) 75%);background-size:400px 100%;animation:shimmer 1.4s infinite;border-radius:var(--r);}
@@ -841,6 +887,15 @@ function useNoteData() {
         emoji: EMOJIS[i],
         url: qualityUrlMap[(r["title"] || "").trim()] || null
       }));
+      const rankMap = {};
+      ranking.forEach(r => {
+        const k = (r["key"] || "").trim();
+        const pv = parseInt(r["期間増加PV"] || 0);
+        if (k && pv > 0) rankMap[k] = {
+          pv,
+          avg: parseFloat(r["1日平均PV"] || 0)
+        };
+      });
       const trendCounts = {};
       trend.forEach(r => {
         const s = r["状態"] || r["state"] || "";
@@ -883,6 +938,7 @@ function useNoteData() {
         pvMile,
         skMile,
         top5,
+        rankMap,
         top5PV: null,
         top5SK: null,
         trendCounts,
@@ -3372,260 +3428,398 @@ function Dashboard({
    PICKUP（おすすめ・新デザイン）
 ───────────────────────────────────────────── */
 function PickupPage({
+  data,
   isMobile
 }) {
-  const heroArticles = [{
-    title: "KITAcoreのAI×思考ログへようこそ — プロンプト設計、アート、そして人生のログプレイ",
+  const e = React.createElement;
+  const ART = k => `https://note.com/ktcrs1107/n/${k}`;
+
+  /* ── キュレーション定義（直書き運用） ─────────────
+     img: note記事/マガジンのOGP・カバー画像URLをここに直接貼る。
+     空文字 "" の場合はタイポグラフィのプレースホルダが表示される
+     （レイアウトは崩れない）。count は掲載本数のスナップショット。
+  ──────────────────────────────────────────── */
+  const HERO = [{
+    key: "nd946a5f905a2",
     tag: "START HERE",
-    url: "https://note.com/ktcrs1107/n/n07d5d073e524",
-    desc: "まず読んでほしい固定記事。ワイが何者で、何をしてるかが全部入ってる。"
+    title: "KITAcoreのAI×思考ログへようこそ — プロンプト設計、アート、そして人生のログプレイ",
+    desc: "まず読んでほしい固定記事。ワイが何者で、何をしてるかが全部入ってる。",
+    img: "https://assets.st-note.com/production/uploads/images/265652895/rectangle_large_type_2_2c8c4e243f52bf91ff037592bfc9f046.png?fit=bounds&quality=85&width=1280",
+    gold: true
   }, {
-    title: "初速スキとバズの相関分析：その因果関係を解明する",
+    key: "n5f594f849c4b",
     tag: "DATA ANALYSIS",
-    url: "https://note.com/ktcrs1107/n/n5f594f849c4b",
-    desc: "note記事の最初の1時間が全てを決めるという仮説を、データで検証した。"
+    title: "初速スキとバズの相関分析：その因果関係を解明する",
+    desc: "note記事の最初の1時間が全てを決めるという仮説を、データで検証した。",
+    img: ""
   }];
-  const magazineGroups = [{
+  const MAG_GROUPS = [{
     name: "KITAcore ORIGINALS",
+    no: "02",
     items: [{
-      title: "AI×DATA LOG",
-      desc: "毎日の実験ログ。プロンプト設計から失敗まで全記録。",
-      url: "https://note.com/ktcrs1107/m/m9c1bd0dc9a3e",
-      icon: "🧪"
+      url: "https://note.com/ktcrs1107/m/m98debce90244",
+      title: "KITAcore's AI Art Gallery",
+      desc: "ワイが制作したAIアート作品だけを集めたギャラリー。アメコミ風からフォトリアルまで。",
+      img: "https://assets.st-note.com/production/uploads/images/229812325/e481b65f0ac534a2c1c2932380b9c9eb.png?fit=bounds&quality=85&width=800"
     }, {
-      title: "AIアート実験室",
-      desc: "画像生成AIの技法研究と試行錯誤の記録。",
-      url: "https://note.com/ktcrs1107/m/m3c61f7e05cf9",
-      icon: "🎨"
-    }, {
-      title: "Python Odyssey",
-      desc: "自動化と試行錯誤の全記録。",
       url: "https://note.com/ktcrs1107/m/md1c85d0a934b",
-      icon: "🐍"
+      title: "Python冒険記",
+      desc: "データ分析をエクセルから卒業した軌跡を、面白おかしく綴った学習ログ。",
+      img: "https://assets.st-note.com/production/uploads/images/218483872/ac2bd5d2c8e682825257da00c0088130.png?fit=bounds&quality=85&width=800"
     }, {
-      title: "Selected List",
-      desc: "再読に値する特選記事アーカイブ。",
-      url: "https://note.com/ktcrs1107/m/m779b42e18707",
-      icon: "🔖"
+      url: "https://note.com/ktcrs1107/m/m33ce42803732",
+      title: "Prompt Engineering Studio",
+      desc: "日々つくり続けてる構造化・実践プロンプトのアーカイブ。いわばプロンプトの図書館。",
+      img: ""
+    }, {
+      url: "https://note.com/ktcrs1107/m/m8a4041323c24",
+      title: "Note運営データ分析",
+      desc: "延べ27万件超のスキを解析し、note運営の再現性を統計で探る分析マガジン。このダッシュボードの母艦。",
+      count: "¥5,980",
+      img: ""
     }]
   }, {
     name: "COLLABORATIONS",
+    no: "03",
     items: [{
-      title: "AI-LA（アイラ）",
-      desc: "共同参加中のマガジン。",
       url: "https://note.com/supertoraneko/m/mc6810aa41870",
-      icon: "🤝"
+      title: "AI-LA（アイラ）",
+      desc: "AI × Layer。AIイラストの創造が積み重なる共同マガジン。",
+      count: "5,087本",
+      img: "https://assets.st-note.com/production/uploads/images/271515043/magazine_cover_landscape_981b77bf75dd8ca6b18438e828e164a1.png?width=800"
     }, {
-      title: "漆黒の絶対領域",
-      desc: "共同参加中のマガジン。",
       url: "https://note.com/hitsuji_natsume/m/m41a7aa3dcc38",
-      icon: "🌑"
+      title: "漆黒の絶対領域",
+      desc: "「黒髪」キャラに特化したイラスト系共同マガジン。",
+      img: "https://assets.st-note.com/production/uploads/images/223444627/e7822b56a93f8080b061f1ef40e03b28.png?fit=bounds&quality=85&width=800"
     }, {
-      title: "集まれ！白銀の髪同盟",
-      desc: "共同参加中のマガジン。",
       url: "https://note.com/reipichu/m/m8fb499ecbcbb",
-      icon: "❄️"
+      title: "集まれ！白銀の髪同盟",
+      desc: "白銀の髪のキャラに特化した共同運営マガジン。銀髪愛を分かち合う場。",
+      img: "https://assets.st-note.com/production/uploads/images/210636769/3ca5dd366e57323a2476542ef8119862.jpeg?fit=bounds&quality=85&width=800"
     }, {
-      title: "ダークファンタジー図書館",
-      desc: "共同参加中のマガジン。",
       url: "https://note.com/shio_batapopcorn/m/mc085f157d924",
-      icon: "🏛️"
+      title: "ダークファンタジー図書館",
+      desc: "ダーク系ファンタジー・SF・アクションの創作を集約する【深淵図書館】。",
+      img: "https://assets.st-note.com/production/uploads/images/216415315/ae488da930985da54a6a8c0328c109f9.png?fit=bounds&quality=85&width=800"
     }, {
-      title: "OASOBI会",
-      desc: "共同参加中のマガジン。",
       url: "https://note.com/maiyu_x_ai/m/m96728bd6b208",
-      icon: "🎉"
+      title: "OASOBI会",
+      desc: "お題ワードから3つ以上選んで創作。月2回イベント付きのハイブリッド創作会。",
+      img: "https://assets.st-note.com/production/uploads/images/255766931/755fcabe9278feb13a9b82cc7a52f10d.png?fit=bounds&quality=85&width=800"
     }, {
-      title: "note×AI活用推進",
-      desc: "共同参加中のマガジン。",
       url: "https://note.com/mugimugi92/m/md2a022132e8f",
-      icon: "🚀"
+      title: "note×AI活用推進",
+      desc: "AI活用記事ならなんでもOK。9,000本超の巨大共同マガジン。",
+      count: "9,223本",
+      img: "https://assets.st-note.com/production/uploads/images/224600227/magazine_cover_landscape_694176835b7815c5af9aef86425f7a3a.png?width=800"
+    }, {
+      url: "https://note.com/akari_seaart/m/mdb292cf776c7",
+      title: "アカリウム",
+      desc: "noteの中の小さな水族館。創作が「いきもの」になって泳ぐ場所。",
+      count: "3,303本",
+      img: "https://assets.st-note.com/production/uploads/images/258963934/magazine_cover_landscape_6928620b1421b339643121457e6a7657.png?width=800"
+    }, {
+      url: "https://note.com/nenkoro2/m/m38c6d06537bf",
+      title: "ChatGPTCreativeClub",
+      desc: "ChatGPTとの創作・対話を記事として残す共同マガジン。",
+      count: "935本",
+      img: "https://assets.st-note.com/production/uploads/images/271978075/magazine_cover_landscape_293f6ccb3762be3fc835c5333ee9446b.png?width=800"
+    }, {
+      url: "https://note.com/modern_holly38/m/m1fb06cd6a61d",
+      title: "ダルメイFC",
+      desc: "ダルメイシンちゃんのファンクラブ会員による記事マガジン。",
+      count: "81本",
+      img: "https://assets.st-note.com/production/uploads/images/260281493/92bd2d02895192651fc1ec10b5373567.png?fit=bounds&quality=85&width=800"
+    }, {
+      url: "https://note.com/shirono_aru/m/m3cc7fd715d5c",
+      title: "PolloAIxしろねんコンテスト",
+      desc: "期間限定（〜6/30）のコンテスト用マガジン。",
+      count: "118本",
+      img: "https://assets.st-note.com/production/uploads/images/274492593/magazine_cover_landscape_1be9cfa27e30ca65c71b66250679c1b1.png?width=800"
     }]
   }];
-  const premiumGroups = [{
+  const PREM_GROUPS = [{
     name: "STRATEGY & LOGIC",
     items: [{
-      title: "初速スキとバズの相関分析：その因果関係を解明する",
+      key: "n5f594f849c4b",
       tag: "ANALYSIS",
-      url: "https://note.com/ktcrs1107/n/n5f594f849c4b"
+      title: "初速スキとバズの相関分析：その因果関係を解明する"
     }, {
-      title: "Note閲覧数・スキ数の自動収集システム実装ガイド",
+      key: "ne2bb6d38c4e3",
       tag: "TOOL",
-      url: "https://note.com/ktcrs1107/n/ne2bb6d38c4e3"
+      title: "Note閲覧数・スキ数の自動収集システム実装ガイド"
     }, {
-      title: "データ構造から逆算したnoteタグ戦略の深淵",
+      key: "n1d32162cd219",
       tag: "STRATEGY",
-      url: "https://note.com/ktcrs1107/n/n1d32162cd219"
+      title: "データ構造から逆算したnoteタグ戦略の深淵"
     }, {
-      title: "Platformアルゴリズム公開の背景とその意図を読み解く",
+      key: "n5f991f7606e9",
       tag: "LOGIC",
-      url: "https://note.com/ktcrs1107/n/n5f991f7606e9"
+      title: "Platformアルゴリズム公開の背景とその意図を読み解く"
     }, {
-      title: "全記事データの自動抽出とスプレッドシート連携法",
+      key: "ndb86a66932ee",
       tag: "AUTO",
-      url: "https://note.com/ktcrs1107/n/ndb86a66932ee"
+      title: "全記事データの自動抽出とスプレッドシート連携法"
     }, {
-      title: "Note非公式APIの機能解析と活用可能性の整理",
+      key: "n3ab972786aa0",
       tag: "REPORT",
-      url: "https://note.com/ktcrs1107/n/n3ab972786aa0"
+      title: "Note非公式APIの機能解析と活用可能性の整理"
     }]
   }, {
     name: "ARTISTRY & TECHNIQUES",
     items: [{
-      title: "群衆プロンプトの自由制御：巨大な集合体を生成する技法",
+      key: "n07197895a3e9",
       tag: "TECH",
-      url: "https://note.com/ktcrs1107/n/n07197895a3e9"
+      title: "群衆プロンプトの自由制御：巨大な集合体を生成する技法"
     }, {
-      title: "プロンプト公開版：切り抜き×逆光×投影の再現技法",
+      key: "n86e1c6ff59e1",
       tag: "ART",
-      url: "https://note.com/ktcrs1107/n/n86e1c6ff59e1"
+      title: "プロンプト公開版：切り抜き×逆光×投影の再現技法"
     }, {
-      title: "水彩迷子を救った「妖怪」と「4つの縛り」の解説",
+      key: "n0323b9955abb",
       tag: "WATERCOLOR",
-      url: "https://note.com/ktcrs1107/n/n0323b9955abb"
+      title: "水彩迷子を救った「妖怪」と「4つの縛り」の解説"
     }, {
-      title: "文字にキャラを埋め込むプロンプト設計",
+      key: "n5c5913089d08",
       tag: "TYPE",
-      url: "https://note.com/ktcrs1107/n/n5c5913089d08"
+      title: "文字にキャラを埋め込むプロンプト設計"
     }, {
-      title: "アメコミホラーを制御するYAML構造化とコンパイル技法",
+      key: "nd9fa08da2f22",
       tag: "YAML",
-      url: "https://note.com/ktcrs1107/n/nd9fa08da2f22"
+      title: "アメコミホラーを制御するYAML構造化とコンパイル技法"
     }, {
-      title: "ダブルエクスポージャー再現：混ぜない、重ねる投影の技法",
+      key: "nb392a506a3e1",
       tag: "DOUBLE",
-      url: "https://note.com/ktcrs1107/n/nb392a506a3e1"
+      title: "ダブルエクスポージャー再現：混ぜない、重ねる投影の技法"
     }, {
-      title: "12干支に変換するキーと11体コピペ集",
+      key: "nfe75462bec74",
       tag: "ZODIAC",
-      url: "https://note.com/ktcrs1107/n/nfe75462bec74"
+      title: "12干支に変換するキーと11体コピペ集"
     }, {
-      title: "Nano Banana Proで映画BTSごっこを楽しむ沼の話",
+      key: "n8787acd84304",
       tag: "PRO",
-      url: "https://note.com/ktcrs1107/n/n8787acd84304"
+      title: "Nano Banana Proで映画BTSごっこを楽しむ沼の話"
     }]
   }, {
     name: "PROMPT ENGINEERING",
     items: [{
-      title: "JSON構造プロンプトの汎用化：あらゆる対象への横展開フレーム",
+      key: "n023ff6bdcf19",
       tag: "FRAME",
-      url: "https://note.com/ktcrs1107/n/n023ff6bdcf19"
+      title: "JSON構造プロンプトの汎用化：あらゆる対象への横展開フレーム"
     }, {
-      title: "NanoBanana 構造化設計：画像生成を運から論理へ変える全貌",
+      key: "n12201dd9b5ff",
       tag: "ENGINE",
-      url: "https://note.com/ktcrs1107/n/n12201dd9b5ff"
+      title: "NanoBanana 構造化設計：画像生成を運から論理へ変える全貌"
     }, {
-      title: "プロンプト順序が生成結果に与える影響の定量的考察",
+      key: "n1cb447965e43",
       tag: "STUDY",
-      url: "https://note.com/ktcrs1107/n/n1cb447965e43"
+      title: "プロンプト順序が生成結果に与える影響の定量的考察"
     }, {
-      title: "衆院選×日経平均：AIに株価シナリオを描かせてみる実験",
+      key: "n4c64f88ab49b",
       tag: "ECONOMY",
-      url: "https://note.com/ktcrs1107/n/n4c64f88ab49b"
+      title: "衆院選×日経平均：AIに株価シナリオを描かせてみる実験"
     }, {
-      title: "KITAcore流プロンプトエンジニアリング：呪文を卒業するカリキュラム",
+      key: "nfb6b2d84dfc9",
       tag: "CURRICULUM",
-      url: "https://note.com/ktcrs1107/n/nfb6b2d84dfc9"
+      title: "KITAcore流プロンプトエンジニアリング：呪文を卒業するカリキュラム"
     }, {
-      title: "AIにプロの調査ルールを移植し、リサーチを効率化する技法",
+      key: "n38437d0f3242",
       tag: "ANALYST",
-      url: "https://note.com/ktcrs1107/n/n38437d0f3242"
+      title: "AIにプロの調査ルールを移植し、リサーチを効率化する技法"
     }, {
-      title: "プロンプトエンジニアリングにおける「ズル技」の体系化",
+      key: "n8ded3116a32b",
       tag: "HACK",
-      url: "https://note.com/ktcrs1107/n/n8ded3116a32b"
+      title: "プロンプトエンジニアリングにおける「ズル技」の体系化"
     }, {
-      title: "AIとの対話ログから自己の思考傾向を丸裸にする試み",
+      key: "ne2173e797345",
       tag: "LOG",
-      url: "https://note.com/ktcrs1107/n/ne2173e797345"
+      title: "AIとの対話ログから自己の思考傾向を丸裸にする試み"
     }]
   }];
-  return /*#__PURE__*/React.createElement("main", {
+  const MEMBERSHIP = {
+    url: "https://note.com/ktcrs1107/membership",
+    title: "KITACore呪文の裏庭",
+    price: "¥980",
+    img: "https://assets.st-note.com/production/uploads/images/247018172/44a802dd2f6dae298dc0dd18f2e0c548.png?width=800",
+    perks: ["実際に画像生成で使った呪文プロンプトを公開（46記事＋掲示板18が読み放題）", "990円未満の有料記事はメンバーなら無料（一部対象外）", "気が向いたらプロンプト調整も一緒にやる（保証はせんｗ）"]
+  };
+
+  /* ── 直近30日の増加PV（period_ranking.csv 由来・useNoteDataで構築済み） ── */
+  const rankMap = data && data.rankMap || {};
+  const fmtNum = n => n.toLocaleString("ja-JP");
+
+  /* ── サムネイル（読み込み失敗時はタイポグラフィのプレースホルダ） ── */
+  function PkThumb({
+    src,
+    label,
+    ratio
+  }) {
+    const [ok, setOk] = useState(!!src);
+    return e("div", {
+      className: "pk-thumb" + (ratio === "wide" ? " wide" : ""),
+      "aria-hidden": "true"
+    }, ok ? e("img", {
+      src,
+      alt: "",
+      loading: "lazy",
+      onError: () => setOk(false)
+    }) : e("span", {
+      className: "pk-ph"
+    }, label));
+  }
+  const totalArt = data && data.totalArt || 0;
+  return e("main", {
     className: "page-fade pickup"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, e("div", {
     className: "wrap",
     style: {
       paddingTop: isMobile ? 36 : 64
     }
-  }, /*#__PURE__*/React.createElement(SectionEyebrow, {
+  }, e(SectionEyebrow, {
     color: BL
-  }, "CURATION"), /*#__PURE__*/React.createElement("h1", {
+  }, "CURATION"), e("h1", {
     className: "sec-title"
-  }, "PICK UP & SERIES"), /*#__PURE__*/React.createElement("section", {
+  }, "PICK UP & SERIES"), e("p", {
+    className: "pk-lead"
+  }, totalArt > 0 ? `全${fmtNum(totalArt)}本のログから、「最初に読む1本」と「続けて潜れるシリーズ」だけを置いてる。` : "「最初に読む1本」と「続けて潜れるシリーズ」だけを置いてる。", e("br", null), "数字は毎日の自動集計から反映や。"),
+
+  /* 01. START HERE */
+  e("section", {
     className: "pk-sec"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, e("div", {
     className: "pk-head"
-  }, "01. START HERE"), /*#__PURE__*/React.createElement("div", {
+  }, "01. START HERE"), e("div", {
     className: "pk-hero-grid"
-  }, heroArticles.map((h, i) => /*#__PURE__*/React.createElement("a", {
+  }, HERO.map((hh, i) => e("a", {
     key: i,
-    className: "card pk-hero",
-    href: h.url,
+    className: "card pk-hero" + (hh.gold ? " gold" : ""),
+    href: ART(hh.key),
     target: "_blank",
-    rel: "noopener noreferrer",
-    style: i === 0 ? {
-      background: "var(--gold-card)",
-      borderColor: "rgba(249,115,22,.35)"
-    } : {}
-  }, /*#__PURE__*/React.createElement("span", {
+    rel: "noopener noreferrer"
+  }, e(PkThumb, {
+    src: hh.img,
+    label: hh.tag
+  }), e("div", {
+    className: "pk-hero-body"
+  }, e("span", {
     className: "badge",
     style: {
-      background: i === 0 ? OR : "var(--card2)",
-      color: i === 0 ? "#fff" : "var(--text)"
+      background: hh.gold ? OR : "var(--card2)",
+      color: hh.gold ? "#fff" : "var(--text)"
     }
-  }, h.tag), /*#__PURE__*/React.createElement("h2", null, h.title), /*#__PURE__*/React.createElement("p", null, h.desc))))), magazineGroups.map((g, gi) => /*#__PURE__*/React.createElement("section", {
+  }, hh.tag), e("h2", null, hh.title), e("p", null, hh.desc)))))),
+
+  /* 02-03. MAGAZINES */
+  MAG_GROUPS.map((g, gi) => e("section", {
     className: "pk-sec",
     key: gi
-  }, /*#__PURE__*/React.createElement("div", {
+  }, e("div", {
     className: "pk-head",
     style: {
       color: "var(--mut)",
       borderColor: "var(--line)"
     }
-  }, `02-${gi + 1}. ${g.name}`), /*#__PURE__*/React.createElement("div", {
+  }, `${g.no}. ${g.name}`), e("div", {
     className: "pk-mag-grid"
-  }, g.items.map((m, i) => /*#__PURE__*/React.createElement("a", {
+  }, g.items.map((m, i) => e("a", {
     key: i,
     className: "card pk-mag",
     href: m.url,
     target: "_blank",
     rel: "noopener noreferrer"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "pk-icon"
-  }, m.icon), /*#__PURE__*/React.createElement("h3", null, m.title), /*#__PURE__*/React.createElement("p", null, m.desc)))))), /*#__PURE__*/React.createElement("section", {
+  }, e(PkThumb, {
+    src: m.img,
+    label: "MAGAZINE",
+    ratio: "wide"
+  }), e("div", {
+    className: "pk-mag-body"
+  }, e("h3", null, m.title, m.count && e("span", {
+    className: "pk-count"
+  }, m.count)), e("p", null, m.desc))))))),
+
+  /* 04. PREMIUM RESOURCE */
+  e("section", {
     className: "pk-sec"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, e("div", {
     className: "pk-head",
     style: {
       color: BL,
-      borderColor: "rgba(59,130,246,.3)"
+      borderColor: "rgba(113,113,122,.45)"
     }
-  }, "03. PREMIUM RESOURCE"), premiumGroups.map((g, gi) => /*#__PURE__*/React.createElement("div", {
-    key: gi,
-    className: "pk-prem"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "pk-prem-name"
-  }, g.name), /*#__PURE__*/React.createElement("div", {
-    className: "card",
-    style: {
-      overflow: "hidden"
-    }
-  }, g.items.map((it, i) => /*#__PURE__*/React.createElement("a", {
-    key: i,
-    className: "pk-prem-row",
-    href: it.url,
+  }, "04. PREMIUM RESOURCE"), e("p", {
+    className: "pk-note"
+  }, "+PV = 直近30日の増加ビュー（毎日自動更新） / ", e("span", {
+    className: "hot-mark"
+  }, "▲"), " = グループ内でいちばん伸びてる記事"), PREM_GROUPS.map((g, gi) => {
+    const pvs = g.items.map(it => rankMap[it.key] ? rankMap[it.key].pv : -1);
+    const maxPv = Math.max.apply(null, pvs);
+    return e("div", {
+      key: gi,
+      className: "pk-prem"
+    }, e("div", {
+      className: "pk-prem-name"
+    }, g.name, e("span", {
+      className: "pk-prem-count"
+    }, ` / ${g.items.length}`)), e("div", {
+      className: "card",
+      style: {
+        overflow: "hidden"
+      }
+    }, g.items.map((it, i) => {
+      const r = rankMap[it.key];
+      const hot = r && maxPv > 0 && r.pv === maxPv;
+      return e("a", {
+        key: i,
+        className: "pk-prem-row",
+        href: ART(it.key),
+        target: "_blank",
+        rel: "noopener noreferrer",
+        style: {
+          borderBottom: i === g.items.length - 1 ? "none" : "1px solid var(--line)"
+        }
+      }, e("span", {
+        className: "pk-tag"
+      }, it.tag), e("span", {
+        className: "pk-prem-title"
+      }, it.title), r && e("span", {
+        className: "pk-stat" + (hot ? " hot" : "")
+      }, hot && e("b", null, "▲ "), `+${fmtNum(r.pv)}`, e("i", null, " PV")), !isMobile && e("span", {
+        className: "pk-arrow"
+      }, "→"));
+    })));
+  })),
+
+  /* 05. MEMBERSHIP */
+  e("section", {
+    className: "pk-sec"
+  }, e("div", {
+    className: "pk-head"
+  }, "05. MEMBERSHIP"), e("a", {
+    className: "card pk-cta",
+    href: MEMBERSHIP.url,
     target: "_blank",
-    rel: "noopener noreferrer",
+    rel: "noopener noreferrer"
+  }, e(PkThumb, {
+    src: MEMBERSHIP.img,
+    label: "MEMBERSHIP",
+    ratio: "wide"
+  }), e("div", {
+    className: "pk-cta-body"
+  }, e("div", {
+    className: "pk-cta-title"
+  }, MEMBERSHIP.title), e("div", {
+    className: "pk-cta-price"
+  }, MEMBERSHIP.price, e("span", null, " / 月")), MEMBERSHIP.perks.map((p, i) => e("div", {
+    className: "perk",
+    key: i
+  }, p)), e("span", {
+    className: "btn-primary",
     style: {
-      borderBottom: i === g.items.length - 1 ? "none" : "1px solid var(--line)"
+      marginTop: 24,
+      display: "inline-block"
     }
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "pk-tag"
-  }, it.tag), /*#__PURE__*/React.createElement("span", {
-    className: "pk-prem-title"
-  }, it.title), !isMobile && /*#__PURE__*/React.createElement("span", {
-    className: "pk-arrow"
-  }, "\u2192")))))))));
+  }, "メンバーシップを見る ↗"))))));
 }
 
 /* ─────────────────────────────────────────────
@@ -4043,6 +4237,7 @@ function KitaWrapped() {
     isMobile: isMobile,
     onTabChange: setTab
   }), tab === "pickup" && /*#__PURE__*/React.createElement(PickupPage, {
+    data: data,
     isMobile: isMobile
   }), tab === "articles" && /*#__PURE__*/React.createElement(ArticleListPage, {
     data: data,
