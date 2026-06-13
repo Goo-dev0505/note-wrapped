@@ -397,15 +397,27 @@ window.SITE_IMAGES = {
   .shelf-strip::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px;}
   .shelf-strip::-webkit-scrollbar-thumb:hover{background:var(--mut);}
   .card-hover{transition:border-color var(--tr),background var(--tr);cursor:pointer;-webkit-tap-highlight-color:transparent;}
-  .rank-card{position:relative;cursor:pointer;border-radius:var(--r);overflow:hidden;transition:border-color var(--tr);-webkit-tap-highlight-color:transparent;}
-  .rank-card:hover{border-color:var(--line2)!important;}
+  .rank-card{position:relative;cursor:pointer;border-radius:var(--r);overflow:hidden;transition:border-color var(--tr),transform .28s cubic-bezier(.22,1,.36,1),box-shadow .28s;-webkit-tap-highlight-color:transparent;}
+  .rank-card:hover{border-color:var(--line2)!important;transform:translateY(-5px);}
   .rank-card .cta-layer{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(249,115,22,.92);opacity:0;transition:opacity var(--tr);pointer-events:none;}
   .rank-card:hover .cta-layer{opacity:1;}
   .rank-card .cta-text{font-family:var(--fm);font-weight:700;font-size:13px;letter-spacing:3px;color:#fff;text-transform:uppercase;}
-  .rank-row{border-radius:var(--r2);overflow:hidden;transition:background var(--tr);cursor:pointer;}
-  .rank-row:hover{background:var(--card2)!important;}
+  .rank-row{border-radius:var(--r2);overflow:hidden;transition:background var(--tr),transform .2s cubic-bezier(.22,1,.36,1);cursor:pointer;}
+  .rank-row:hover{background:var(--card2)!important;transform:translateX(4px);}
   .rank-row .row-cta{opacity:0;transition:opacity var(--tr);}
   .rank-row:hover .row-cta{opacity:1;}
+  /* ── ランキング遊び心 ── */
+  .rk-av{transition:transform .25s cubic-bezier(.34,1.56,.64,1);}
+  .rank-card:hover .rk-av,.rank-row:hover .rk-av{transform:scale(1.12) rotate(-6deg);}
+  .rk-crown{display:inline-block;animation:rkWobble 2.4s ease-in-out infinite;transform-origin:bottom center;}
+  @keyframes rkWobble{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(9deg)}}
+  .rk-badge{transition:transform var(--tr);}
+  .rank-card:hover .rk-badge,.rank-row:hover .rk-badge{transform:scale(1.07);}
+  .rk-sparkle{position:absolute;pointer-events:none;font-size:13px;animation:rkTwinkle 1.9s ease-in-out infinite;}
+  @keyframes rkTwinkle{0%,100%{opacity:.15;transform:scale(.6)}50%{opacity:1;transform:scale(1.15)}}
+  .rk-confetti{position:absolute;top:-6px;border-radius:2px;will-change:transform,opacity;animation:rkFall linear forwards;}
+  @keyframes rkFall{0%{transform:translateY(-8px) rotate(0);opacity:0}10%{opacity:1}100%{transform:translateY(240px) rotate(560deg);opacity:0}}
+  @media (prefers-reduced-motion: reduce){.rk-crown,.rk-sparkle,.rk-confetti{animation:none!important}.rk-confetti{display:none!important}}
 
   /* ══════════ 演出 ══════════ */
   .boot-screen{position:fixed;inset:0;z-index:10000;background:var(--bg);display:flex;align-items:center;justify-content:center;transition:opacity .45s ease;}
@@ -814,6 +826,117 @@ const MEDAL = ["👑", "🥈", "🥉"];
 const MEDAL_COLOR = [OR, "#a0a0a0", "#b07c40"];
 const BUMP_COLORS = ["#f97316", "#3b82f6", "#22c55e", "#eab308", "#ec4899", "#8b5cf6", "#06b6d4", "#f43f5e", "#10b981", "#f59e0b", "#6366f1", "#84cc16", "#e11d48", "#0ea5e9", "#d97706", "#7c3aed", "#059669", "#dc2626", "#2563eb", "#16a34a"];
 const BUMP_FETCH_N = 20;
+// 名前から決定論的にアバター（イニシャル＋2色グラデ）を生成
+const AVATAR_PALETTE = [["#f97316", "#fb923c"], ["#3b82f6", "#60a5fa"], ["#22c55e", "#4ade80"], ["#ec4899", "#f472b6"], ["#8b5cf6", "#a78bfa"], ["#06b6d4", "#22d3ee"], ["#f43f5e", "#fb7185"], ["#eab308", "#facc15"], ["#10b981", "#34d399"], ["#6366f1", "#818cf8"]];
+function avatarFor(name) {
+  const s = (name || "?").trim();
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  const [c1, c2] = AVATAR_PALETTE[h % AVATAR_PALETTE.length];
+  // 先頭の表示用文字（絵文字・サロゲートペア対応）
+  const initial = [...s][0] ? [...s][0].toUpperCase() : "?";
+  return {
+    initial,
+    gradient: `linear-gradient(135deg, ${c1}, ${c2})`,
+    color: c1
+  };
+}
+// スキ数に応じた称号バッジ
+const RANK_TITLES = [{
+  min: 100,
+  label: "ヌシ",
+  emoji: "🏯",
+  color: "#f97316"
+}, {
+  min: 50,
+  label: "常連",
+  emoji: "🔥",
+  color: "#ef4444"
+}, {
+  min: 20,
+  label: "レギュラー",
+  emoji: "⭐",
+  color: "#eab308"
+}, {
+  min: 5,
+  label: "新顔",
+  emoji: "🌱",
+  color: "#22c55e"
+}, {
+  min: 0,
+  label: "ご新規さん",
+  emoji: "🍀",
+  color: "#06b6d4"
+}];
+function titleFor(n) {
+  n = Number(n) || 0;
+  return RANK_TITLES.find(t => n >= t.min) || RANK_TITLES[RANK_TITLES.length - 1];
+}
+function RankBadge({
+  likes,
+  small
+}) {
+  const t = titleFor(likes);
+  return /*#__PURE__*/React.createElement("span", {
+    className: "rk-badge",
+    style: {
+      display: "inline-flex",
+      alignItems: "center",
+      gap: 4,
+      padding: small ? "2px 7px" : "3px 9px",
+      borderRadius: 12,
+      fontSize: small ? 9 : 10,
+      fontFamily: "var(--fj)",
+      fontWeight: 700,
+      lineHeight: 1,
+      color: t.color,
+      background: `${t.color}1f`,
+      border: `1px solid ${t.color}44`,
+      whiteSpace: "nowrap"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: small ? 10 : 11
+    }
+  }, t.emoji), t.label);
+}
+// 1位を祝う紙吹雪（外部ライブラリ不要）
+function Confetti() {
+  const [pieces] = useState(() => {
+    const colors = ["#f97316", "#fb923c", "#eab308", "#22c55e", "#3b82f6", "#ec4899", "#ffffff"];
+    return Array.from({
+      length: 32
+    }, (_, i) => ({
+      left: Math.random() * 100,
+      delay: Math.random() * 0.5,
+      dur: 1.7 + Math.random() * 1.4,
+      color: colors[i % colors.length],
+      rot: Math.random() * 360,
+      w: 6 + Math.random() * 5
+    }));
+  });
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "absolute",
+      inset: 0,
+      overflow: "visible",
+      pointerEvents: "none",
+      zIndex: 6
+    }
+  }, pieces.map((p, i) => /*#__PURE__*/React.createElement("span", {
+    key: i,
+    className: "rk-confetti",
+    style: {
+      left: p.left + "%",
+      background: p.color,
+      width: p.w,
+      height: p.w * 1.7,
+      animationDuration: p.dur + "s",
+      animationDelay: p.delay + "s",
+      transform: `rotate(${p.rot}deg)`
+    }
+  })));
+}
 
 /* ─────────────────────────────────────────────
    HELPERS
@@ -2533,50 +2656,117 @@ function RankSkeleton({
 }
 function HeroCard({
   row,
-  isMobile
+  isMobile,
+  maxLikes
 }) {
   const idx = row.rank - 1;
   const url = row.has_profile_url ? row.creator_url : null;
   const mc = MEDAL_COLOR[idx] ?? "var(--faint)";
   const isFirst = idx === 0;
+  const av = avatarFor(row.creator_name);
+  const pct = maxLikes > 0 ? Math.max(6, Math.round(row.likes_count / maxLikes * 100)) : 0;
+  const avSize = isFirst ? isMobile ? 56 : 72 : isMobile ? 46 : 58;
   const inner = /*#__PURE__*/React.createElement("div", {
     className: "rank-card",
     style: {
       background: isFirst ? "var(--gold-card)" : "var(--card2)",
       border: `1px solid ${isFirst ? `${OR}55` : "var(--line2)"}`,
-      padding: isMobile ? "18px 14px" : "26px 22px",
-      height: "100%"
+      borderRadius: 16,
+      padding: isMobile ? "18px 16px" : isFirst ? "26px 22px" : "22px 18px",
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
+      gap: 14,
+      boxShadow: isFirst ? `0 12px 38px ${OR}26` : "none"
     }
-  }, url && /*#__PURE__*/React.createElement("div", {
-    className: "cta-layer"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "cta-text"
-  }, "\u30D7\u30ED\u30D5\u30A3\u30FC\u30EB\u3078 \u2192")), /*#__PURE__*/React.createElement("div", {
+  },
+  isFirst && /*#__PURE__*/React.createElement("span", {
+    className: "rk-sparkle",
+    style: {
+      top: 12,
+      right: 16
+    }
+  }, "\u2728"), isFirst && /*#__PURE__*/React.createElement("span", {
+    className: "rk-sparkle",
+    style: {
+      bottom: 20,
+      left: 18,
+      fontSize: 11,
+      animationDelay: ".8s"
+    }
+  }, "\u2728"),
+  /* \u30A2\u30D0\u30BF\u30FC\uFF0B\u30E9\u30F3\u30AF */
+  /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       alignItems: "center",
-      gap: 8,
-      marginBottom: 14
+      gap: 12
     }
-  }, /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
-      fontSize: isFirst ? 26 : 20
+      position: "relative",
+      flexShrink: 0
     }
-  }, MEDAL[idx]), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "rk-av",
+    style: {
+      width: avSize,
+      height: avSize,
+      borderRadius: "50%",
+      background: av.gradient,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontFamily: "var(--fj)",
+      fontWeight: 800,
+      color: "#fff",
+      fontSize: isFirst ? isMobile ? 24 : 30 : isMobile ? 20 : 24,
+      boxShadow: "0 6px 18px rgba(0,0,0,.28)"
+    }
+  }, av.initial), /*#__PURE__*/React.createElement("div", {
+    className: isFirst ? "rk-crown" : null,
+    style: {
+      position: "absolute",
+      right: -4,
+      bottom: -4,
+      fontSize: isFirst ? 24 : 19,
+      lineHeight: 1,
+      filter: "drop-shadow(0 1px 2px rgba(0,0,0,.45))"
+    }
+  }, MEDAL[idx])), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginLeft: "auto",
+      textAlign: "right"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: "var(--fm)",
+      fontSize: 9,
+      letterSpacing: 2,
+      color: "var(--faint)"
+    }
+  }, "RANK"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: "var(--fd)",
-      fontSize: isFirst ? isMobile ? 52 : 68 : isMobile ? 38 : 52,
+      fontSize: isFirst ? isMobile ? 44 : 56 : isMobile ? 34 : 44,
       color: mc,
       lineHeight: 1,
       letterSpacing: -1
     }
-  }, String(row.rank).padStart(2, "0"))), /*#__PURE__*/React.createElement("div", {
+  }, String(row.rank).padStart(2, "0")))),
+  /* \u540D\u524D\uFF0B\u79F0\u53F7\u30D0\u30C3\u30B8 */
+  /*#__PURE__*/React.createElement("div", {
     style: {
-      fontSize: isMobile ? 13 : 15,
+      display: "flex",
+      flexDirection: "column",
+      gap: 8
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: isMobile ? 14 : isFirst ? 17 : 15,
       fontWeight: 700,
       color: isFirst ? TEXT : "var(--text2)",
       lineHeight: 1.4,
-      marginBottom: 12,
       overflow: "hidden",
       display: "-webkit-box",
       WebkitLineClamp: 2,
@@ -2584,14 +2774,23 @@ function HeroCard({
     }
   }, row.creator_name), /*#__PURE__*/React.createElement("div", {
     style: {
+      display: "flex"
+    }
+  }, /*#__PURE__*/React.createElement(RankBadge, {
+    likes: row.likes_count
+  }))),
+  /* \u30B9\u30AD\u6570\uFF0B\u52E2\u3044\u30D0\u30FC */
+  /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
       display: "flex",
       alignItems: "baseline",
-      gap: 6
+      gap: 6,
+      marginBottom: 8
     }
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: "var(--fd)",
-      fontSize: isFirst ? isMobile ? 38 : 50 : isMobile ? 30 : 38,
+      fontSize: isFirst ? isMobile ? 34 : 44 : isMobile ? 28 : 34,
       color: mc,
       lineHeight: 1
     }
@@ -2604,20 +2803,58 @@ function HeroCard({
     }
   }, "\u30B9\u30AD")), /*#__PURE__*/React.createElement("div", {
     style: {
-      marginTop: 10,
+      height: 6,
+      borderRadius: 4,
+      background: "var(--line)",
+      overflow: "hidden"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: "100%",
+      width: pct + "%",
+      borderRadius: 4,
+      background: isFirst ? `linear-gradient(90deg,${OR},#fb923c)` : av.gradient,
+      transition: "width .6s cubic-bezier(.22,1,.36,1)"
+    }
+  }))),
+  /* \u30D5\u30C3\u30BF\u30FC\uFF1A\u6700\u7D42\u30B9\u30AD\uFF0BCTA */
+  /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: "auto",
+      display: "flex",
+      alignItems: "center",
+      gap: 8,
+      paddingTop: 4
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
       fontSize: 10,
       color: "var(--mut)",
       fontFamily: "var(--fm)",
       letterSpacing: .5
     }
-  }, "\u6700\u7D42 ", fmtDate(row.last_like_at)), !url && /*#__PURE__*/React.createElement("div", {
+  }, "\u6700\u7D42 ", fmtDate(row.last_like_at)), url ? /*#__PURE__*/React.createElement("span", {
     style: {
-      marginTop: 8,
+      marginLeft: "auto",
+      display: "inline-block",
+      padding: "6px 14px",
+      borderRadius: 18,
+      fontSize: 10,
+      fontFamily: "var(--fs)",
+      letterSpacing: 1,
+      fontWeight: 700,
+      color: "#fff",
+      background: OR,
+      whiteSpace: "nowrap"
+    }
+  }, "\u898B\u306B\u884C\u304F \u2192") : /*#__PURE__*/React.createElement("span", {
+    style: {
+      marginLeft: "auto",
       fontSize: 9,
       color: "var(--faint)",
       fontFamily: "var(--fs)"
     }
-  }, "URL\u672A\u8A2D\u5B9A"));
+  }, "URL\u672A\u8A2D\u5B9A")));
   return url ? /*#__PURE__*/React.createElement("a", {
     href: url,
     target: "_blank",
@@ -2631,37 +2868,61 @@ function HeroCard({
 }
 function RankRow({
   row,
-  isMobile
+  isMobile,
+  maxLikes
 }) {
   const url = row.has_profile_url ? row.creator_url : null;
-  const inner = /*#__PURE__*/React.createElement("div", {
-    className: "rank-row",
+  const av = avatarFor(row.creator_name);
+  const pct = maxLikes > 0 ? Math.max(4, Math.round(row.likes_count / maxLikes * 100)) : 0;
+  const avatar = /*#__PURE__*/React.createElement("div", {
+    className: "rk-av",
     style: {
-      display: "grid",
-      gridTemplateColumns: isMobile ? "48px 1fr 56px" : "56px 1fr 80px 100px 90px",
-      gap: isMobile ? 10 : 16,
-      padding: isMobile ? "12px 10px" : "14px 20px",
+      width: isMobile ? 38 : 42,
+      height: isMobile ? 38 : 42,
+      borderRadius: "50%",
+      background: av.gradient,
+      flexShrink: 0,
+      display: "flex",
       alignItems: "center",
-      borderBottom: "1px solid var(--line)"
+      justifyContent: "center",
+      color: "#fff",
+      fontFamily: "var(--fj)",
+      fontWeight: 800,
+      fontSize: isMobile ? 15 : 17,
+      boxShadow: "0 2px 8px rgba(0,0,0,.2)"
+    }
+  }, av.initial);
+  const bar = /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: 4,
+      borderRadius: 3,
+      background: "var(--line)",
+      overflow: "hidden"
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      fontFamily: "var(--fd)",
-      fontSize: isMobile ? 24 : 28,
-      color: "var(--faint)",
-      lineHeight: 1,
-      textAlign: "center"
+      height: "100%",
+      width: pct + "%",
+      borderRadius: 3,
+      background: av.gradient,
+      transition: "width .6s cubic-bezier(.22,1,.36,1)"
     }
-  }, row.rank), /*#__PURE__*/React.createElement("div", {
+  }));
+  const ctaPill = txt => /*#__PURE__*/React.createElement("span", {
     style: {
-      fontSize: isMobile ? 12 : 13,
+      display: "inline-block",
+      padding: isMobile ? "4px 10px" : "5px 13px",
+      borderRadius: 16,
+      fontSize: 10,
+      fontFamily: "var(--fs)",
+      letterSpacing: 1,
       fontWeight: 700,
-      color: "var(--text2)",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
+      color: "#fff",
+      background: OR,
       whiteSpace: "nowrap"
     }
-  }, row.creator_name), /*#__PURE__*/React.createElement("div", {
+  }, txt);
+  const likesNode = /*#__PURE__*/React.createElement("div", {
     style: {
       textAlign: "right",
       fontFamily: "var(--fd)",
@@ -2669,37 +2930,134 @@ function RankRow({
       color: TEXT,
       lineHeight: 1
     }
-  }, Number(row.likes_count).toLocaleString(), /*#__PURE__*/React.createElement("div", {
+  }, Number(row.likes_count).toLocaleString(), /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: 9,
       color: "var(--mut)",
       fontFamily: "var(--fs)",
-      letterSpacing: .5
+      letterSpacing: .5,
+      marginLeft: 3
     }
-  }, "\u30B9\u30AD")), !isMobile && /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "right",
-      fontSize: 10,
-      color: "var(--mut)"
-    }
-  }, fmtDate(row.last_like_at)), !isMobile && /*#__PURE__*/React.createElement("div", {
-    className: "row-cta",
-    style: {
-      textAlign: "right"
-    }
-  }, url && /*#__PURE__*/React.createElement("span", {
-    style: {
-      display: "inline-block",
-      padding: "4px 12px",
-      borderRadius: 16,
-      fontSize: 10,
-      fontFamily: "var(--fs)",
-      letterSpacing: 1,
-      color: "#fff",
-      background: OR,
-      whiteSpace: "nowrap"
-    }
-  }, "\u898B\u306B\u884C\u304F \u2192")));
+  }, "\u30B9\u30AD"));
+  let inner;
+  if (isMobile) {
+    inner = /*#__PURE__*/React.createElement("div", {
+      className: "rank-row",
+      style: {
+        display: "grid",
+        gridTemplateColumns: "38px 1fr auto",
+        gap: 12,
+        padding: "12px 10px",
+        alignItems: "center",
+        borderBottom: "1px solid var(--line)"
+      }
+    }, avatar, /*#__PURE__*/React.createElement("div", {
+      style: {
+        minWidth: 0
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        alignItems: "baseline",
+        gap: 6,
+        marginBottom: 6
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: "var(--fd)",
+        fontSize: 13,
+        color: "var(--faint)",
+        flexShrink: 0
+      }
+    }, String(row.rank).padStart(2, "0")), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: 13,
+        fontWeight: 700,
+        color: "var(--text2)",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap"
+      }
+    }, row.creator_name)), bar), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-end",
+        gap: 6
+      }
+    }, likesNode, /*#__PURE__*/React.createElement(RankBadge, {
+      likes: row.likes_count,
+      small: true
+    }), url && ctaPill("\u898B\u308B \u2192")));
+  } else {
+    inner = /*#__PURE__*/React.createElement("div", {
+      className: "rank-row",
+      style: {
+        display: "grid",
+        gridTemplateColumns: "56px 1fr 80px 100px 96px",
+        gap: 16,
+        padding: "14px 20px",
+        alignItems: "center",
+        borderBottom: "1px solid var(--line)"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: "var(--fd)",
+        fontSize: 28,
+        color: "var(--faint)",
+        lineHeight: 1,
+        textAlign: "center"
+      }
+    }, row.rank), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: 12,
+        minWidth: 0
+      }
+    }, avatar, /*#__PURE__*/React.createElement("div", {
+      style: {
+        minWidth: 0,
+        flex: 1
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: 8,
+        marginBottom: 6
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: 13,
+        fontWeight: 700,
+        color: "var(--text2)",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        minWidth: 0
+      }
+    }, row.creator_name), /*#__PURE__*/React.createElement(RankBadge, {
+      likes: row.likes_count,
+      small: true
+    })), bar)), likesNode, /*#__PURE__*/React.createElement("div", {
+      style: {
+        textAlign: "right",
+        fontSize: 10,
+        color: "var(--mut)"
+      }
+    }, fmtDate(row.last_like_at)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        textAlign: "right"
+      }
+    }, url ? ctaPill("\u898B\u306B\u884C\u304F \u2192") : /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: 9,
+        color: "var(--faint)",
+        fontFamily: "var(--fs)"
+      }
+    }, "\u2014")));
+  }
   return url ? /*#__PURE__*/React.createElement("a", {
     href: url,
     target: "_blank",
@@ -3217,6 +3575,9 @@ function LikesRankingPage({
   const items = (active.data?.items ?? []).filter(r => ![...EXCLUDED_URLNAMES].some(u => (r.creator_url || "").includes(u))).slice(0, periodCfg.top);
   const top3 = items.slice(0, 3),
     rest = items.slice(3);
+  const maxLikes = Math.max(...items.map(r => Number(r.likes_count) || 0), 1);
+  // デスクトップは表彰台順（2位・1位・3位）で中央を主役に
+  const podium = !isMobile && top3.length === 3 ? [top3[1], top3[0], top3[2]] : top3;
   const genAt = active.data?.generated_at?.slice(0, 10).replace(/-/g, "/") ?? null;
   const periodLabel = buildPeriodLabel(active.data, period);
   useEffect(() => {
@@ -3369,20 +3730,29 @@ function LikesRankingPage({
       display: "grid",
       gridTemplateColumns: isMobile ? "1fr" : `repeat(${top3.length},1fr)`,
       gap: 12,
-      marginBottom: 8
+      marginBottom: rest.length > 0 ? 24 : 8,
+      alignItems: "end"
     }
-  }, top3.map(row => /*#__PURE__*/React.createElement(HeroCard, {
+  }, podium.map(row => /*#__PURE__*/React.createElement("div", {
     key: row.like_user_id,
+    style: {
+      position: "relative",
+      marginBottom: !isMobile && top3.length === 3 && row.rank === 1 ? 18 : 0
+    }
+  }, row.rank === 1 && /*#__PURE__*/React.createElement(Confetti, {
+    key: "cf-" + row.like_user_id
+  }), /*#__PURE__*/React.createElement(HeroCard, {
     row: row,
-    isMobile: isMobile
-  }))), rest.length > 0 && /*#__PURE__*/React.createElement("div", {
+    isMobile: isMobile,
+    maxLikes: maxLikes
+  })))), rest.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 8
     }
   }, !isMobile && /*#__PURE__*/React.createElement("div", {
     style: {
       display: "grid",
-      gridTemplateColumns: "56px 1fr 80px 100px 90px",
+      gridTemplateColumns: "56px 1fr 80px 100px 96px",
       gap: 16,
       padding: "8px 20px",
       fontSize: 9,
@@ -3402,7 +3772,8 @@ function LikesRankingPage({
   }, "\u6700\u7D42\u30B9\u30AD\u65E5"), /*#__PURE__*/React.createElement("div", null)), rest.map(row => /*#__PURE__*/React.createElement(RankRow, {
     key: row.like_user_id,
     row: row,
-    isMobile: isMobile
+    isMobile: isMobile,
+    maxLikes: maxLikes
   }))))), items.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       padding: isMobile ? "0 16px 60px" : "0 40px 60px",
