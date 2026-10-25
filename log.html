@@ -463,6 +463,10 @@ window.SITE_IMAGES = {
     .works-grid{column-count:2;column-gap:10px;}
     .works-grid img{margin-bottom:10px;}
     .kpi-grid{grid-template-columns:1fr 1fr;gap:12px;}
+    /* 「インプレッション」のような長いラベルが1文字ずつ折れるのを防ぐ。
+       狭い画面ではラベルを1行占有させ、前日比バッジを下の行に落とす。 */
+    .kpi-top{flex-wrap:wrap;gap:6px;}
+    .kpi-label{flex:1 1 100%;letter-spacing:1px;}
     .t5-row{grid-template-columns:40px 24px 1fr auto;gap:10px;padding:14px 4px;}
     .t5-rank{font-size:21px;}
     .t5-val{font-size:18px;}
@@ -1031,7 +1035,11 @@ function useNoteData() {
       return "";
     }),
     // eyecatch.csv はオプション（無くても動く）。fetch_eyecatch.py で生成 → data/ に置く
-    fetchData("eyecatch.csv").catch(() => "")]).then(([dailyRaw, rankRaw, trendRaw, follRaw, qualityRaw, eyecatchRaw]) => {
+    fetchData("eyecatch.csv").catch(() => ""),
+    // note新ダッシュボード（2026-09-08刷新）由来のファネル指標。
+    // 旧「ビュー」はnote本体で非表示になり照合不能になったため、KPIと成長チャートの主系列はこちらを使う。
+    // 取得できない場合は旧ビューにフォールバックするので、このファイルが無くても画面は壊れない。
+    fetchData("funnel_cumulative_public.csv").catch(() => "")]).then(([dailyRaw, rankRaw, trendRaw, follRaw, qualityRaw, eyecatchRaw, funnelCumRaw]) => {
       if (!alive) return;
       const daily = parseCSV(dailyRaw),
         ranking = parseCSV(rankRaw),
@@ -1167,13 +1175,27 @@ function useNoteData() {
         s: parseInt(r["スキ合計"] || 0)
       }));
 
+      /* 累計値は本来、単調増加する。収集側の取りこぼしで前日より小さい累計が入る日があり
+         （実データで確認: 旧ビュー 2026/06/02 ／ note新指標 2026-10-02）、そのままだと
+         チャートが谷状に落ち込む。累計の最高値を下回る行は異常として表示から除外する。
+         ※ 元CSVは触らない。根本対応は収集側で行う。 */
+      const dropDips = (arr, get) => {
+        let peak = -Infinity;
+        return arr.filter(x => {
+          const v = get(x);
+          if (!(v > 0) || v < peak) return false;
+          peak = v;
+          return true;
+        });
+      };
+
       // ── PV/スキ 全日次系列（14日/30日/全期間の切替用・間引きなし） ──
-      const growthSeries = daily.map(r => ({
+      const growthSeries = dropDips(daily.map(r => ({
         full: r["日付"] || "",
         d: (r["日付"] || "").split("/").slice(1).map(x => parseInt(x)).join("/"),
         v: parseInt(r["ビュー合計"] || r["pv"] || 0),
         s: parseInt(r["スキ合計"] || r["sk"] || 0)
-      })).filter(r => r.d);
+      })).filter(r => r.d), p => p.v);
 
       // ── 節目（フォロワー同様の自動節目。PV=10,000単位 / スキ=1,000単位） ──
       const calcMile = (val, unit) => {
@@ -1186,6 +1208,55 @@ function useNoteData() {
       };
       const pvMile = calcMile(totalPV, 10000);
       const skMile = calcMile(totalSK, 1000);
+
+      /* ══════════ note新指標（インプレッション／PV／スキ／コメント） ══════════
+         2026-09-08のnoteダッシュボード刷新で旧「ビュー」が廃止され、
+         「インプレッション（表示された数）」と「PV（開かれた数）」に分離された。
+         旧ビュー（daily_summary.csv の「ビュー合計」）はnote本体に表示されず照合できないため、
+         表向きのKPIは funnel_cumulative_public.csv を主系列とし、旧ビューは参考値として残す。
+         旧ビュー由来の値（totalPV / growthSeries / 記事別指標）は削除せず温存している。 */
+      const funnelCum = parseCSV(funnelCumRaw || "");
+      const fNum = (r, k) => r ? parseInt(String(r[k] || "0").replace(/,/g, "")) || 0 : 0;
+      // 累計が前日を下回る異常行を除外してから、KPI・前日比・伸び率を計算する
+      const funnelClean = dropDips(funnelCum, r => fNum(r, "impression"));
+      const fcLast = funnelClean.length ? funnelClean[funnelClean.length - 1] : null;
+      const fcPrev = funnelClean.length > 1 ? funnelClean[funnelClean.length - 2] : null;
+      const fcFirst = funnelClean.length ? funnelClean[0] : null;
+      // page_view が取れていなければ新指標は無効扱い（＝旧ビューにフォールバック）
+      const hasFunnel = !!fcLast && fNum(fcLast, "page_view") > 0;
+      const totalIMP = hasFunnel ? fNum(fcLast, "impression") : 0;
+      const totalPVNew = hasFunnel ? fNum(fcLast, "page_view") : totalPV;
+      const totalSKNew = hasFunnel ? fNum(fcLast, "like") : totalSK;
+      const totalCM = hasFunnel ? fNum(fcLast, "comment") : 0;
+      const impDiff = hasFunnel && fcPrev ? totalIMP - fNum(fcPrev, "impression") : 0;
+      const pvNewDiff = hasFunnel && fcPrev ? totalPVNew - fNum(fcPrev, "page_view") : pvDiff;
+      const skNewDiff = hasFunnel && fcPrev ? totalSKNew - fNum(fcPrev, "like") : skDiff;
+      const viewRate = hasFunnel ? parseFloat(fcLast["view_rate_pct"] || 0) || 0 : 0;
+      const impMile = calcMile(totalIMP, 100000);
+      const pvMileNew = calcMile(totalPVNew, 10000);
+      const skMileNew = calcMile(totalSKNew, 1000);
+
+      // 新指標の累計推移（snapshot_date 単位 / 2026-09-08〜）
+      const growthSeriesNew = funnelClean.map(r => {
+        const d = (r["snapshot_date"] || "").trim();
+        return {
+          full: d.replace(/-/g, "/"),
+          d: d.slice(5).split("-").map(x => parseInt(x)).join("/"),
+          v: fNum(r, "page_view"),
+          s: fNum(r, "like"),
+          i: fNum(r, "impression")
+        };
+      }).filter(r => r.d && r.v > 0);
+
+      // 伸び率は新旧で集計期間が違う（新=9/8〜 / 旧=2025-11-15〜）ので、
+      // 表示用には同じ期間同士で比較した値（*Shown）を使う。
+      const pvGrowthNew = hasFunnel && fcFirst && fNum(fcFirst, "page_view") > 0 ? Math.round((totalPVNew - fNum(fcFirst, "page_view")) / fNum(fcFirst, "page_view") * 100) : 0;
+      const skGrowthNew = hasFunnel && fcFirst && fNum(fcFirst, "like") > 0 ? Math.round((totalSKNew - fNum(fcFirst, "like")) / fNum(fcFirst, "like") * 100) : 0;
+      const pvGrowthShown = hasFunnel ? pvGrowthNew : pvGrowth;
+      const skGrowthShown = hasFunnel ? skGrowthNew : skGrowth;
+      const funnelFrom = growthSeriesNew.length ? growthSeriesNew[0].full : "";
+      const legacyFrom = growthSeries.length ? growthSeries[0].full : "";
+
       const EMOJIS = ["💀", "🔧", "🔬", "🎨", "⚗️"];
       const top5 = ranking.sort((a, b) => parseInt(b["期間増加PV"] || 0) - parseInt(a["期間増加PV"] || 0)).slice(0, 5).map((r, i) => ({
         rank: String(i + 1).padStart(2, "0"),
@@ -1236,6 +1307,26 @@ function useNoteData() {
         growthSeries,
         pvMile,
         skMile,
+        // ── note新指標（主系列） ──
+        hasFunnel,
+        totalIMP,
+        totalPVNew,
+        totalSKNew,
+        totalCM,
+        impDiff,
+        pvNewDiff,
+        skNewDiff,
+        viewRate,
+        impMile,
+        pvMileNew,
+        skMileNew,
+        growthSeriesNew,
+        pvGrowthNew,
+        skGrowthNew,
+        pvGrowthShown,
+        skGrowthShown,
+        funnelFrom,
+        legacyFrom,
         top5,
         top5PV: null,
         top5SK: null,
@@ -1247,7 +1338,7 @@ function useNoteData() {
         hiddenGems: null,
         articlesLoaded: false,
         articlesProgress: 0,
-        tickerText: `🔥 急上昇 ${rising}記事 · 🟢 継続 ${cont}記事 · ⚠️ 減速 ${slow}記事 · 💤 停止 ${stop}記事 · スキ率 ${fmtPct(skiRate)}% · `,
+        tickerText: `🔥 急上昇 ${rising}記事 · 🟢 継続 ${cont}記事 · ⚠️ 減速 ${slow}記事 · 💤 停止 ${stop}記事 · スキ率 ${fmtPct(skiRate)}% · ${hasFunnel ? `読まれ率 ${viewRate}% · ` : ""}`,
         stopPct: totalArt > 0 ? Math.round(stop / (rising + cont + slow + stop || 1) * 100) : 0,
         rising,
         cont,
@@ -4004,12 +4095,12 @@ function TopFiveSection({
   const MODES = [{
     id: "period",
     label: "30日間",
-    suffix: "PV/30日",
+    suffix: "旧ビュー/30日",
     color: OR
   }, {
     id: "pv",
-    label: "累計PV",
-    suffix: "累計PV",
+    label: "累計ビュー(旧)",
+    suffix: "累計旧ビュー",
     color: OR
   }, {
     id: "sk",
@@ -4049,7 +4140,17 @@ function TopFiveSection({
     className: `${mode === m.id ? "on" : ""}${m.id === "sk" ? " b" : ""}`,
     "aria-pressed": mode === m.id,
     onClick: () => setMode(m.id)
-  }, m.label)))), waiting ? [1, 2, 3, 4, 5].map(i => /*#__PURE__*/React.createElement(Skeleton, {
+  }, m.label)))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 10,
+      fontFamily: "var(--fm)",
+      color: "var(--mut)",
+      letterSpacing: 0.4,
+      lineHeight: 1.7,
+      marginTop: -16,
+      marginBottom: 18
+    }
+  }, "※ 記事別の数値は旧ビュー基準（2026-09-08のnote刷新前の指標）。noteの新ダッシュボードのインプレッション／PVとは一致しません。"), waiting ? [1, 2, 3, 4, 5].map(i => /*#__PURE__*/React.createElement(Skeleton, {
     key: i,
     w: "100%",
     h: 58,
@@ -4080,11 +4181,16 @@ function GrowthPanel({
   isMobile
 }) {
   const [range, setRange] = useState("all");
+  /* 主系列＝note新指標（funnel_cumulative の累計PV／スキ／インプレ）。2026-09-08以降しか無い。
+     新指標が取れないときは旧ビュー系列にフォールバックするので、画面は空にならない。 */
+  const useNew = !!(data && data.hasFunnel && data.growthSeriesNew && data.growthSeriesNew.length > 1);
   const series = useMemo(() => {
-    const s = data?.growthSeries || [];
+    const s = useNew ? data.growthSeriesNew : data?.growthSeries || [];
     if (range === "all") return s;
     return s.slice(-parseInt(range));
-  }, [data, range]);
+  }, [data, range, useNew]);
+  /* 下段＝旧ビュー（参考値）。note本体からは消えた指標やけど、2025-11-15からの履歴があるので捨てずに残す。 */
+  const legacySeries = useNew ? data.growthSeries || [] : [];
   const GTip = ({
     active,
     payload
@@ -4118,7 +4224,43 @@ function GrowthPanel({
         color: "var(--mut2)",
         lineHeight: 1.5
       }
-    }, "\u30B9\u30AD ", p.s.toLocaleString()));
+    }, "\u30B9\u30AD ", p.s.toLocaleString()), p.i ? /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: "var(--fm)",
+        fontSize: 10,
+        letterSpacing: 1,
+        color: "var(--mut)",
+        marginTop: 3
+      }
+    }, "インプレ ", p.i.toLocaleString()) : null);
+  };
+  /* 下段チャート（旧ビュー）用のツールチップ */
+  const LTip = ({
+    active,
+    payload
+  }) => {
+    if (!active || !payload?.length) return null;
+    const p = payload[0].payload;
+    return /*#__PURE__*/React.createElement("div", {
+      style: {
+        ...CHART_TIP,
+        padding: "8px 12px"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: "var(--fm)",
+        fontSize: 10,
+        letterSpacing: 1,
+        color: "var(--mut)",
+        marginBottom: 4
+      }
+    }, p.full), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: "var(--fd)",
+        fontSize: 13,
+        color: "var(--mut2)"
+      }
+    }, "旧ビュー ", p.v.toLocaleString()));
   };
   return /*#__PURE__*/React.createElement("div", {
     className: "card panel"
@@ -4135,7 +4277,7 @@ function GrowthPanel({
     style: {
       marginBottom: 0
     }
-  }, "TOTAL PV \uFF0F \u30B9\u30AD GROWTH"), /*#__PURE__*/React.createElement("div", {
+  }, useNew ? "PV ／ スキ GROWTH（note新指標）" : "TOTAL PV ／ スキ GROWTH"), /*#__PURE__*/React.createElement("div", {
     className: "seg gr-range"
   }, [["14", "14日"], ["30", "30日"], ["all", "全期間"]].map(([id, label]) => /*#__PURE__*/React.createElement("button", {
     key: id,
@@ -4240,7 +4382,55 @@ function GrowthPanel({
       verticalAlign: "middle",
       marginRight: 5
     }
-  }), "\u7D2F\u8A08\u30B9\u30AD\uFF08\u53F3\u8EF8\uFF09")));
+  }), "\u7D2F\u8A08\u30B9\u30AD\uFF08\u53F3\u8EF8\uFF09")), useNew && legacySeries.length > 1 ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 16,
+      paddingTop: 14,
+      borderTop: "1px solid var(--line)"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "panel-label",
+    style: {
+      marginBottom: 4,
+      color: "var(--mut)"
+    }
+  }, "LEGACY — 旧ビュー（参考値）"), /*#__PURE__*/React.createElement(ResponsiveContainer, {
+    width: "100%",
+    height: 92
+  }, /*#__PURE__*/React.createElement(LineChart, {
+    data: legacySeries,
+    margin: {
+      top: 4,
+      right: 8,
+      left: 0,
+      bottom: 0
+    }
+  }, /*#__PURE__*/React.createElement(XAxis, {
+    dataKey: "d",
+    hide: true
+  }), /*#__PURE__*/React.createElement(YAxis, {
+    hide: true,
+    domain: [dataMin => Math.floor(dataMin * 0.995), "auto"]
+  }), /*#__PURE__*/React.createElement(Tooltip, {
+    content: /*#__PURE__*/React.createElement(LTip, null)
+  }), /*#__PURE__*/React.createElement(Line, {
+    type: "monotone",
+    dataKey: "v",
+    stroke: "var(--mut)",
+    strokeWidth: 1.4,
+    strokeDasharray: "4 3",
+    dot: false,
+    name: "旧ビュー"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 10,
+      fontFamily: "var(--fm)",
+      color: "var(--mut)",
+      letterSpacing: 0.4,
+      marginTop: 6,
+      lineHeight: 1.7
+    }
+  }, "noteが2026-09-08のダッシュボード刷新で廃止した「ビュー」。", data.legacyFrom ? data.legacyFrom + "〜の自前集計。" : "", "note本体では表示されないため照合不可。記事別の指標は現在この旧ビュー基準。")) : null);
 }
 
 /* ─────────────────────────────────────────────
@@ -4550,29 +4740,39 @@ function Dashboard({
     style: {
       borderRadius: 14
     }
-  })) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(KpiCard, {
+  })) : /*#__PURE__*/React.createElement(React.Fragment, null,
+  /* note\u65B0\u6307\u6A19\uFF08funnel\uFF09\u304C\u53D6\u308C\u3066\u3044\u308C\u3070\u30A4\u30F3\u30D7\u30EC\u30C3\u30B7\u30E7\u30F3\u3092\u3001
+     \u53D6\u308C\u306A\u3051\u308C\u3070\u5F93\u6765\u3069\u304A\u308A\u7DCF\u8A18\u4E8B\u6570\u3092\u51FA\u3059 */
+  data.hasFunnel ? /*#__PURE__*/React.createElement(KpiCard, {
+    label: "\u30A4\u30F3\u30D7\u30EC\u30C3\u30B7\u30E7\u30F3",
+    value: data.totalIMP,
+    diff: data.impDiff,
+    color: BL,
+    mile: data.impMile
+  }) : /*#__PURE__*/React.createElement(KpiCard, {
+    label: "\u7DCF\u8A18\u4E8B\u6570",
+    value: data.totalArt,
+    diff: data.artDiff,
+    color: "var(--text)"
+  }), /*#__PURE__*/React.createElement(KpiCard, {
     label: "\u7D2F\u8A08PV",
-    value: data.totalPV,
-    diff: data.pvDiff,
+    value: data.totalPVNew,
+    diff: data.pvNewDiff,
     color: OR,
-    mile: data.pvMile
+    mile: data.pvMileNew,
+    note: data.hasFunnel ? "note新ダッシュボード準拠" : null
   }), /*#__PURE__*/React.createElement(KpiCard, {
     label: "\u7D2F\u8A08\u30B9\u30AD",
-    value: data.totalSK,
-    diff: data.skDiff,
+    value: data.totalSKNew,
+    diff: data.skNewDiff,
     color: "var(--text)",
-    mile: data.skMile
+    mile: data.hasFunnel ? data.skMileNew : data.skMile
   }), /*#__PURE__*/React.createElement(KpiCard, {
     label: "\u30D5\u30A9\u30ED\u30EF\u30FC",
     value: data.lastFollower,
     diff: data.followerDiff,
     color: "var(--text)",
     note: data.followerMsg
-  }), /*#__PURE__*/React.createElement(KpiCard, {
-    label: "\u7DCF\u8A18\u4E8B\u6570",
-    value: data.totalArt,
-    diff: data.artDiff,
-    color: "var(--text)"
   }))))), /*#__PURE__*/React.createElement("div", {
     className: "ticker-wrap",
     style: {
@@ -4598,17 +4798,17 @@ function Dashboard({
     style: {
       marginTop: 16
     }
-  })) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SectionTitle, null, "\u96C6\u8A08\u958B\u59CB \u2192 \u4ECA", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
+  })) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SectionTitle, null, (data.hasFunnel && data.funnelFrom ? data.funnelFrom : "\u96C6\u8A08\u958B\u59CB") + " \u2192 \u4ECA", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
     style: {
       color: BL
     }
-  }, "+", data.pvGrowth, "%")), /*#__PURE__*/React.createElement("p", {
+  }, "+", data.pvGrowthShown, "%")), /*#__PURE__*/React.createElement("p", {
     className: "sec-lead"
   }, "\u30B9\u30AD\u306E\u4F38\u3073\u306F ", /*#__PURE__*/React.createElement("strong", {
     style: {
       color: BL
     }
-  }, "+", data.skGrowth, "%"), data.skGrowth > data.pvGrowth ? " とPVを上回る。「数字より質」が育ってる証拠。" : data.skGrowth > 0 ? " で成長中。PVと一緒にファンも増やしていこ。" : " は伸び途中。スキされる記事、研究する価値あり。"), /*#__PURE__*/React.createElement("div", {
+  }, "+", data.skGrowthShown, "%"), data.skGrowthShown > data.pvGrowthShown ? " とPVを上回る。「数字より質」が育ってる証拠。" : data.skGrowthShown > 0 ? " で成長中。PVと一緒にファンも増やしていこ。" : " は伸び途中。スキされる記事、研究する価値あり。"), /*#__PURE__*/React.createElement("div", {
     className: "stat-pair"
   }, /*#__PURE__*/React.createElement("div", {
     className: "item b"
@@ -4617,7 +4817,7 @@ function Dashboard({
     style: {
       color: BL
     }
-  }, "+", data.skGrowth, "%"), /*#__PURE__*/React.createElement("div", {
+  }, "+", data.skGrowthShown, "%"), /*#__PURE__*/React.createElement("div", {
     className: "lab"
   }, "\u30B9\u30AD\u5897\u52A0\u7387")), /*#__PURE__*/React.createElement("div", {
     className: "item"
